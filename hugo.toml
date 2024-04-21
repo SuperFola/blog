@@ -1,0 +1,4 @@
+baseURL = 'https://superfola.github.io/blog'
+languageCode = 'en-us'
+title = 'Lex Plt blog'
+theme = 'ananke'
