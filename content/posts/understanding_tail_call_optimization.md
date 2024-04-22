@@ -2,7 +2,7 @@
 title = 'Understanding tail call optimization'
 date = 2022-02-20T23:02:10+02:00
 draft = false
-keywords = ['vm', 'bytecode', 'pldev']
+tags = ['vm', 'bytecode', 'pldev']
 +++
 
 Lately, I've been working on optimizations for my language, [ArkScript](https://arkscript-lang.dev), and finally take some time to add tail-call optimization to my compiler.

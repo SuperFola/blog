@@ -2,7 +2,7 @@
 title = 'What are those things named pointers?'
 date = 2018-09-08T22:05:34+02:00
 draft = false
-keywords = ['explainlikeimfive', 'memory']
+tags = ['explainlikeimfive', 'memory']
 +++
 
 Why did I write this article ? In my engineering school, we have C++ lessons, and very often, students do not understand what a *pointer* is, and what are their use. I tried to write something as simple as possible to fix this issue, do not hesitate to tell me if there is anything missing/wrong/whatsoever !

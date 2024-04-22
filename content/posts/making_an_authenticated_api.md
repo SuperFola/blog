@@ -2,7 +2,7 @@
 title = 'Making an authenticated API'
 date = 2021-11-12T23:02:10+02:00
 draft = false
-keywords = ['javascript', 'api', 'auth']
+tags = ['javascript', 'api', 'auth']
 +++
 
 This week, I had to design an API with protected routes, which needed the user to be logged in. There is even more to it, said API should be used by a website (where you have access to cookies).

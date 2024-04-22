@@ -2,7 +2,8 @@
 title = 'Why do I need git?'
 date = 2020-04-08T22:57:17+02:00
 draft = false
-keywords = ['git', 'beginners']
+tags = ['git', 'beginners']
+image = '/git_log.png'
 +++
 
 Nowadays, we have code everywhere. We need to patch bugs, find how and why a bug was introduced to fix it, find when a functionality was added and by who, thus we need what is called "version control".

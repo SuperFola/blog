@@ -2,7 +2,8 @@
 title = 'Parallelizing a bytecode interpreter'
 date = 2021-04-14T23:02:10+02:00
 draft = false
-keywords = ['bytecode', 'vm', 'pldev']
+tags = ['bytecode', 'vm', 'pldev']
+image = '/current_model.png'
 +++
 
 *Disclaimer*: this article is intended to be part of a *Request For Comments* [on a language I am working on](https://arkscript-lang.github.io).

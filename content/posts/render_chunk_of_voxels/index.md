@@ -2,10 +2,9 @@
 title = 'Lets render chunks of voxels with OpenGL!'
 date = 2018-10-13T22:15:52+02:00
 draft = false
-keywords = ['gamedev', 'cpp', 'opengl']
+tags = ['gamedev', 'cpp', 'opengl']
+image = '/cover_image.png'
 +++
-
-![](/cover_image.png)
 
 In my [previous post]({{< ref "/posts/making_a_rendering_engine/index.md" >}} "Making a rendering engine"), I tried to introduce you to my journey: making a game (I forgot to mention that I want to make (more or less) the whole game myself, from the engine to the assets). I am now trying to render *chunks* of *blocks* and... that was harder than I thought !
 

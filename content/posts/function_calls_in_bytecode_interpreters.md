@@ -2,7 +2,7 @@
 title = 'Function calls in bytecode interpreters'
 date = 2021-05-10T23:02:10+02:00
 draft = false
-keywords = ['bytecode', 'vm', 'pldev']
+tags = ['bytecode', 'vm', 'pldev']
 +++
 
 [In the previous article]({{< ref "/posts/understanding_bytecode_interpreters" >}} "Understanding bytecode interpreters"), we discussed the global idea behind a bytecode interpreter, and explained the concept of a stack and how the instructions could be represented. Now we will dive a bit more in *tables* and *call stack*.

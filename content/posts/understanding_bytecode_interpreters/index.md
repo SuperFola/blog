@@ -2,7 +2,8 @@
 title = 'Understanding bytecode interpreters'
 date = 2021-05-02T23:02:10+02:00
 draft = false
-keywords = ['bytecode', 'vm', 'pldev']
+tags = ['bytecode', 'vm', 'pldev']
+image = '/stack_example.png'
 +++
 
 Have you ever wondered how Java or Python work? What is a "virtual machine"? If those questions stir your interest, you've come to the right place!

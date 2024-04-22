@@ -2,10 +2,9 @@
 title = 'The beginning of my journey: making a rendering engine'
 date = 2018-10-07T22:11:13+02:00
 draft = false
-keywords = ['gamedev', 'cpp']
+tags = ['gamedev', 'cpp']
+image = '/cover_image.png'
 +++
-
-![](/cover_image.png)
 
 *Nota Bene*: This serie of articles is mainly focused on my experience while making *Voksel*, a 3D game made in a Minecraft style, so I will only write about my opinion and how I solve the problems I met !
 

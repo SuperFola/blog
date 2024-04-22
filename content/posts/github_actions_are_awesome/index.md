@@ -2,7 +2,7 @@
 title = 'GitHub actions are awesome'
 date = 2021-06-08T23:02:10+02:00
 draft = false
-keywords = ['github', 'ci', 'automation']
+tags = ['github', 'ci', 'automation']
 +++
 
 Until recently, when we wanted to create new releases for [ArkScript](https://github.com/ArkScript-lang/Ark), we had to build the language on all the system we support (currently Windows and Linux), build the modules (http, console, random, etc), test everything on *each* operating system, and then package the needed files and directory in ZIPs. We had to go to GitHub, create a new release, add the correct tag (and not mix it with the title as they are different things!), grep the latest changelog, and add our artifacts.
