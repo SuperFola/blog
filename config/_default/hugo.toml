@@ -1,0 +1,7 @@
+baseURL = 'https://superfola.github.io/blog/'
+languageCode = 'en-us'
+paginate = 5
+title = 'Lex Plt blog'
+theme = 'hugo-theme-stack'
+
+defaultContentLanguage = 'en'
