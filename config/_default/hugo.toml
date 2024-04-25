@@ -1,4 +1,4 @@
-baseURL = 'https://superfola.github.io/blog/'
+baseURL = 'https://lexp.lt'
 languageCode = 'en-us'
 paginate = 5
 title = 'Lex Plt blog'
