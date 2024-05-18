@@ -11,6 +11,6 @@ identifier = "mastodon"
 name = "Mastodon"
 url = "https://hachyderm.io/@lexplt"
 
-#[social.params]
-#icon = "brand-mastodon"
+[social.params]
+icon = "brand-mastodon"
 
