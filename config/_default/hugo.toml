@@ -5,3 +5,9 @@ title = 'Lex Plt blog'
 theme = 'hugo-theme-stack'
 
 defaultContentLanguage = 'en'
+
+[privacy]
+  [privacy.youtube]
+    disable = false
+    privacyEnhanced = true
+
