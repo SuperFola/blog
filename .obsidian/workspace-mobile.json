@@ -1,0 +1,181 @@
+{
+  "main": {
+    "id": "871f605a82da95e5",
+    "type": "split",
+    "children": [
+      {
+        "id": "881ab64992cab1c2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a5e3d6546c6bfaf1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "content/posts/code_formatter_for_arkscript.md",
+                "mode": "preview",
+                "source": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "7bde4653ee030b91",
+    "type": "mobile-drawer",
+    "children": [
+      {
+        "id": "89c1ece1b0c67adb",
+        "type": "leaf",
+        "state": {
+          "type": "file-explorer",
+          "state": {
+            "sortOrder": "alphabetical"
+          }
+        }
+      },
+      {
+        "id": "ea0efe5c0f246484",
+        "type": "leaf",
+        "state": {
+          "type": "search",
+          "state": {
+            "query": "",
+            "matchingCase": false,
+            "explainSearch": false,
+            "collapseAll": false,
+            "extraContext": false,
+            "sortOrder": "alphabetical"
+          }
+        }
+      },
+      {
+        "id": "624395d859a2d91d",
+        "type": "leaf",
+        "state": {
+          "type": "tag",
+          "state": {
+            "sortOrder": "frequency",
+            "useHierarchy": true
+          }
+        }
+      },
+      {
+        "id": "15427e7a955783e2",
+        "type": "leaf",
+        "state": {
+          "type": "bookmarks",
+          "state": {}
+        }
+      }
+    ],
+    "currentTab": 0
+  },
+  "right": {
+    "id": "94f82bd67dff5b11",
+    "type": "mobile-drawer",
+    "children": [
+      {
+        "id": "179d7372b00749a5",
+        "type": "leaf",
+        "state": {
+          "type": "backlink",
+          "state": {
+            "file": "content/posts/code_formatter_for_arkscript.md",
+            "collapseAll": false,
+            "extraContext": false,
+            "sortOrder": "alphabetical",
+            "showSearch": false,
+            "searchQuery": "",
+            "backlinkCollapsed": false,
+            "unlinkedCollapsed": true
+          }
+        }
+      },
+      {
+        "id": "6f2a2bbf22373127",
+        "type": "leaf",
+        "state": {
+          "type": "outgoing-link",
+          "state": {
+            "file": "content/posts/code_formatter_for_arkscript.md",
+            "linksCollapsed": false,
+            "unlinkedCollapsed": true
+          }
+        }
+      },
+      {
+        "id": "ac1a94aa085d2fb1",
+        "type": "leaf",
+        "state": {
+          "type": "outline",
+          "state": {
+            "file": "content/posts/code_formatter_for_arkscript.md"
+          }
+        }
+      }
+    ],
+    "currentTab": 0
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "a5e3d6546c6bfaf1",
+  "lastOpenFiles": [
+    "content/posts/writing_a_macro_system_for_arkscript.md",
+    "content/posts/code_formatter_for_arkscript.md",
+    "/content/posts/code_formatter_for_arkscript.md",
+    "/content/links/index.md",
+    "/config/_default/hugo.toml",
+    "/themes/hugo-theme-stack",
+    "content/posts/how_i_created_my_own_scripting_language.md",
+    "CNAME",
+    "themes/hugo-theme-stack",
+    "themes",
+    "assets/icons/brand-mastodon.svg",
+    "assets/img/avatar.png",
+    "assets/icons",
+    "assets/img",
+    "assets/jsconfig.json",
+    "assets",
+    "static/favicon16.png",
+    "static/favicon.png",
+    "static/favicon96.png",
+    "static",
+    "content/posts/understanding_bytecode_interpreters/index.md",
+    "content/posts/understanding_bytecode_interpreters/stack_example.png",
+    "content/posts/github_actions_are_awesome/release.png",
+    "content/posts/github_actions_are_awesome/discord.png",
+    "content/posts/github_actions_are_awesome/fancy_button.png",
+    "content/posts/github_actions_are_awesome/index.md",
+    "content/posts/making_a_rendering_engine/index.md",
+    "content/posts/making_a_rendering_engine/cover_image.png",
+    "content/posts/render_chunk_of_voxels/index.md",
+    "content/posts/parallelizing_a_bytecode_interpreter/index.md",
+    "content/posts/advice_on_games_architecture/index.md",
+    "content/posts/why_do_i_need_git/index.md",
+    "content/links/index.md",
+    "content/search/index.md",
+    "content/archives/index.md",
+    "content/posts/what_is_oop.md",
+    "content/posts/what_are_those_things_called_pointers.md",
+    "content/posts/explanation_of_python_callable.md",
+    "content/posts/different_kinds_of_tests.md",
+    "content/posts/understanding_tail_call_optimization.md",
+    "content/posts/making_an_authenticated_api.md",
+    "content/posts/function_calls_in_bytecode_interpreters.md",
+    "content/posts/starting_a_journey_with_cmake.md",
+    "archetypes/default.md"
+  ]
+}
