@@ -9,7 +9,7 @@ Just tonight, I wanted to add support for `caps word` to my [keyboard](https://g
 
 ## Dependencies, compilers, versions and brew
 
-I had QMK 1.1.1 when I first compiled my arkenswoop firmware, but in the mean time I ran `brew install xyz` several times. If you know anything about brew, it is probably that it updates all your packages before installing anything by default. Well, of course, it had to update QMK to `1.1.5_1` and several other components like Python (on my Mac M1, I can't use Python > 3.11 with vial/qmk due to syntax errors).
+I had QMK 1.1.1 when I first compiled my arkenswoop firmware, but in the mean time I ran `brew install xyz` several times. If you know anything about brew, it is probably that it updates all your packages before installing anything by default. Well, of course, it had to update QMK to `1.1.5_1` and several other components like Python (on my Mac M1, I can't use Python > 3.11 with vial/qmk due to syntax errors) and a gcc toolchain we’ll talk about later.
 
 I forgot to mention that I was using vial-qmk and not raw qmk, which I installed as follows:
 
@@ -20,9 +20,13 @@ qmk setup -H ~/vial-qmk
 
 vial-qmk is a fork of qmk adding support for updating your keymap interactively through a gui, allowing you to save and load keymaps quickly, which I love because it works through your browser too, so I can update my keymap at work, even on a laptop with no admin rights where I can't install anything.
 
+As far as I know, it is a Python GUI and a collection of scripts to make your firmware and bundle it with your keymap serialized in JSON.
+
 ### Fixing Python
 
-So I went on and tried to fix my Python installation. No easy way to do this except with an additional command, `pyenv`. I installed it with `brew install pyenv`, and set it up in my `~/.zshrc`:
+So I went ahead and tried to fix my Python installation, so that I could run the commands to build my firmware with vial.
+
+No easy way to do this except with an additional command (or risking breaking your system by downgrading the system python), `pyenv`. I installed it with `brew install pyenv`, and set it up in my `~/.zshrc`:
 
 ```shell
 if command -v pyenv >/dev/null; then
@@ -32,11 +36,11 @@ if command -v pyenv >/dev/null; then
 fi
 ```
 
-But then I discovered when running `pyenv versions` that it could list only versions it installed, or the system one! So I had to uninstall nearly all my python versions (except for 3.11 and 3.12, because why not keep a few just in case) installed through brew, and install python 3.8 with pyenv: `pyenv install 3.8`. Then make it the default with `pyenv local 3.8` in the vial-qmk folder.
+But then I discovered when running `pyenv versions` that it could list only versions it installed, or the system one! So I had to uninstall nearly all my brew python versions (except for 3.11 and 3.12, because why not keep the most recent ones just in case) installed through brew, and install python 3.8 with pyenv: `pyenv install 3.8`. Then make it the default with `pyenv local 3.8` in the vial-qmk folder.
 
 ### Fixing my toolchain...?
 
-Now I could run `make arkenswoop:vial:flash` without Python errors blocking the compilation process, but then, avr-gcc screwed up? An error very similar to this one (apart from the keyboard name) popped up:
+Now I could run `make arkenswoop:vial:flash` without Python errors blocking the compilation process, but then, avr-gcc screwed up? An error very similar to this one, down to the compiler version (apart from the keyboard name) popped up:
 
 ```
 Copyright (C) 2023 Free Software Foundation, Inc.
