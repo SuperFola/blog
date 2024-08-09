@@ -40,7 +40,7 @@ But then I discovered when running `pyenv versions` that it could list only vers
 
 ### Fixing my toolchain...?
 
-Now I could run `make arkenswoop:vial:flash` without Python errors blocking the compilation process, but then, avr-gcc screwed up? An error very similar to this one, down to the compiler version (apart from the keyboard name) popped up:
+Now I could run `make arkenswoop:vial:flash` without Python errors blocking the compilation process, but then, avr-gcc screwed up? An error very similar to this one (apart from the keyboard name), down to the compiler version popped up:
 
 ```
 Copyright (C) 2023 Free Software Foundation, Inc.
@@ -65,7 +65,7 @@ gmake: *** [Makefile:392: lily58/rev1:via] Error 1
 Make finished with errors
 ```
 
-But I had a toolchain, see brew search results:
+But I had a toolchain (thus a standard library and a `assert.h` somewhere, see brew search results:
 
 ```
 brew search avr-gcc
