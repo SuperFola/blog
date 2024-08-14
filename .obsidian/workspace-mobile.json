@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/posts/qmk_macos_sonoma.md",
+                "file": "content/posts/function_calls_in_bytecode_interpreters.md",
                 "mode": "preview",
                 "source": true
               }
@@ -85,7 +85,7 @@
         "state": {
           "type": "backlink",
           "state": {
-            "file": "content/posts/qmk_macos_sonoma.md",
+            "file": "content/posts/function_calls_in_bytecode_interpreters.md",
             "collapseAll": false,
             "extraContext": false,
             "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
         "state": {
           "type": "outgoing-link",
           "state": {
-            "file": "content/posts/qmk_macos_sonoma.md",
+            "file": "content/posts/function_calls_in_bytecode_interpreters.md",
             "linksCollapsed": false,
             "unlinkedCollapsed": true
           }
@@ -114,7 +114,7 @@
         "state": {
           "type": "outline",
           "state": {
-            "file": "content/posts/qmk_macos_sonoma.md"
+            "file": "content/posts/function_calls_in_bytecode_interpreters.md"
           }
         }
       }
@@ -133,10 +133,14 @@
   },
   "active": "a5e3d6546c6bfaf1",
   "lastOpenFiles": [
-    "content/posts/code_formatter_for_arkscript.md",
+    "content/posts/different_kinds_of_tests.md",
+    "content/posts/parallelizing_a_bytecode_interpreter/index.md",
     "content/posts/qmk_macos_sonoma.md",
-    "/content/posts/qmk_macos_sonoma.md",
+    "content/posts/checking_the_collision_freeness_of_an_homemade_hash.md",
+    "/content/posts/checking_the_collision_freeness_of_an_homemade_hash.md",
     "/themes/hugo-theme-stack",
+    "content/posts/code_formatter_for_arkscript.md",
+    "/content/posts/qmk_macos_sonoma.md",
     "content/posts/writing_a_macro_system_for_arkscript.md",
     "/content/posts/code_formatter_for_arkscript.md",
     "/content/links/index.md",
@@ -164,7 +168,6 @@
     "content/posts/making_a_rendering_engine/index.md",
     "content/posts/making_a_rendering_engine/cover_image.png",
     "content/posts/render_chunk_of_voxels/index.md",
-    "content/posts/parallelizing_a_bytecode_interpreter/index.md",
     "content/posts/advice_on_games_architecture/index.md",
     "content/posts/why_do_i_need_git/index.md",
     "content/links/index.md",
@@ -173,11 +176,8 @@
     "content/posts/what_is_oop.md",
     "content/posts/what_are_those_things_called_pointers.md",
     "content/posts/explanation_of_python_callable.md",
-    "content/posts/different_kinds_of_tests.md",
     "content/posts/understanding_tail_call_optimization.md",
     "content/posts/making_an_authenticated_api.md",
-    "content/posts/function_calls_in_bytecode_interpreters.md",
-    "content/posts/starting_a_journey_with_cmake.md",
-    "archetypes/default.md"
+    "content/posts/function_calls_in_bytecode_interpreters.md"
   ]
 }

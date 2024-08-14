@@ -7,7 +7,7 @@ categories = ['pldev']
 image = '/current_model.png'
 +++
 
-*Disclaimer*: this article is intended to be part of a *Request For Comments* [on a language I am working on](https://arkscript-lang.github.io).
+*Disclaimer*: this article is intended to be part of a *Request For Comments* [on a language I am working on](https://arkscript-lang.dev).
 
 *Note*: I will be using *bytecode interpreter* and *virtual machine* (sometimes written VM) interchangeably throughout this article.
 
