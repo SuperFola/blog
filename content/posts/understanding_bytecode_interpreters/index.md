@@ -2,7 +2,8 @@
 title = 'Understanding bytecode interpreters'
 date = 2021-05-02T23:02:10+02:00
 draft = false
-tags = ['bytecode', 'vm', 'pldev']
+tags = ['bytecode', 'vm']
+categories = ['pldev']
 image = '/stack_example.png'
 +++
 

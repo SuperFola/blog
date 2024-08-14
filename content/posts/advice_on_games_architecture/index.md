@@ -2,7 +2,8 @@
 title = 'Advice on games architecture'
 date = 2021-04-22T23:02:10+02:00
 draft = false
-tags = ['gamedev', 'architecture']
+tags = ['architecture']
+categories = ['gamedev']
 image = '/scene_graph.png'
 +++
 

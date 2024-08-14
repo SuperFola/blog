@@ -2,7 +2,8 @@
 title = 'Lets render chunks of voxels with OpenGL!'
 date = 2018-10-13T22:15:52+02:00
 draft = false
-tags = ['gamedev', 'cpp', 'opengl']
+tags = ['cpp', 'opengl']
+categories = ['gamedev']
 image = '/cover_image.png'
 +++
 

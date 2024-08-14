@@ -2,7 +2,8 @@
 title = 'The beginning of my journey: making a rendering engine'
 date = 2018-10-07T22:11:13+02:00
 draft = false
-tags = ['gamedev', 'cpp']
+tags = ['cpp']
+categories = ['gamedev']
 image = '/cover_image.png'
 +++
 

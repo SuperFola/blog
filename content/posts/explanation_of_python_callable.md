@@ -2,7 +2,8 @@
 title = 'Call me maybe: an explanation of Python callable'
 date = 2020-03-24T22:55:57+02:00
 draft = false
-tags = ['python', 'explainlikeimfive']
+tags = ['python']
+categories = ['eli5']
 +++
 
 If you have some experience with Python, you must have already seen a `TypeError: 'T' object is not callable`.

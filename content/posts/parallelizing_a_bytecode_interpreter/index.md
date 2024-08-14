@@ -2,7 +2,8 @@
 title = 'Parallelizing a bytecode interpreter'
 date = 2021-04-14T23:02:10+02:00
 draft = false
-tags = ['bytecode', 'vm', 'pldev']
+tags = ['bytecode', 'vm']
+categories = ['pldev']
 image = '/current_model.png'
 +++
 
