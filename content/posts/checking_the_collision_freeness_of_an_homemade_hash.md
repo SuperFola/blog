@@ -37,23 +37,33 @@ A bunch of incomprehensible symbols that could seem random, as if I typed on my 
 My first approach was in Scala, as it is the language we use at work. I just put a few lines of code with a mutable set and hoped for the best.
 
 ```scala
-def test(): Boolean = {
+import scala.collection.mutable
+
+object Hash {
+  def main(args: Array[String]): Unit = {
+    test()
+  }
+
+  def test(): Boolean = {
     var set = mutable.Set[Long]()
-    for (x <- 1 to 0xFFFFFFFFl) {
-        val r = compute(constant, x)
-        if (set.contains(r)) {
-            println(s"$x has a collision, generated $r")
-            return false
-        }
-        set.add(r)
+    val constant = 1723651244
+
+    for (x <- 1L to 0xFFFFFFFFl) {
+      val r = (((~constant ^ x) & 0x0000ffffL) | (~(constant ^ x) & 0xffff0000L))
+      if (set.contains(r)) {
+        println(s"$x has a collision, generated $r")
+        return false
+      }
+      set.add(r)
     }
     true
+  }
 }
-
-test()
 ```
 
-However, after 10 minutes on an M1 MacBook Pro it wasn't finished, so I stopped it and started looking for a better way to check if my transformation was collision-free.
+Time (1 -> 0xFF'FFFF): `scala Hash.scala -J-Xmx2g  5.43s user 0.37s system 291% cpu 1.988 total`
+
+However, after 10 minutes on an M1 MacBook Pro it wasn't finished (and I had to tweak the max heap size multiple times to avoid getting max heap size errors), so I stopped it and started looking for a better way to check if my transformation was collision-free.
 
 What's better than trying again without changing your code? Well I did just that, but using another language, much more low level: C++.
 
@@ -68,11 +78,12 @@ I wrote nearly the same code, but using C++, and a "better set" (since `std::set
 int main()
 {
     auto set = std::unordered_set<long>();
+    constexpr long constant = 1723651244L;
 
     for (long x = 1; x < 0xffffffffl; ++x)
     {
         const long r = (((~constant ^ x) & 0x0000ffffl) | ((~(constant ^ x) & 0xffff0000l))) & 0xffffffffl;
-        if (set.contains(r))
+        if (set.count(r) == 1)
         {
             std::cout << x << " (uuid bits=" << r << ") already in set" << std::endl;
             return 1;
@@ -87,7 +98,9 @@ int main()
 }
 ```
 
-And compiled in release mode to get the best performances: `clang++ compute.cpp -o compute -O3 --std=c++20`. To my surprise, on my M1 MacBook Pro, it was a faster than the Scala solution but moved by 1% every 20 seconds or so! I didn't want to have to wait for so long to iterate on the transformation in case it generated a collision.
+Time (1 -> 0xfff'ffff): `./compute  9.48s user 2.48s system 93% cpu 12.796 total`
+
+And compiled in release mode to get the best performances: `clang++ compute.cpp -o compute -O3 --std=c++20`. To my surprise, on my M1 MacBook Pro, it was a faster than the Scala solution but moved by 1% every 20 seconds or so! I didn't want to have to wait for so long to iterate on the transformation in case it generated a collision. Also, no more java out of memory errors.
 
 The "slowness" lies in two things here:
 1. the way I check for collisions can not be parallelized (unless I compute N sets and then merge them, which will likely take a lot of time since we are working on 4'294'967'295 values)
@@ -107,6 +120,7 @@ Creating a `std::bitset<0xffffffff>` will most likely not work, since it would t
 int main()
 {
     auto bits = std::make_unique<std::bitset<0xffffffffl + 1>>(0);
+    constexpr long constant = 1723651244L;
 
     for (long x = 1; x < 0xffffffffl; ++x)
     {
@@ -125,6 +139,8 @@ int main()
     return 0;
 }
 ```
+
+Time (1 -> 0xfff'ffff): `./compute  0.59s user 0.05s system 73% cpu 0.864 total`
 
 If you have a keen eye you will have noticed a weird size for the `std::bitset`: 0xffffffff + 1. That's because 4'294'967'295 should be a valid value, so I needed to have it available.
 
