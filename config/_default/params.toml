@@ -4,6 +4,9 @@ mainSections = ["posts"]
 rssFullContent = true
 favicon = "favicon.png"
 
+[frontmatter]
+lastmod = ["lastmod", ":git", "date", "publishDate"]
+
 [footer]
 since = 2018
 customText = ""

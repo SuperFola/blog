@@ -6,6 +6,8 @@ theme = 'hugo-theme-stack'
 
 defaultContentLanguage = 'en'
 
+enableGitInfo = true
+
 [privacy]
   [privacy.youtube]
     disable = false
