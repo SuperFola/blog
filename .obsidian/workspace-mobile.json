@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/posts/function_calls_in_bytecode_interpreters.md",
+                "file": "content/posts/code_formatter_for_arkscript.md",
                 "mode": "preview",
                 "source": true
               }
@@ -85,7 +85,7 @@
         "state": {
           "type": "backlink",
           "state": {
-            "file": "content/posts/function_calls_in_bytecode_interpreters.md",
+            "file": "content/posts/code_formatter_for_arkscript.md",
             "collapseAll": false,
             "extraContext": false,
             "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
         "state": {
           "type": "outgoing-link",
           "state": {
-            "file": "content/posts/function_calls_in_bytecode_interpreters.md",
+            "file": "content/posts/code_formatter_for_arkscript.md",
             "linksCollapsed": false,
             "unlinkedCollapsed": true
           }
@@ -114,7 +114,7 @@
         "state": {
           "type": "outline",
           "state": {
-            "file": "content/posts/function_calls_in_bytecode_interpreters.md"
+            "file": "content/posts/code_formatter_for_arkscript.md"
           }
         }
       }
@@ -133,51 +133,51 @@
   },
   "active": "a5e3d6546c6bfaf1",
   "lastOpenFiles": [
-    "content/posts/different_kinds_of_tests.md",
-    "content/posts/parallelizing_a_bytecode_interpreter/index.md",
-    "content/posts/qmk_macos_sonoma.md",
-    "content/posts/checking_the_collision_freeness_of_an_homemade_hash.md",
-    "/content/posts/checking_the_collision_freeness_of_an_homemade_hash.md",
-    "/themes/hugo-theme-stack",
-    "content/posts/code_formatter_for_arkscript.md",
-    "/content/posts/qmk_macos_sonoma.md",
-    "content/posts/writing_a_macro_system_for_arkscript.md",
+    "content/page",
+    "content/page/links/index.md",
+    "content/page/links/flsub.png",
+    "content/page/links",
+    "content/page/search/index.md",
+    "content/page/search",
+    "content/categories/eli5",
+    "content/categories",
+    "content/page/links/arkscript.png",
+    "content/categories/eli5/_index.md",
+    "content/page/links/GitHub-Mark.png",
+    "content/page/archives/index.md",
+    "content/page/archives",
+    "content/categories/pldev/_index.md",
+    "content/categories/pldev/banner.png",
+    "content/categories/pldev",
+    "content/categories/gamedev/_index.md",
+    "content/categories/gamedev",
+    "content/categories/eli5/banner.png",
+    "content/categories/gamedev/banner.png",
+    "/content/page/search/index.md",
+    "/content/page/links/flsub.png",
+    "/content/page/links/arkscript.png",
+    "/content/page/links/GitHub-Mark.png",
+    "/content/page/archives/index.md",
+    "/content/page/links/index.md",
+    "/content/posts/writing_a_macro_system_for_arkscript.md",
+    "/content/posts/what_is_oop.md",
+    "/content/posts/what_are_those_things_called_pointers.md",
+    "/content/posts/understanding_tail_call_optimization.md",
+    "/content/posts/understanding_bytecode_interpreters/index.md",
+    "/content/posts/render_chunk_of_voxels/index.md",
+    "/content/posts/parallelizing_a_bytecode_interpreter/index.md",
+    "/content/posts/making_a_rendering_engine/index.md",
+    "/content/posts/how_i_created_my_own_scripting_language.md",
+    "/content/posts/function_calls_in_bytecode_interpreters.md",
+    "/content/posts/explanation_of_python_callable.md",
     "/content/posts/code_formatter_for_arkscript.md",
-    "/content/links/index.md",
+    "/content/posts/checking_the_collision_freeness_of_an_homemade_hash.md",
+    "/content/posts/advice_on_games_architecture/index.md",
+    "/content/categories/pldev/banner.png",
+    "/content/categories/pldev/_index.md",
+    "/content/categories/gamedev/_index.md",
+    "/config/_default/params.toml",
     "/config/_default/hugo.toml",
-    "content/posts/how_i_created_my_own_scripting_language.md",
-    "CNAME",
-    "themes/hugo-theme-stack",
-    "themes",
-    "assets/icons/brand-mastodon.svg",
-    "assets/img/avatar.png",
-    "assets/icons",
-    "assets/img",
-    "assets/jsconfig.json",
-    "assets",
-    "static/favicon16.png",
-    "static/favicon.png",
-    "static/favicon96.png",
-    "static",
-    "content/posts/understanding_bytecode_interpreters/index.md",
-    "content/posts/understanding_bytecode_interpreters/stack_example.png",
-    "content/posts/github_actions_are_awesome/release.png",
-    "content/posts/github_actions_are_awesome/discord.png",
-    "content/posts/github_actions_are_awesome/fancy_button.png",
-    "content/posts/github_actions_are_awesome/index.md",
-    "content/posts/making_a_rendering_engine/index.md",
-    "content/posts/making_a_rendering_engine/cover_image.png",
-    "content/posts/render_chunk_of_voxels/index.md",
-    "content/posts/advice_on_games_architecture/index.md",
-    "content/posts/why_do_i_need_git/index.md",
-    "content/links/index.md",
-    "content/search/index.md",
-    "content/archives/index.md",
-    "content/posts/what_is_oop.md",
-    "content/posts/what_are_those_things_called_pointers.md",
-    "content/posts/explanation_of_python_callable.md",
-    "content/posts/understanding_tail_call_optimization.md",
-    "content/posts/making_an_authenticated_api.md",
-    "content/posts/function_calls_in_bytecode_interpreters.md"
+    "/themes/hugo-theme-stack"
   ]
 }
