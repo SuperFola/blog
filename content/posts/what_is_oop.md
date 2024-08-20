@@ -8,13 +8,13 @@ categories = ['eli5']
 
 **Why** did i write this article ? Object Oriented Programming is very useful, but also a wide subject, and in my engineering school, I found it was a bit tough to understand this concept.
 
-# A class describes an object
+## A class describes an object
 
-## ... but isn't the object itself.
+### ... but isn't the object itself.
 
 When you are writing what we call a `class` in OOP, it's basically an instruction manual to build an *object*. Let's think about a chair: the chair itself is the object - who sometimes says it's an *instance* of the class - while the manual written to help you build one would be the class.
 
-## A class also describes the behaviour of an object
+### A class also describes the behaviour of an object
 
 Now that you understand the most primitive difference between a *class* and an *object*, I have to add something to the definition of a *class*: it doesn't **only** describe the shape of an object, it also describes its behaviour. To explain this, I will take an animal: a duck. Its manual would be something like the following:
 
@@ -59,13 +59,14 @@ So a *class* is a combinaison of both of those things:
 
 Let's keep this manual in a corner of your brain, we'll need it later.
 
-# Some technical vocabulary
+## Some technical vocabulary
 
 We saw the manual, to build a duck, and what behaviour it should have. All of these belong to a single *class*:
 - all the parts of our duck described in the manual will have a corresponding *attribute* in our Duck *class*
 - it's behaviour will be translated into *methods* in the same *class* Duck
 
 So, with this new vocabulary, we now have this:
+
 ```
 class: Duck
     attributes:
@@ -92,9 +93,9 @@ class: Duck
 
 We have the definition of our *class* Duck now ! We can create as many *object*s Duck as we want, but you may have notice that they will all look the same. Indeed, we didn't add an attribute for the age of the duck, or its color, its size...
 
-# Extending our classes
+## Extending our classes
 
-## The concept of inheritance
+### The concept of inheritance
 
 We've seen that we can describe a duck with a class. Sometimes, writting those classes can take a long time since we need a lot of attributes and methods, and very often other people have already written those classes for us.
 

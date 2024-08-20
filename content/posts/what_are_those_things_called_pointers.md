@@ -8,18 +8,18 @@ categories = ['eli5']
 
 Why did I write this article ? In my engineering school, we have C++ lessons, and very often, students do not understand what a *pointer* is, and what are their use. I tried to write something as simple as possible to fix this issue, do not hesitate to tell me if there is anything missing/wrong/whatsoever !
 
-# What are those things called "pointers" ?
+## What are those things called "pointers" ?
 
 When programming in what we call "low level" programming language, you can sometimes meet what is called a *pointer*. In this post, we'll go through a bit of history and describe how a computer works before explaining what is this strange thing: "pointer".
 
-# How does a computer store variables ?
+## How does a computer store variables ?
 
 Under the hood, a computer has what we call RAM - or memory - to store variables. Basically, it's a small hard drive dedicated to store data represented in binary format. Everything in memory is stored as a sequence of 0 and 1, formatted in such a way your computer can understand it.  
 When creating a program, you can create variables of differents type, such as *number* (integers or floating point numbers), *string* (sequence of characters)... And they are all stored in memory as 0 and 1 !
 
 It means that, when you create a new variable of type *integer*, it will allocate space for it in memory (usually 4 bytes), in order to store a value, for example "10", in binary format.
 
-# A bit of history
+## A bit of history
 
 We covered how variables are stored in memory, let's go through a bit of history to understand why pointers were created.
 
@@ -29,7 +29,7 @@ Each variable declared in a program is created when the program starts, and the 
 
 And here appeared "dynamic memory management". Behind those ugly words, there is a pointer ! The goal of "dynamic memory management" (I'll write it *DMM* since it's a bit shorter) is to be able to allocate memory at *runtime*, eg for a variable, and destroy it when it's not needed anymore. We can now create a temporary variable at runtime and save memory !
 
-# How does *DMM* works ?
+## How does *DMM* works ?
 
 In pseudo-code, we could write this :
 

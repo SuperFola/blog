@@ -10,13 +10,13 @@ If you have some experience with Python, you must have already seen a `TypeError
 
 In this article we will try to demystify this kind of errors.
 
-# What is a callable?
+## What is a callable?
 
 A `callable` is anything that can be called, from a function, to a class constructor.
 
 For example, `len` is a callable because we can write `len(object)`.
 
-# Creating a callable
+## Creating a callable
 
 The easiest way is to write a function or a lambda:
 

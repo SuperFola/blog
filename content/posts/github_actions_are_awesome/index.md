@@ -11,20 +11,20 @@ All that without forgeting to increment the version number in our CMakeLists, an
 
 That's why I decided to make a "button-click-to-release" GitHub actions.
 
-# What are GitHub actions?
+## What are GitHub actions?
 
 They are steps (build, log, download, upload, whatever), chained in an environment (a container to be exact). Those steps are described in YAML files, under a magic folder `.github/workflows/` in your repository.
 
 This can be used to create continuous integration workflows, to ensure that your code can still build on many operating systems when you create a new pull request, it can be used to run a linter on your code... It can do a lot of things.
 
-# Pre-requisites
+## Pre-requisites
 
 For this "button-click-to-release" action, I needed
 - a changelog, following [this nomenclature](https://keepachangelog.com)
 - build artifacts from other workflows
 - (optional) a Discord webhook link
 
-## Build artifacts? What are they?
+### Build artifacts? What are they?
 
 This is a new thing introduced with Actions: the possibility to store files (zip, tar.gz, text files, whatever) on a specific workflow run. For example, your workflow is producing a binary (in our case, an executable `ark` and multiple static objects files), you can add a special step in your workflow to zip those files and attach them to the workflow run. By doing this, when visiting your actions runs history (under `Actions`), you can have a snapshot build per workflow run.
 
@@ -32,7 +32,7 @@ By doing this, we don't have to build our language on multiple OS ourselves, the
 
 *Note*: the build artifacts are available for at most 90 days (you can lower this duration if you want to)
 
-## Creating artifacts
+### Creating artifacts
 
 In our build workflows (linux-gcc, linux-clang, msvc for Windows), we added testing steps after building, to ensure everything works, and only if they succeeded, we create a build artifact. Otherwise we would waste space uploading a non-working version of the project!
 
@@ -53,7 +53,7 @@ The step is quite straightforward, we retrieve the wanted files, add them to a f
         path: artifact
 ```
 
-## Creating the workflow
+### Creating the workflow
 
 I created a `release.yml` workflow under `.github/workflows/`, with a `workflow_dispatch` field. This allows us to run the workflow manually *and* gives it parameters (eg. the version number, title, etc).
 
@@ -162,7 +162,7 @@ Finally, we attach our artifacts to the created release:
         ...
 ```
 
-# The output
+## The output
 
 Now, we just have to:
 - update the version in the CMakeLists
@@ -182,7 +182,7 @@ Finally, we get our release on GitHub:
 
 *yes the version displayed on the last screenshot doesn't match the one in the webhook as they were made separately*
 
-# Conclusion
+## Conclusion
 
 In a few lines of code, we can finally create releases in a near friction-less way, and I hope that it will help us to create more regular releases of our project!
 

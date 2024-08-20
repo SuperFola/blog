@@ -7,13 +7,13 @@ categories = ['gamedev']
 image = '/cover_image.png'
 +++
 
-*Nota Bene*: This serie of articles is mainly focused on my experience while making *Voksel*, a 3D game made in a Minecraft style, so I will only write about my opinion and how I solve the problems I met !
+*Nota Bene*: This serie of articles is mainly focused on my experience while making *Voksel*, a 3D game made in a Minecraft style, so I will only write about my opinion and how I solve the problems I met!
 
-A month ago, I got this strange idea after having taught myself on OpenGL : What if I made my own rendering engine? It could be funny, and I could learn a lot ! That's how I started making [Zavtrak](https://gitlab.com/SuperFola/Zavtrak). Few days after, another idea hit me: what if I made my own version of Minecraft using this engine ? So that's how my journey started, on a sunny day of September !
+A month ago, I got this strange idea after having taught myself on OpenGL: What if I made my own rendering engine? It could be funny, and I could learn a lot! That's how I started making [Zavtrak](https://gitlab.com/SuperFola/Zavtrak). Few days after, another idea hit me: what if I made my own version of Minecraft using this engine? So that's how my journey started, on a sunny day of September!
 
-I made a small ToDo to know where I was going :
+I made a small ToDo to know where I was going:
 
-* abstraction code for :
+* abstraction code for:
     * VAO, VBO, EBO
     * shaders
     * free fly camera
@@ -23,7 +23,7 @@ I made a small ToDo to know where I was going :
 
 A VAO acts an array storing vertex (a collection of data per 3D point) attribute pointers, used by OpenGL when given a VBO (vertex buffer object, storing vertices) to know if it looking at a position, a color, a texture coordinate... in a given vertex.
 
-An EBO (element buffer object) is an array storing indexes of vertices (stored in a given VBO) to "link" them :
+An EBO (element buffer object) is an array storing indexes of vertices (stored in a given VBO) to "link" them:
 
 ```python
 vertices = [
@@ -41,7 +41,7 @@ defines a right-angle triangle (when giving the data to OpenGL). An EBO avoids r
 
 A shader is a small program (written in [GLSL](https://en.wikipedia.org/wiki/OpenGL_Shading_Language)) to tell OpenGL how to draw a single pixel, given a vertex.
 
-My idea was to have something like this :
+My idea was to have something like this:
 
 ```cpp
 auto shader = zk::Shader("shader.vert", "shader.frag");
@@ -66,7 +66,7 @@ shader.use();
 
 ```
 
-which is basically the same thing as [this](https://learnopengl.com/code_viewer_gh.php?code=src/1.getting_started/2.1.hello_triangle/hello_triangle.cpp) (without the window configuration and all, which you can find [here](https://gitlab.com/SuperFola/Zavtrak/blob/master/examples/hello_triangle.cpp)), a lot shorter and easier to understand, uh ?
+which is basically the same thing as [this](https://learnopengl.com/code_viewer_gh.php?code=src/1.getting_started/2.1.hello_triangle/hello_triangle.cpp) (without the window configuration and all, which you can find [here](https://gitlab.com/SuperFola/Zavtrak/blob/master/examples/hello_triangle.cpp)), a lot shorter and easier to understand, uh?
 
 The biggest problem I have now is that we must configure everything ourself (setting vertex attributes, and creating a VAO and a VBO, binding them...) (and I still didn't fix it, since I wanted to focus on the game and rewrite the engine later).
 
@@ -74,7 +74,7 @@ After writing a lot of [redundant code](https://gitlab.com/SuperFola/Zavtrak/blo
 
 ![GIF: everything is fine](https://media.giphy.com/media/z9AUvhAEiXOqA/giphy.gif)
 
-This concludes the first article of this serie, which is more a "explain-me-the-plot" article than a "the-problems-of-writing-a-rendering-engine", but if you want to know my pros and cons of making your own, here they are :
+This concludes the first article of this serie, which is more a "explain-me-the-plot" article than a "the-problems-of-writing-a-rendering-engine", but if you want to know my pros and cons of making your own, here they are:
 
 Pros
 

@@ -17,7 +17,7 @@ Version control is a bunch of things to solve the problem stated above:
 
 And `git` is a tool to do all those things! Awesome, isn't it?
 
-# Glossary
+## Glossary
 
 **commit**: we can see it as a list of changes made to a project ; for example a line in this index would be: `file which had been modified`, `lines of the file changed`, `new content for each line`
 
@@ -31,7 +31,7 @@ And `git` is a tool to do all those things! Awesome, isn't it?
 
 **pull request**: after having created your own branch or after having forked a repository, you made some changes to the project, and ask the maintainer to merge your changes with their changes
 
-# How do I use `git`?
+## How do I use `git`?
 
 *Nota bene*: this post will only cover the basic usage of `git` through the command line
 
@@ -40,7 +40,7 @@ And `git` is a tool to do all those things! Awesome, isn't it?
 * basic usage of a terminal (moving between folders, executing commands)
 * `git` is installed (if not: https://git-scm.com/)
 
-## Initializing a repository on your computer
+### Initializing a repository on your computer
 
 First thing we want to do is to create a repository on your computer to register your changes to your project through commits.
 
@@ -61,7 +61,7 @@ my-private-key.priv
 *.o
 ```
 
-## Creating your first commit
+### Creating your first commit
 
 To create a commit, we need to add files to it, since a commit is collection of changes made to file, it needs to know which files to look at.
 
@@ -87,7 +87,7 @@ git commit -m "a nice commit message here"
 
 The `-m` is for `message`.
 
-## Checking which files were updated since last commit
+### Checking which files were updated since last commit
 
 It's useful to know which files have been modified when you have been working for hours on a problem, to know which files to commit.
 
@@ -125,7 +125,7 @@ giving a better output:
  M CHANGELOG.md
 ```
 
-## Listing your last commits
+### Listing your last commits
 
 To list commits with their message and date, we use
 
@@ -175,7 +175,7 @@ git log --all --decorate --oneline --graph
 
 ![git log with pretty branches graph output](/git_log.png)
 
-## Pushing your local repository to a remote one
+### Pushing your local repository to a remote one
 
 Once we have made a few commits, we would like to host them on a repository, such as on GitHub or GitLab. You will need to have an account on one of those website, and create a repository on your account.
 
@@ -195,7 +195,7 @@ git remote -u origin master
 
 The `-u` stands for `set upstream`, we are pushing our commits to the remote `origin`, and registering origin as the upstream for our branch `master`.
 
-## Creating a new version of a project
+### Creating a new version of a project
 
 Don't start over! You can easily reuse your existing code by creating a *branch*.
 
@@ -213,7 +213,7 @@ The branch name can not have any whitespace in it. This command will create the 
 git checkout my_branch
 ```
 
-# Understanding GitHub/GitLab vocabulary
+## Understanding GitHub/GitLab vocabulary
 
 An *issue* is a discussion thread about a problem/idea/question an user has with your code.
 

@@ -6,21 +6,21 @@ tags = ['arkscript']
 categories = ['pldev']
 +++
 
-# Why ?
+## Why ?
 - manipulate code
 - enhance the syntax
 
-# What should it do?
+## What should it do?
 - evaluate code
 - treat data as code and code as data -> homoiconicity
 
-# Does it work?
+## Does it work?
 
-# Graphs of the code
+## Graphs of the code
 
-# Links to the code?
+## Links to the code?
 
-# Problems I had while making said system
+## Problems I had while making said system
 - recursive evaluation
 - recursive unification
 

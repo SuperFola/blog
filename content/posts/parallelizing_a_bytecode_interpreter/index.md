@@ -11,7 +11,7 @@ image = '/current_model.png'
 
 *Note*: I will be using *bytecode interpreter* and *virtual machine* (sometimes written VM) interchangeably throughout this article.
 
-# Introduction
+## Introduction
 
 There are a lot of languages out there, and new ones are born everyday. We can often divide them into 4 categories:
 - interpreted from a tree (often the Abstract Syntax Tree itself)
@@ -21,7 +21,7 @@ There are a lot of languages out there, and new ones are born everyday. We can o
 
 The first one will lack performances, the 3rd one will have no problem on that side (given a good Intermediate Representation optimizer), the 2nd one is limited by the performances of the target language, and the 4th one is limited by its virtual machine.
 
-## Why targeting a VM?
+### Why targeting a VM?
 
 It has many advantages, such as:
 - compile once (to bytecode), run everywhere (as long as you made your VM available on the targeted platforms)
@@ -29,7 +29,7 @@ It has many advantages, such as:
 
 To add some personnal bonus points, I am often working with huge codebases in C++, thus a tiny modification often requires to rebuild nearly everything, not great when you want to make small adjustments to your NPCs movements or your animation controller. By embedding a VM to run an homebrew bytecode, I just have to write some bytecode to move my NPCs or play animations, bind the corresponding C++ functions to the VM, and voilà. Now you can modify the bytecode (often stored as a file) and avoid recompiling everything.
 
-# Baseline of a bytecode interpreter
+## Baseline of a bytecode interpreter
 
 A bytecode interpreter (or virtual machine) can be stack based, register based, or both, each having their own pros and cons. I'm not going to discuss over which one is better, that would take a whole article. 
 
@@ -37,7 +37,7 @@ The main difference is that in a stack based VM, when doing something like `1 + 
 
 *Nota bene*: this describes possible implementations, some may work in different ways, but those are the main ideas
 
-### Example of a stack based VM
+#### Example of a stack based VM
 
 ![Example of a stack based VM](/stack_based_vm.png)
 Source: [craftinginterpreters.com](https://craftinginterpreters.com/a-virtual-machine.html)
@@ -45,8 +45,8 @@ Source: [craftinginterpreters.com](https://craftinginterpreters.com/a-virtual-ma
 ------
 
 In the rest of this article, we will only be considering stack based bytecode interpreters.
- 
-# Synchronization problems
+
+## Synchronization problems
 
 A bytecode interpreter is intrinsically sequential, because of its stack:
 * first we push values to it
@@ -81,7 +81,7 @@ This is quite restrictive, because it means that we will only be able to run oth
 
 ![Execution of the current model](/current_model.png)
 
-# Parallelism, not concurrency
+## Parallelism, not concurrency
 
 As stated before, concurrency problems can arise from having a single stack and multiple threads. One could say that a solution would be to:
 - interrupt a thread,
@@ -111,14 +111,14 @@ total_time =
 `a` being the number of times we need to context-switch.
 
 Our goal being true parallelism and exploitation of more than a single core processing power, we can't use this approach.
- 
-# Multiple stacks design
+
+## Multiple stacks design
 
 The idea is described in "Running Parallel Bytecode Interpreters on Heterogeneous Hardware." (Juan Fumero, Athanasios Stratikopoulos, and Christos Kotselidis. 2020), where they implement a minimal parallel JVM clone, to run with OpenCL. Their project here takes advantage of the parallelism at *compile time* by introducing instructions such as `PARALLEL_GLOAD_INDEXED <idx>` to tell their VM which heap they should write to/read from. This is better than what we described above, because by indicating which heap is accessed, you can more easily get rid of the concurrency problems at compile time (instead of at runtime, while some guards could still be implemented).
 
 This is quite complicated work for a project like [ArkScript](https://github.com/ArkScript-lang/Ark), thus I am going with a simpler approach, without needing to update the compiler, making this a performance enhancement integrable in many other bytecode interpreters.
 
-## Runtime Information structures
+### Runtime Information structures
 
 We introduce `n + 1` structures for *RunTime Information* in the VM, to keep track of
 * the stack
@@ -135,7 +135,7 @@ This implementation doesn't prevent us from calling other functions in threads, 
 
 We will have to implement parallel builtins, such as `parallel/for <list> <function>`, which would divide the work on the list evenly accross the available cores, given a maximum of `n` cores at the same time since we have a fixed number of "RTI structures", thus a fixed number of stacks to operate on.
 
-### Choosing the right amount of structures (and stacks)
+#### Choosing the right amount of structures (and stacks)
 
 The choice of the value of `n` isn't straightforward and depends on the type of hardware we're aiming for. Since our language is only released on 64bits platforms, which are quite modern, we could chose a value of `n` matching the current market value. The maximum number of cores per CPU has drastically increased for a few decades now:
 
@@ -145,13 +145,13 @@ From [Design for Manycore Systems](http://www.drdobbs.com/go-parallel/article/sh
 and it's pretty common to come accross 4-cores or 8-cores CPU, thus it would be enough to have `n=4`, so that we don't waste too much space with unused "RTI structures", and have enough to use more CPU processing power. Some may argue that 64-bits dual cores processor exists and I acknowledge this fact, but with 2 "RTI structures" used out of 4, we won't waste that much space since the stacks of each structure is 8 to 32 times smaller compared to the main stack (about 8192 values in our implementation).  
 Of course this discussion on the choice of `n` is important *only if the allocation of the structures is static*, which will most likely be the case in our implementation for performance reasons, but you can still go with a dynamic approach and forget about that.
 
-## Handling variables out of the thread scope
+### Handling variables out of the thread scope
 
 It is still unclear if it is the VM role to tell the user that they can't write to a variable outside a thread scope, or if it's up to the user to guarantee this: it will depend on the type of the language implementing this technique (high or low level) and on the presence (or lack of) synchronization procedures (such as *semaphore* and *mutex*).
 
 However, [ArkScript](https://github.com/ArkScript-lang/Ark) being an high level language, this would most likely be a runtime check (or even better, if possible, a compile time check) to help the user catch such problems. This could result in a single check on the current "RTI structure" when executing the instruction `STORE value symbol`: is it a symbol defined in the current structure or in the main one? If it's the last one, then the thread is trying to write a variable which doesn't belong to it.
 
-# Conclusion
+## Conclusion
 
 This article was trying to bring details about how parallelism could be introduced to a bytecode interpreter, even though it's not perfect since we need to halt the main thread. However for our project, it doesn't seem like a big deal, since it would still help with speeding up the language processing power on many algorithms, as well as allow us to avoid adding synchronization procedures such as `await`.
 

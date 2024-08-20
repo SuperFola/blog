@@ -8,13 +8,13 @@ categories = ['pldev']
 
 [In the previous article]({{< ref "/posts/understanding_bytecode_interpreters" >}} "Understanding bytecode interpreters"), we discussed the global idea behind a bytecode interpreter, and explained the concept of a stack and how the instructions could be represented. Now we will dive a bit more in *tables* and *call stack*.
 
-# Tables?
+## Tables?
 
 As we saw in the previous article, we need a way to keep track of symbols' identifiers, to refer to them using a fixed size number instead of a variable size string.
 
 Now, one could wonder why are we keeping the variables' names, instead of using only the identifiers. The two possibilities would work, however, our first approach (keeping the names) will come in handy when debugging our programs: we will be able to give names to the numbers.
 
-## Values' table
+### Values table
 
 We introduced a table to keep track of the variables' names, so that we could refer to variables by using a single fixed length number in our bytecode. The same should apply to values if we want to be able to handle more than unsigned numbers, currently used to refer to variables' identifiers. Remember our bytecode example:
 
@@ -59,7 +59,7 @@ Notice that even if a value was repeated in the program, we didn't duplicate it 
 
 *Nota bene:* we could have the same discussion we had with `print`, about special values such as `true` and `false`, and give them fixed identifiers, like `0` and `1`, and make it so that every value identifier starts at 2. We won't do that here.
 
-# Keeping track of variables
+## Keeping track of variables
 
 Now that we have a way to identify variables and load them, we need something to store them. There are multiple ways to achieve that, for example storing the variables on the stack (so they have a fixed offset on the stack and we can read/write them in O(1)). We could also add an extra structure, for example a list of lists, to keep a LIFO stack of scopes. The latter is what we're going to do here, since it's easier, and the first idea has drawbacks:
 * to read a variable from a previous scope (useful in recursive functions), we need to crawl back to the top of the stack each time, a stack which can get pretty heavy on functions like Fibonacci function (recursive version)
@@ -90,7 +90,7 @@ Then our virtual machine will keep a `scopes: List[Scope] = [Scope()]` (with a d
 
 Our `LOAD_SYM` instruction will have to iterate in reverse order over the list of scopes, to read from the most recent scope to the least recent one, and our `STORE` instruction will just have to insert a new variable in the latest scope, i.e. the one on top of the scopes' stack.
 
-# Calling a function
+## Calling a function
 
 Now, we need a way to represent our functions easily in our bytecode.
 
@@ -104,7 +104,7 @@ This assumes that we have to keep track of the caller bytecode address, to be ab
 
 The latter is what we will go with in these articles. Since our stack stores values for our language, those values (numbers, strings, booleans...) must have a type. What if we added another type specific to bytecode address? This way, we can easily clear the stack of junk values when we met a `RET` and retrieve the latest bytecode address to go back to!
 
-## Bytecode pages
+### Bytecode pages
 
 We will divide our bytecode into pages, since a bytecode is a serie of instructions, or phrases, like a book. Some people also call that *bytecode chunks*. A page = a function, which the 0th one being for the global scope. This will ease function representation: we just need to know to which *page* we need to jump to.
 
@@ -143,7 +143,7 @@ The function:
 	RET
 ```
 
-## Recursivity?
+### Recursivity?
 
 Now you may wonder how we can implement recursivity. We already have what's needed to call a single function, but can it call itself?
 

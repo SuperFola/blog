@@ -11,7 +11,7 @@ Have you ever wondered how Java or Python work? What is a "virtual machine"? If 
 
 If everything goes according to the plan, this will be part of a serie of articles on understanding and making bytecode interpreters (we will even see a bit of how you could compile a language to a bytecode).
 
-# Why should I care about VMs?
+## Why should I care about VMs?
 
 A virtual machine enables high portability: compile once, run everywhere.
 
@@ -19,7 +19,7 @@ You can get performances nearly equal to native programs ones, compared to tree-
 
 Also, it's a lot of fun to make one, because we will be creating our own instructions set (which can be seen as an assembly language) and creating our own "virtual CPU" to run our instructions set. In a way, making a VM is the same as making a small specialized virtual computer!
 
-# Basic concepts
+## Basic concepts
 
 A virtual machine (or bytecode interpreter) works on a linear instruction's flow. A "program" being linear gives us way better performances compared to non-linear one, because we don't have to fetch data 5KiB after the current one, then 2MiB before... the CPU cache will love it, as it will be more predictible.
 
@@ -27,7 +27,7 @@ Also, with such type of programs, we have only two things we can do:
 * execute current instruction, jump to the next one ;
 * jump to an arbitrary position in the bytecode (useful for loops and conditions)
 
-## Instructions
+### Instructions
 
 In an high-level language, an instruction would be something like `if (condition) then ...`. Way too verbose for a bytecode, we want to keep it small. In a bytecode, we would have something like `PUSH 5; PUSH 4; EQ; POP_JUMP_IF_TRUE 15` (compare 4 and 5, jump to address 15 if the comparison was truthy), with each uppercase letters word being an instruction.
 
@@ -54,7 +54,7 @@ Let's break this down:
 
 Now you may wonder how `EQ` works, and why we have `PUSH` and `POP_...` instructions. For this short example I assumed we were using a **stack based virtual machine**. Basically, we have a *LIFO stack* (last in, first out) on which we put values, and instructions can use this stack to retrieve values (pop them off), do stuff with them, and push back (or not) a result to the stack.
 
-## The stack
+### The stack
 
 As specified before, it is a special finite space on which we put our values to operate on them later, for example:
 * adding two numbers
@@ -70,7 +70,7 @@ To operate on this stack with more freedom, we can introduce special instruction
 
 Source: [craftinginterpreters.com](https://craftinginterpreters.com/a-virtual-machine.html)
 
-## Registers?
+### Registers?
 
 Every CPU has a finite set of registers, and since our VM is inspired from the architecture of computers, could we (or should we) have registers in our implementation? What would be the benefits?
 
@@ -84,7 +84,7 @@ Generating code for a *stack based* VM is easier than for a *register based* one
 
 In this serie, we will only target *stack based* VM because they are easier to use, and while we aim for performance, top performance / near native performances aren't worth a shot here. Near native performances would take us years to achieve, and a lot of micro benchmarks and micro optimizations (that's still doable of course, but not our goal here).
 
-## From language to bytecode
+### From language to bytecode
 
 Let's take this small snippet from an imaginary language:
 

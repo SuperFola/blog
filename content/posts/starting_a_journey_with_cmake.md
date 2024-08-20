@@ -9,13 +9,13 @@ Very often, I have to help friends and colleagues to build a C or C++ project, a
 
 This blog post will try to provide basic CMake knowledge and how to produce a nice and working `CMakeLists.txt`.
 
-# Introduction: what's CMake? Why should I use it?
+## Introduction: what's CMake? Why should I use it?
 
 CMake is called a project generator. It can generate `Makefile`s, Visual Studio projects, ninja files... In a nutshell it generates files used to compile a project.
 
 It's awesome in a way because you only have a single `CMakeLists.txt` for your project, and then run `cmake` on this file to generate a project for the current platform. It means that we don't have to bother anymore with creating and maintaining a lot of build files to compile your code on Linux, Windows, MacOS and many more operating systems.
 
-# Compiling some files into an executable/library
+## Compiling some files into an executable/library
 
 Let's go through a basic CMakeLists.txt:
 
@@ -79,7 +79,7 @@ Basically what it does is:
 1. link libraries to our project (eg. opengl, X11, fs...)
 1. set the project properties to request at least C++ 17
 
-## Launching CMake and compiling
+### Launching CMake and compiling
 
 Now that we have a nice CMakeLists.txt, we need to tell CMake to use it:
 
@@ -105,7 +105,8 @@ The `--build` option tells CMake where its generated files are, and the `--confi
 
 With multi-target compilers, the output files will be under `build/<config>/<project name>`, with single-target compilers like G++, under `build/<project name>`.
 
-# Including a project B in a project A
+## Including a project B in a project A
+
 *each with its own CMakeLists.txt*
 
 When dealing with a large codebase, we often need to use external dependencies which already come with their own CMakeLists.txt. The goal is to make use of this power in a very lines to avoid rewriting everything.
@@ -120,7 +121,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC NiceCmakeProjectLib)
 
 And we're done. Here what happens is that CMake will register the subdirectory as a separate CMake project (I assumed this project was generating a lib by using `add_library` instead of `add_executable`, name `NiceCmakeProjectLib`).
 
-# Conclusion
+## Conclusion
 
 A few tips before leaving:
 * when adding new files to a project, you need to regenerate the CMake files by using the command `cmake -Bbuild`. The previous settings sent by using `-D<name>=<value>` are kept and re-used

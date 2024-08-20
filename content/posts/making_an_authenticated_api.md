@@ -13,7 +13,7 @@ This week, I had to design an API with protected routes, which needed the user t
 
 ----
 
-# Making a simple server
+## Making a simple server
 
 Let's create a small server for this demonstration:
 
@@ -36,9 +36,10 @@ app.listen(port)
 
 We have two routes here, one unprotected `/` and one which we want to protect. If we only had to use this route through the browser, the answer would be easy: just use `express-session` and a cookie parser, to send a cookie to the user, and retrieve it to check if they are logged in or not.
 
-# Basic protection of a route
+## Basic protection of a route
 
 Said idea would look as follows
+
 ```javascript
 // ...
 const session = require('express-session')
@@ -65,6 +66,7 @@ app.get('/protected', (req, res, next) => {
 Easy and quick to use, just set a session and check if some data is present (here we are checking against `userID`).
 
 We can even make it simpler to use by making a middleware:
+
 ```javascript
 // ...
 
@@ -87,11 +89,12 @@ But there is more to it, how would you use those cookies from an **API**?
 * Just add a `Cookie` header with the cookie value? Doesn't work, and even if it does, it's quite ugly
 * Send the userID in our requests? The API could be bruteforced until the attacker finds a valid user identifier they can use
 
-# Making the API callable from outside the browser
+## Making the API callable from outside the browser
 
 The idea I went with is using the `Authorization` header. It can take multiple values, but the one I'm interested in is `Authorization: Basic <base64 token>`. Once the base64 token is decoded, we will have something like `userID:hash`.
 
 We can get those information like this in our middleware:
+
 ```javascript
 const authMiddleware = async (req, _, next) => {
   if (req.headers.authorization) {
@@ -110,7 +113,7 @@ const authMiddleware = async (req, _, next) => {
 }
 ```
 
-# Security concerns
+## Security concerns
 
 Now this API could work in a browser with cookies, and with curl (if we don't forget to send the authorization header). This sounds too easy, right?
 
@@ -126,6 +129,7 @@ To accomplish this, I could have just send `userID:hash(now.timestamp + 3600)`. 
 We can send something like `userID:hash(creation_timestamp + hash(secret + password))`. Good luck making a hash table to reverse this (note: the secret is server side, unknown by the client, to make the password hash robust against hash tables attacks). Then we only have to store something like `"tokens": [{"expireAt": Date.now(), "value": token}]` in our user database, to be able to check if we got a valid token.
 
 Our `checkToken` function can look like this:
+
 ```javascript
 const checkToken = async (user, token) => {
   const db = getDatabase("users")
@@ -142,7 +146,7 @@ const checkToken = async (user, token) => {
 }
 ```
 
-# Conclusion
+## Conclusion
 
 Avoid sending raw credentials in your authorization header, as they could be stolen by an attacker. Also use time based tokens, to automatically remove tokens from users' accounts when they are expired, setting the security level of your application a bit higher. You could even delete the tokens when they have been used more than X times, it's up to you.
 
