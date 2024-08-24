@@ -1,6 +1,11 @@
 # Markdown renderer configuration
-[goldmark.renderer]
-unsafe = true
+[goldmark]
+  [goldmark.renderer]
+  unsafe = true
+  [goldmark.parser]
+    [goldmark.parser.attribute]
+    block = true
+    title = true
 
 [tableOfContents]
 endLevel = 4

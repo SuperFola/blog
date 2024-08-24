@@ -1,0 +1,9 @@
+<blockquote {{ with .Attributes.cite }}cite="{{ . }}"{{ end }}>
+  {{ .Text | safeHTML }}
+    <a href="{{ with .Attributes.cite }}{{ . }}{{ end }}" target="_blank">
+      <cite class="blockquote-caption">
+        {{ .Attributes.caption | safeHTML }}
+      </cite>
+    </a>
+</blockquote>
+
