@@ -37,7 +37,7 @@ The main difference is that in a stack based VM, when doing something like `1 + 
 
 *Nota bene*: this describes possible implementations, some may work in different ways, but those are the main ideas
 
-#### Example of a stack based VM
+### Example of a stack based VM
 
 ![Example of a stack based VM](/stack_based_vm.png)
 Source: [craftinginterpreters.com](https://craftinginterpreters.com/a-virtual-machine.html)
@@ -135,7 +135,7 @@ This implementation doesn't prevent us from calling other functions in threads, 
 
 We will have to implement parallel builtins, such as `parallel/for <list> <function>`, which would divide the work on the list evenly accross the available cores, given a maximum of `n` cores at the same time since we have a fixed number of "RTI structures", thus a fixed number of stacks to operate on.
 
-#### Choosing the right amount of structures (and stacks)
+### Choosing the right amount of structures (and stacks)
 
 The choice of the value of `n` isn't straightforward and depends on the type of hardware we're aiming for. Since our language is only released on 64bits platforms, which are quite modern, we could chose a value of `n` matching the current market value. The maximum number of cores per CPU has drastically increased for a few decades now:
 
