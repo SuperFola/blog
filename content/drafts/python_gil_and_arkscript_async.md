@@ -1,7 +1,6 @@
 +++
 title = "Comparing Python's GIL and ArkScript async/await"
 date = 2024-08-24T16:52:00+02:00
-draft = true
 tags = ['python', 'arkscript']
 categories = ['pldev']
 +++
