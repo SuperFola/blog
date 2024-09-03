@@ -5,7 +5,7 @@ tags = ['python', 'arkscript']
 categories = ['pldev']
 +++
 
-Python has received a lot of attention lately. The 3.13 release, planned for October this year, will begin the huge work of [removing the GIL](https://peps.python.org/pep-0703/). A [prerelease](https://www.python.org/downloads/release/python-3130rc1/) is already out for the curious users who want to try a (nearly) GIL-less Python.
+Python has received a lot of attention lately. The 3.13 release, planned for October this year, will begin the huge work of [removing the GIL](https://peps.python.org/pep-0703/). A [prerelease](https://www.python.org/downloads/release/python-3130rc1/) is already out for curious users who want to try a (nearly) GIL-less Python.
 
 All this hype made me dig in my own language, [ArkScript](https://arkscript-lang.dev), as I had a Global VM Lock, too, in the past (added in version 3.0.12, in 2020, removed in 3.1.3 in 2022), to compare things and force me to dig deeper into the how and why of the Python GIL.
 
