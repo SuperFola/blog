@@ -205,13 +205,39 @@ This means that we can create a new version of a project by creating a new branc
 
 ```
 git checkout -b the_name_of_my_branch
+# or using switch:
+git switch -c the_name_of_my_branch
 ```
 
 The branch name can not have any whitespace in it. This command will create the new branch (the `-b` stands for *create a new branch*), and automatically move you to this branch. If you want to go back to another branch to retrieve code, you can do:
 
 ```
 git checkout my_branch
+# with switch:
+git switch my_branch
 ```
+
+Using `git switch` you can even jump between you current and last branch:
+
+```
+# current branch: feature
+
+git switch master
+# -> current branch: master
+
+git switch -
+# -> current branch: feature
+```
+
+### Updating your main branch with code added on another branch
+
+Let's say you have a `master` *branch* for your project, where the stable and tested code lies. You might create a `feature/login` *branch* to develop the login / logout feature, test it on its own, before adding this code in your `master` *branch*. As said earlier, this process is called merging.
+
+There are multiple ways to merge a *branch* into another:
+1. creating a *pull request* (on GitHub) or a *merge request* (on GitLab) between `feature/login` and `master`
+2. using the command line:
+    1. `git switch master ; git merge feature/login`: this will *merge* the *commits* from `feature/login` into `master`, creating a *merge commit* to indicate a merge occurred
+    2. `git switch master ; git rebase feature/login`: this will *rebase* the *commits* from `feature/login` into `master`, reapplying them one after another (the *commit hashes* will change due to this, that's not a problem at all). You might get conflicts, then you will have to solve them and edit the commits as they come to solve the conflicts. No *merge commit* will be created
 
 ## Understanding GitHub/GitLab vocabulary
 
