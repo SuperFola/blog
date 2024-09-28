@@ -3,6 +3,7 @@ title = 'Find bugs by fuzzing your code'
 date = 2022-11-06T23:02:10+02:00
 draft = false
 tags = ['fuzzing', 'tests', 'cpp', 'automation']
+image = '/fuzzer.png'
 +++
 
 If you have ever worked on a large scale project, you know that finding and tracking bugs can be very tedious and lengthy.
