@@ -131,8 +131,18 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "a5e3d6546c6bfaf1",
+  "active": "89c1ece1b0c67adb",
   "lastOpenFiles": [
+    "/content/posts/usb_c_rambling/usb-connector-types.jpg",
+    "/content/posts/usb_c_rambling/index.md",
+    "/content/posts/usb_c_rambling/USB_Type-C_plug_pinout.png",
+    "/content/posts/usb_c_rambling/USB_2022_September_naming_scheme.png",
+    "/content/posts/usb_c_rambling/USB-C_chart.jpg",
+    "/content/drafts/implementing_an_intermediate_representation.md",
+    "/content/drafts/arkscript_update_december_2024/index.md",
+    "/themes/hugo-theme-stack",
+    "/content/posts/usb_c_rambling",
+    "/content/drafts/arkscript_update_december_2024",
     "content/drafts/code_formatter_for_arkscript.md",
     "content/drafts/implementing_an_intermediate_representation.md",
     "content/posts/arkscript_presentation.md",
@@ -152,11 +162,8 @@
     "content/posts/arkscript_update_september_2024/unittests-report.png",
     "content/posts/arkscript_update_september_2024",
     "content/posts/arkscript_update_november_2022/failure-testing.png",
-    "content/posts/arkscript_update_june_2024/std-testing.png",
-    "content/posts/arkscript_update_june_2024/arkscript-notion.png",
     "content/posts/arkscript_update_june_2024",
     "content/categories/arkscript/_index.md",
-    "content/categories/arkscript/banner.png",
     "content/categories/arkscript",
     "content/posts/arkscript_update_june_2024/index.md",
     "content/posts/arkscript_update_july_2020.md",
@@ -170,14 +177,7 @@
     "/content/posts/arkscript_update_july_2021.md",
     "/content/posts/arkscript_update_july_2020.md",
     "/content/posts/arkscript_update_december_2021.md",
-    "/content/posts/arkscript_presentation.md",
-    "/content/categories/arkscript/_index.md",
-    "/themes/hugo-theme-stack",
     "/content/posts/arkscript_update_september_2024",
-    "/content/posts/arkscript_update_november_2022",
-    "/content/posts/arkscript_update_june_2024",
-    "/content/posts/arkscript_update_july_2022",
-    "content/posts/code_formatter_for_arkscript.md",
-    "content/posts/shortcircuiting_in_bytecode_interpreter.md"
+    "/content/posts/arkscript_update_november_2022"
   ]
 }
