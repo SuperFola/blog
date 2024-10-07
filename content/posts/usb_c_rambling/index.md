@@ -1,5 +1,5 @@
 +++
-title = 'Comparing USB C norms'
+title = 'Rambling about USB-C'
 date = 2024-10-07T19:50:00+02:00
 tags = ['hardware']
 categories = []
