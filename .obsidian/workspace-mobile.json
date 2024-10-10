@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "content/drafts/implementing_an_intermediate_representation.md",
-                "mode": "source",
+                "mode": "preview",
                 "source": false
               }
             }
@@ -131,16 +131,16 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "89c1ece1b0c67adb",
+  "active": "a5e3d6546c6bfaf1",
   "lastOpenFiles": [
+    "/content/drafts/implementing_an_intermediate_representation.md",
+    "/content/drafts/arkscript_update_december_2024/index.md",
+    "/themes/hugo-theme-stack",
     "/content/posts/usb_c_rambling/usb-connector-types.jpg",
     "/content/posts/usb_c_rambling/index.md",
     "/content/posts/usb_c_rambling/USB_Type-C_plug_pinout.png",
     "/content/posts/usb_c_rambling/USB_2022_September_naming_scheme.png",
     "/content/posts/usb_c_rambling/USB-C_chart.jpg",
-    "/content/drafts/implementing_an_intermediate_representation.md",
-    "/content/drafts/arkscript_update_december_2024/index.md",
-    "/themes/hugo-theme-stack",
     "/content/posts/usb_c_rambling",
     "/content/drafts/arkscript_update_december_2024",
     "content/drafts/code_formatter_for_arkscript.md",
@@ -161,7 +161,6 @@
     "content/posts/arkscript_update_september_2024/notion-tasks.png",
     "content/posts/arkscript_update_september_2024/unittests-report.png",
     "content/posts/arkscript_update_september_2024",
-    "content/posts/arkscript_update_november_2022/failure-testing.png",
     "content/posts/arkscript_update_june_2024",
     "content/categories/arkscript/_index.md",
     "content/categories/arkscript",
