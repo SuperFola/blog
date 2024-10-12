@@ -250,14 +250,16 @@ Who would have thought that avoiding a serie of `LOAD_CONST`, `STORE` and using 
 Applying this pattern to increment (`LOAD_SYMBOL a`, `LOAD_CONST 1`, `ADD` becomes `INCREMENT a`), decrement, and store the head or tail of a list in a variable helps, tremendously according to the benchmarks:
 
 ```
-                          |           | 0-684ea758   | 4-ad889963          | 5-ee9ff764
---------------------------+-----------+--------------+---------------------+---------------------
- quicksort                | real_time | 0.152787ms   | -0.011 (-7.4961%)   | -0.002 (-1.5518%)
-                          | cpu_time  | 0.152334ms   | -0.011 (-7.4757%)   | -0.002 (-1.3825%)
- ackermann/iterations:50  | real_time | 81.2917ms    | -14.163 (-17.4218%) | -21.385 (-26.3065%)
-                          | cpu_time  | 80.9612ms    | -14.116 (-17.4358%) | -21.132 (-26.1011%)
- fibonacci/iterations:100 | real_time | 7.51618ms    | -1.483 (-19.7270%)  | -1.244 (-16.5506%)
-                          | cpu_time  | 7.4984ms     | -1.484 (-19.7880%)  | -1.233 (-16.4476%)
- man_or_boy               | real_time | 0.015211ms   | -0.000 (-1.4010%)   | 0.000 (0.8264%)
-                          | cpu_time  | 0.0151691ms  | -0.000 (-1.7134%)   | 0.000 (1.0277%)
+                          |           | 0-684ea758   | 5-ee9ff764
+--------------------------+-----------+--------------+---------------------
+ quicksort                | real_time | 0.152787ms   | -0.002 (-1.5518%)
+                          | cpu_time  | 0.152334ms   | -0.002 (-1.3825%)
+ ackermann/iterations:50  | real_time | 81.2917ms    | -21.385 (-26.3065%)
+                          | cpu_time  | 80.9612ms    | -21.132 (-26.1011%)
+ fibonacci/iterations:100 | real_time | 7.51618ms    | -1.244 (-16.5506%)
+                          | cpu_time  | 7.4984ms     | -1.233 (-16.4476%)
 ```
+
+The first column, `0-684ea758` is our reference benchmark (based on ArkScript commit `684ea758`), and the second one, `5-ee9ff764`, is the result of implementing our IR and IR optimizer. Quite the improvement!
+
+// todo add intermediate benchmark with computed goto and no IR
