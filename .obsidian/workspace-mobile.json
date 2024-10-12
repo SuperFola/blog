@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "content/drafts/implementing_an_intermediate_representation.md",
-                "mode": "preview",
+                "mode": "source",
                 "source": false
               }
             }
@@ -133,6 +133,8 @@
   },
   "active": "a5e3d6546c6bfaf1",
   "lastOpenFiles": [
+    "content/posts/npm_fail2ban_config.md",
+    "/content/posts/npm_fail2ban_config.md",
     "/content/drafts/implementing_an_intermediate_representation.md",
     "/content/drafts/arkscript_update_december_2024/index.md",
     "/themes/hugo-theme-stack",
@@ -175,7 +177,6 @@
     "/content/posts/arkscript_update_july_2022/index.md",
     "/content/posts/arkscript_update_july_2021.md",
     "/content/posts/arkscript_update_july_2020.md",
-    "/content/posts/arkscript_update_december_2021.md",
     "/content/posts/arkscript_update_september_2024",
     "/content/posts/arkscript_update_november_2022"
   ]
