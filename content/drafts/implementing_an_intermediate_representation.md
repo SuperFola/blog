@@ -55,8 +55,190 @@ However I didn't really like this idea, it felt like reinventing the wheel, anot
 
 This time, we will use a structure very similar if not identical to the bytecode, and get rid of all the `JUMP` instructions. Taking inspiration from assembly, they will get replaced by **labels** and **gotos** in our IR! This way we can add and remove as many instructions as we want, as long as we don't update a **label** we can still compute its address later and compile our **gotos** to absolute jumps without any issues.
 
+This is also the easiest solution, as it does not require me to entirely rewrite the compiler: I just have to add a wrapper for the `Instruction`, that gets compiled to bytecode.
 
-1. Go through the IR inst look for Load store, load load, store store...
-2. Do not work on load label store as that would break the label/goto (investigation needed here)
-3. Go through all the code to remove NOP
-4. Go through the code to find the labels and their address, to compute the final bytecode
+## Implementing the IR
+
+The wrapper is small and was easy to implement, needing only an additional `Kind` to differentiate final instructions (`Opcode` and `Opcode2Args`) and entities that require processing to be compiled to final instructions (`Goto`, `GotoIfTrue`, `GotoIfFalse` all require the attached label to be computed first). The `Label` is only there to get an address in the bytecode, and won't produce an instruction.
+
+
+```cpp
+enum class Kind
+{
+    Label,
+    Goto,
+    GotoIfTrue,
+    GotoIfFalse,
+    Opcode,
+    Opcode2Args
+};
+
+using label_t = std::size_t;
+
+class Entity
+{
+public:
+    explicit Entity(Kind kind);
+    explicit Entity(Instruction inst, uint16_t arg = 0);
+    Entity(Instruction inst, uint16_t primary_arg, uint16_t secondary_arg);
+
+    // tools to build IR entities easily
+    static Entity Label();
+    static Entity Goto(const Entity& label);
+    static Entity GotoIf(const Entity& label, bool cond);
+
+    [[nodiscard]] Word bytecode() const;
+    // getters
+    [[nodiscard]] inline label_t label() const { return m_label; }
+    [[nodiscard]] inline Kind kind() const { return m_kind; }
+    [[nodiscard]] inline Instruction inst() const { return m_inst; }
+    [[nodiscard]] inline uint16_t primaryArg() const { return m_primary_arg; }
+    [[nodiscard]] inline uint16_t secondaryArg() const { return m_secondary_arg; }
+
+private:
+    inline static label_t LabelCounter = 0;
+
+    Kind m_kind;
+    label_t m_label { 0 };
+    Instruction m_inst { NOP };
+    uint16_t m_primary_arg { 0 };
+    uint16_t m_secondary_arg { 0 };
+};
+
+using Block = std::vector<Entity>;
+```
+
+### Instructions in ArkScript
+
+It is also interesting to speak about the instruction representation in ArkScript. An instruction in on four bytes: `iiiiiiii pppppppp aaaaaaaa aaaaaaaa`.
+
+- `i` represents the instruction bits, 8, giving us 256 different instructions possible
+- `p` is for padding, ignored in instructions with a single immediate argument
+- `a` represents the bits of the immediate argument, a total of 16 (0 -> 65'535)
+
+Super Instructions can require up to two arguments, which are encoded using the padding: `iiiiiiii ssssssss ssssaaaa aaaaaaaa`.
+
+- we still have our instruction on the same byte,
+- `s` represents the bits of the secondary argument, a total of 12 (0 -> 4095)
+- `a` represents the bits of the primary argument, a total of 12 (0 -> 4095)
+
+### Compiling an IR entity to bytecode
+
+Since some instructions can take two arguments, the instruction-to-bytecode helper had to be updated. Implementation for reference:
+
+```cpp
+struct Word
+{
+    uint8_t opcode = 0;
+    uint8_t byte_1 = 0;
+    uint8_t byte_2 = 0;
+    uint8_t byte_3 = 0;
+
+    explicit Word(const uint8_t inst, const uint16_t arg = 0) :
+        opcode(inst),
+        // byte_1 = 0, this is our padding here
+        byte_2(static_cast<uint8_t>(arg >> 8)),
+        byte_3(static_cast<uint8_t>(arg & 0xff))
+    {}
+
+    Word(const uint8_t inst, const uint16_t primary_arg,
+         const uint16_t secondary_arg) :
+        opcode(inst)
+    {
+        byte_1 = static_cast<uint8_t>((secondary_arg & 0xff0) >> 4);
+        byte_2 = static_cast<uint8_t>(
+            (secondary_arg & 0x00f) << 4 | (primary_arg & 0xf00) >> 8
+        );
+        byte_3 = static_cast<uint8_t>(primary_arg & 0x0ff);
+    }
+};
+```
+
+The rest is pretty straightfoward: instead of having the **Compiler** output bytecode directly, it now outputs IR entities, and a new **IRCompiler** has been introduced. All it has to do is map an IR entity to its instruction, and turn it into a `Word` so that it can be written to disk.
+
+An important step is to compute the labels addresses so that we can generate correct `JUMP`, `POP_JUMP_IF_TRUE` and `POP_JUMP_IF_FALSE` instructions:
+
+```cpp
+uint16_t pos = 0;
+std::unordered_map<IR::label_t, uint16_t> label_to_position;
+for (auto inst : page)
+{
+    switch (inst.kind())
+    {
+        case IR::Kind::Label:
+            label_to_position[inst.label()] = pos;
+            // the label isn't an instruction,
+            // do not update `pos` here
+            break;
+
+        default:
+            ++pos;
+    }
+}
+```
+
+### Detecting sequence of entities that can be combined
+
+This one was way easier than I thought, all we have to do is iterate on the IR blocks given, and match the current entity and the next one with a known pattern. Only thing to be aware of is jumping over the instructions we managed to fuse, so that we do not push left over instructions in our optimized IR.
+
+```cpp
+void IROptimizer::process(
+    const std::vector<IR::Block>& pages,
+    const std::vector<std::string>& symbols,
+    const std::vector<ValTableElem>& values)
+{
+    m_symbols = symbols;
+    m_values = values;
+
+    for (const auto& block : pages)
+    {
+        m_ir.emplace_back();
+        IR::Block& current_block = m_ir.back();
+
+        std::size_t i = 0;
+        const std::size_t end = block.size();
+
+        while (i < end)
+        {
+            // alias to ease the writing of the rules below:
+            const Instruction first = block[i].inst();
+            const uint16_t arg_1 = block[i].primaryArg();
+
+            // if we have at least two instructions left,
+            // we can try to match for super instructions patterns
+            if (i + 1 < end)
+            {
+                const Instruction second = block[i + 1].inst();
+                // only the `primaryArg` is needed as we will check
+                // for normal instructions below, which have
+                // a single argument
+                const uint16_t arg_2 = block[i + 1].primaryArg();
+
+                // LOAD_CONST x
+                // LOAD_CONST y
+                // ---> LOAD_CONST_LOAD_CONST x y
+                if (first == LOAD_CONST && second == LOAD_CONST)
+                {
+                    current_block.emplace_back(
+                        LOAD_CONST_LOAD_CONST, arg_1, arg_2);
+                    i += 2;
+                }
+                // ...
+                else
+                {
+                    // otherwise we should not forget to add the
+                    // other instructions to the output IR, we don't
+                    // want just the optimzed IR!
+                    current_block.emplace_back(block[i]);
+                    ++i;
+                }
+            }
+            else
+            {
+                current_block.emplace_back(block[i]);
+                ++i;
+            }
+        }
+    }
+}
+```
