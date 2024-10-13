@@ -1,6 +1,6 @@
 +++
 title = 'Implementing an Intermediate Representation for ArkScript'
-date = 2024-10-01T17:45:45+02:00
+date = 2024-10-13T22:02:00+02:00
 tags = ['arkscript']
 categories = ['pldev']
 +++
@@ -250,16 +250,19 @@ Who would have thought that avoiding a serie of `LOAD_CONST`, `STORE` and using 
 Applying this pattern to increment (`LOAD_SYMBOL a`, `LOAD_CONST 1`, `ADD` becomes `INCREMENT a`), decrement, and store the head or tail of a list in a variable helps, tremendously according to the benchmarks:
 
 ```
-                          |           | 0-684ea758   | 5-ee9ff764
---------------------------+-----------+--------------+---------------------
- quicksort                | real_time | 0.152787ms   | -0.002 (-1.5518%)
-                          | cpu_time  | 0.152334ms   | -0.002 (-1.3825%)
- ackermann/iterations:50  | real_time | 81.2917ms    | -21.385 (-26.3065%)
-                          | cpu_time  | 80.9612ms    | -21.132 (-26.1011%)
- fibonacci/iterations:100 | real_time | 7.51618ms    | -1.244 (-16.5506%)
-                          | cpu_time  | 7.4984ms     | -1.233 (-16.4476%)
+                          |           | 5-c7f632ff   | 6-28999c0f
+--------------------------+-----------+--------------+--------------------
+ quicksort                | real_time | 0.168728ms   | -0.014 (-8.2280%)
+                          | cpu_time  | 0.168515ms   | -0.014 (-8.2479%)
+ ackermann/iterations:50  | real_time | 68.31ms      | -7.278 (-10.6545%)
+                          | cpu_time  | 68.2342ms    | -7.259 (-10.6384%)
+ fibonacci/iterations:100 | real_time | 6.62604ms    | -0.160 (-2.4159%)
+                          | cpu_time  | 6.61819ms    | -0.161 (-2.4266%)
+ man_or_boy               | real_time | 0.0169651ms  | -0.001 (-7.6834%)
+                          | cpu_time  | 0.0160228ms  | -0.000 (-2.3673%)
+ builtins                 | real_time | 0.622685ms   | -0.037 (-5.8815%)
+                          | cpu_time  | 0.621938ms   | -0.037 (-5.9495%)
 ```
 
-The first column, `0-684ea758` is our reference benchmark (based on ArkScript commit `684ea758`), and the second one, `5-ee9ff764`, is the result of implementing our IR and IR optimizer. Quite the improvement!
+The first column, `5-c7f632ff` is our reference benchmark (based on ArkScript commit `684ea758`), and the second one, `5-ee9ff764`, is the result of implementing our IR and IR optimizer. Quite the improvement, we gained at least 2% and at most 10% on every single benchmark!
 
-// todo add intermediate benchmark with computed goto and no IR
