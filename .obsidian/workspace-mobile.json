@@ -13,15 +13,44 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/drafts/implementing_an_intermediate_representation.md",
+                "file": "content/drafts/arkscript_update_december_2024/index.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "implementing_an_intermediate_representation"
+              "title": "index"
+            }
+          },
+          {
+            "id": "d41ebdef4c43e752",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "content/drafts/code_formatter_for_arkscript.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "code_formatter_for_arkscript"
+            }
+          },
+          {
+            "id": "b09dbc84ecf6fd71",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "content/drafts/writing_a_macro_system_for_arkscript.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "writing_a_macro_system_for_arkscript"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -95,7 +124,7 @@
         "state": {
           "type": "backlink",
           "state": {
-            "file": "content/drafts/implementing_an_intermediate_representation.md",
+            "file": "content/drafts/writing_a_macro_system_for_arkscript.md",
             "collapseAll": false,
             "extraContext": false,
             "sortOrder": "alphabetical",
@@ -114,7 +143,7 @@
         "state": {
           "type": "outgoing-link",
           "state": {
-            "file": "content/drafts/implementing_an_intermediate_representation.md",
+            "file": "content/drafts/writing_a_macro_system_for_arkscript.md",
             "linksCollapsed": false,
             "unlinkedCollapsed": true
           },
@@ -128,7 +157,7 @@
         "state": {
           "type": "outline",
           "state": {
-            "file": "content/drafts/implementing_an_intermediate_representation.md"
+            "file": "content/drafts/writing_a_macro_system_for_arkscript.md"
           },
           "icon": "lucide-list",
           "title": "Outline"
@@ -147,13 +176,15 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "a5e3d6546c6bfaf1",
+  "active": "b09dbc84ecf6fd71",
   "lastOpenFiles": [
+    "content/drafts/code_formatter_for_arkscript.md",
+    "content/drafts/arkscript_update_december_2024/index.md",
+    "content/drafts/writing_a_macro_system_for_arkscript.md",
+    "content/drafts/implementing_an_intermediate_representation.md",
     "content/posts/implementing_an_intermediate_representation.md",
     "/content/posts/implementing_an_intermediate_representation.md",
     "/themes/hugo-theme-stack",
-    "content/drafts/arkscript_update_december_2024/index.md",
-    "content/drafts/implementing_an_intermediate_representation.md",
     "content/posts/npm_fail2ban_config.md",
     "/content/posts/npm_fail2ban_config.md",
     "/content/drafts/implementing_an_intermediate_representation.md",
@@ -165,7 +196,6 @@
     "/content/posts/usb_c_rambling/USB-C_chart.jpg",
     "/content/posts/usb_c_rambling",
     "/content/drafts/arkscript_update_december_2024",
-    "content/drafts/code_formatter_for_arkscript.md",
     "content/posts/arkscript_presentation.md",
     "content/posts/arkscript_update_july_2022/unbound-var-error.png",
     "content/posts/arkscript_update_july_2022",
@@ -192,7 +222,6 @@
     "/content/posts/computed_gotos.md",
     "/content/posts/arkscript_update_september_2024/index.md",
     "/content/posts/arkscript_update_november_2022/index.md",
-    "/content/posts/arkscript_update_june_2024/index.md",
     "/content/posts/arkscript_update_september_2024",
     "/content/posts/arkscript_update_november_2022"
   ]
