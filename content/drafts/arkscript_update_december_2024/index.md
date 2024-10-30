@@ -22,25 +22,25 @@ Introducing this IR didn't change anything, as it is 96% based on the instructio
 
 ## More optimizations!
 
-- todo
-- todo
+- computed gotos
+- super instructions + IR optimizer
 
 /* todo: benchmarks */
 
-```
-                          |           | 0-684ea758   | 4-ad889963          | 5-ee9ff764
---------------------------+-----------+--------------+---------------------+---------------------
- quicksort                | real_time | 0.152787ms   | -0.011 (-7.4961%)   | -0.002 (-1.5518%)
-                          | cpu_time  | 0.152334ms   | -0.011 (-7.4757%)   | -0.002 (-1.3825%)
- ackermann/iterations:50  | real_time | 81.2917ms    | -14.163 (-17.4218%) | -21.385 (-26.3065%)
-                          | cpu_time  | 80.9612ms    | -14.116 (-17.4358%) | -21.132 (-26.1011%)
- fibonacci/iterations:100 | real_time | 7.51618ms    | -1.483 (-19.7270%)  | -1.244 (-16.5506%)
-                          | cpu_time  | 7.4984ms     | -1.484 (-19.7880%)  | -1.233 (-16.4476%)
- man_or_boy               | real_time | 0.015211ms   | -0.000 (-1.4010%)   | 0.000 (0.8264%)
-                          | cpu_time  | 0.0151691ms  | -0.000 (-1.7134%)   | 0.000 (1.0277%)
-```
+baseline - computed gotos - super instructions
 
-IR go brrrrrrrr
+```
+                          |           | 5-57d0e0cd   | 6-c7f632ff          | 7-28999c0f
+--------------------------+-----------+--------------+---------------------+---------------------
+ quicksort                | real_time | 0.190424ms   | -0.022 (-11.3935%)  | -0.036 (-18.6841%)
+                          | cpu_time  | 0.179065ms   | -0.011 (-5.8917%)   | -0.024 (-13.6537%)
+ ackermann/iterations:50  | real_time | 78.6985ms    | -10.388 (-13.2004%) | -17.667 (-22.4485%)
+                          | cpu_time  | 78.5711ms    | -10.337 (-13.1561%) | -17.596 (-22.3949%)
+ fibonacci/iterations:100 | real_time | 7.43315ms    | -0.807 (-10.8582%)  | -0.967 (-13.0118%)
+                          | cpu_time  | 7.42263ms    | -0.804 (-10.8377%)  | -0.965 (-13.0013%)
+ man_or_boy               | real_time | 0.016108ms   | 0.001 (5.3210%)     | -0.000 (-2.7713%)
+                          | cpu_time  | 0.0160867ms  | -0.000 (-0.3972%)   | -0.000 (-2.7551%)
+```
 
 ## Coverage report
 
