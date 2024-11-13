@@ -3,7 +3,7 @@ title = 'Assembling the Floppy keyboard'
 date = 2024-11-12T21:16:00+02:00
 tags = ['qmk']
 categories = ['diy', 'keyboard']
-image = '/IMG_1806.jpeg'
+image = '/IMG_1814.jpeg'
 +++
 
 A few weeks ago, I was feeling like making a new (split) keyboard, since I hadn't assembled one for nearly a year now. It's like Lego(tm), so of course I love that activity as much as coding, and since I'm on a keyboard 10 hours a day due to my job and hobbies, it's quite fitting.
@@ -107,4 +107,6 @@ And here are the final results (I went with pastel choc keycaps for a somewhat v
 ![Left hand side](/IMG_1802.jpeg) ![Left hand side, right hand flipped to see its back](/IMG_1805.jpeg)
 
 ![Side to side](/IMG_1804.jpeg) ![With a floppy disk between them for comparison](/IMG_1806.jpeg)
+
+![With a cable](/IMG_1814.jpeg)
 
