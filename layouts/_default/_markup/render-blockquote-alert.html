@@ -9,7 +9,7 @@
 <blockquote class="alert alert-{{ .AlertType }}">
   <p class="alert-heading">
     {{ transform.Emojify (index $emojis .AlertType) }}
-    {{ or (i18n .AlertType) (title .AlertType) }}
+    <b>{{ or (i18n .AlertType) (title .AlertType) }}</b>
   </p>
   {{ .Text | safeHTML }}
 </blockquote>
