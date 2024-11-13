@@ -3,6 +3,7 @@ title = 'Enabling caps word in my Vial firmware on MacOS Sonoma'
 date = 2024-08-08T23:46:47+02:00
 draft = false
 tags = ['keyboard', 'qmk', 'macos']
+categories = ['keyboard']
 +++
 
 Just tonight, I wanted to add support for `caps word` to my [keyboard](https://github.com/SuperFola/arkenswoop), but it needed an update to its qmk firmware. "No problem" I thought to myself, I already did this a lot in the past, what could go wrong? Well, everything.
