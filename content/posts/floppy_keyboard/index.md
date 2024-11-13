@@ -3,6 +3,7 @@ title = 'Assembling the Floppy keyboard'
 date = 2024-11-12T21:16:00+02:00
 tags = ['qmk']
 categories = ['diy', 'keyboard']
+image = '/IMG_1806.jpeg'
 +++
 
 A few weeks ago, I was feeling like making a new (split) keyboard, since I hadn't assembled one for nearly a year now. It's like Lego(tm), so of course I love that activity as much as coding, and since I'm on a keyboard 10 hours a day due to my job and hobbies, it's quite fitting.
