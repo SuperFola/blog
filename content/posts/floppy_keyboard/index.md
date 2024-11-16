@@ -22,7 +22,7 @@ This time, my crazy idea was to fit a split keyboard in the footprint of a flopp
 - 34x Kailh choc hotswap sockets (PG1350),
 - 34x choc v1 switches,
 - 34x choc v1 keycaps,
-- 4x M2 spacers and 8x M2 screws (preferably 4mm),
+- 8x M2 spacers and 16x M2 screws (preferably 4mm),
 - a **straight** RJ9 cable (you can make them straight with a crimping tool),
 - some little rubber feet/bumpers (minimum of 4 on each side)
 
