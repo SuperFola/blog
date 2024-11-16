@@ -12,6 +12,22 @@ This time, my crazy idea was to fit a split keyboard in the footprint of a flopp
 
 ![The PCBS](/IMG_1790.jpeg)
 
+## Components required
+
+- a PCB kit (2x backplates, 2x PCBs, 2x switch plate),
+- 2x pro-micro compatible controllers (I'll be using Liatris in this guide),
+- (optional) 2x set of two mill max sockets with headers (only if you want your controllers to be hotswappable),
+- 2x RJ9 connectors,
+- 34x surface mounted diodes (1N4148W),
+- 34x Kailh choc hotswap sockets (PG1350),
+- 34x choc v1 switches,
+- 34x choc v1 keycaps,
+- 4x M2 spacers and 8x M2 screws (preferably 4mm),
+- a **straight** RJ9 cable (you can make them straight with a crimping tool),
+- some little rubber feet/bumpers (minimum of 4 on each side)
+
+As of November 2024, this will tally at approximately 130€.
+
 ## Build guide
 
 A short build guide with various tips and tricks I learned from building a few keyboards will now interrupt this article.
