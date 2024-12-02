@@ -17,8 +17,7 @@ The compiler didn't get angry, but now outputs instructions in a new intermediat
 
 Why the extra step, you might ask? I wanted to be able to add *super instructions*, which relies on merging some instructions together to do more in a single instruction. Introducing an IR that is easy to handle seems like a good fit for this task. We could have a `LOAD_CONST_STORE` instruction, to avoid pushing to the stack and then popping, and much more small improvements like this.
 
-// TODO: update ref to article drafts -> posts
-Introducing this IR didn't change anything, as it is 96% based on the instruction set. The small difference is that we have to handle jumps differently, since we want to be able to merge instructions, jump offsets might change. If you're interested about this, go read [Implementing an IR for ArkScript]({{< ref "/drafts/implementing_an_intermediate_representation.md" >}}).
+Introducing this IR didn't change anything, as it is 96% based on the instruction set. The small difference is that we have to handle jumps differently, since we want to be able to merge instructions, jump offsets might change. If you're interested about this, go read [Implementing an IR for ArkScript]({{< ref "/posts/implementing_an_intermediate_representation.md" >}}).
 
 ## More optimizations!
 
