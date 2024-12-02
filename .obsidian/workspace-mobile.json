@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/posts/floppy_keyboard/index.md",
+                "file": "content/drafts/code_formatter_for_arkscript.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "index"
+              "title": "code_formatter_for_arkscript"
             }
           }
         ]
@@ -150,6 +150,7 @@
   },
   "active": "92dc6d163fe976a8",
   "lastOpenFiles": [
+    "content/posts/floppy_keyboard/index.md",
     "CNAME",
     "themes/hugo-theme-stack",
     "themes",
@@ -165,7 +166,6 @@
     "static/favicon.png",
     "static/favicon96.png",
     "static",
-    "layouts/_default/_markup/render-blockquote-regular.html",
     "content/categories/arkscript/_index.md",
     "content/categories/arkscript/banner.png",
     "content/categories/gamedev/_index.md",
@@ -187,7 +187,6 @@
     "content/posts/render_chunk_of_voxels/index.md",
     "content/posts/usb_c_rambling/index.md",
     "content/posts/parallelizing_a_bytecode_interpreter/index.md",
-    "content/posts/floppy_keyboard/index.md",
     "content/posts/arkscript_update_june_2024/index.md",
     "content/posts/advice_on_games_architecture/index.md",
     "content/posts/why_do_i_need_git/index.md",
