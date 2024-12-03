@@ -133,9 +133,19 @@
           "icon": "lucide-list",
           "title": "Outline"
         }
+      },
+      {
+        "id": "f88ae1ac88f8729c",
+        "type": "leaf",
+        "state": {
+          "type": "git-view",
+          "state": {},
+          "icon": "git-pull-request",
+          "title": "Source Control"
+        }
       }
     ],
-    "currentTab": 0
+    "currentTab": 3
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -150,6 +160,7 @@
   },
   "active": "92dc6d163fe976a8",
   "lastOpenFiles": [
+    "content/drafts/designing_a_better_import.md",
     "content/drafts/code_formatter_for_arkscript.md",
     "/content/drafts/designing_a_better_import.md",
     "/content/drafts/arkscript_update_december_2024/index.md",
@@ -194,7 +205,6 @@
     "content/posts/advice_on_games_architecture/index.md",
     "content/posts/why_do_i_need_git/index.md",
     "content/page/links/index.md",
-    "content/page/search/index.md",
-    "content/page/archives/index.md"
+    "content/page/search/index.md"
   ]
 }
