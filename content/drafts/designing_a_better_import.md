@@ -25,6 +25,8 @@ The compiler toolchain used to look like this:
 .-------.      .--------.     .-----------------.     .-----------.     .----------.
 ```
 
+The compiler was doing a lot of work, transforming an AST into bytecode, checking for the presence of undefined symbols, suggesting alternative names… It was too big to be manageable, so it has to be split. The parser was also in charge of resolving imports, by recursively calling itself when it found an import node.
+
 After October 5th refactor, it's more like:
 
 ```goat
@@ -40,6 +42,10 @@ After October 5th refactor, it's more like:
       '->  | IROptimizer | --> | IRCompiler |
            .-------------.     .------------.
 ```
+
+- The Lexer disappeared, as the old parser was also not very manageable, hard to evolve, had a lot of bugs and could create invalid nodes. We’re now using a parser combinators approach, checking syntax more seriously while parsing, ensuring only correct nodes can be created.
+- The import solving got put in a separate pass, in charge of finding and replacing import nodes by a `Namespace` node with the different attributes of the import (glob, with prefix, specific symbols to import)
+- Then a new compiler pass appeared, and it is the one we will talk about the most: the **name resolution pass**, in charge of detecting unbound symbols and resolving namespaces
 
 Currently ast are merged together, we can’t import with a prefix nor import only a few symbols
 
