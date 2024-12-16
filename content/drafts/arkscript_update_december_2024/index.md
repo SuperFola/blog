@@ -3,7 +3,7 @@ title = 'ArkScript - December 2024 update'
 date = 2024-12-15T17:29:00+02:00
 tags = []
 categories = ['arkscript']
-image = ''
+image = '/advent_of_code.png'
 +++
 
 Hello there!
@@ -165,15 +165,28 @@ I've stopped quite early (day 9 as of writing), but that was quite insightful, a
 
 Things improved:
 
-- `string:find`
-- `string:setAt`
-- `@=` and `@@=`
-- dedicated scope around loops
-- `@@`
+- `string:find` now takes a third optional argument, `startIndex`
+- `string:setAt` is a new builtin to modify a string at a given position and replace a character, which returns a copy of the original string, like `list:setAt`
+- `@=` and `@@=` are operators modifying strings and lists in place!
+    - `@=` is working on one dimension indexables like strings and list: `(@= lst 1 5)` would replace the element at position 1 by `5`
+    - `@@=` works on two dimension indexables like list of lists or list of strings: `(@@= lst 1 2 false)` would replace element on line 1, column 2 by `false`
+- dedicated scope around loops, so that we can create variables inside the loop body without having them leaking after the loop
+- `@@`, which I'm still working as of right now, to get an element inside a two dimension indexables (list of lists or list of strings)
+
+## A new pre-release!
+
+With all these new features and improvements, a new release has been drafted! We are nearing the final v4 release for ArkScript.
+
+> [!arkscript]
+> New release: [ArkScript v4.0.0-10]("https://github.com/ArkScript-lang/Ark/releases/tag/v4.0.0-10), built for Windows, Linux and Mac, along with Docker images!
+
+It's also fun to see how many times each release have been released (see [GithubProjectStats](https://superfola.github.io/GitHubProjectStats/?user=ArkScript-lang&repo=Ark)). It seems that the Linux (built with GCC 14) version is the most popular one so far, with 321 total download across all versions! The most successful version is the 4.0.0-9 with 292 downloads, then the second one appears to be the 3.5.0 with 140 downloads.
 
 ## Tasks done
 
 ![Tasks tracker](/tasks.png)
 
-135 -> 159 total
+Since the last update, we went from 135 total registered tasks to 159 (24 new). 106 tasks are now completed (+31), 3 are in progress, 19 need more details (still in the idea stage) and 20 have yet to be done (and 10 have been abandoned).
+
+I might take some time off the project, having worked a lot on it recently, I feel like I need some rest, get my head out of the water. Have a nice Christmas & new year holidays, see you in 2025!
 

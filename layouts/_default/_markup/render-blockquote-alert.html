@@ -4,12 +4,19 @@
   "note" ":information_source:"
   "tip" ":bulb:"
   "warning" ":information_source:"
+  "arkscript" "img/arkscript.png"
 }}
 
 <blockquote class="alert alert-{{ .AlertType }}">
   <p class="alert-heading">
-    {{ transform.Emojify (index $emojis .AlertType) }}
-    <b>{{ or (i18n .AlertType) (title .AlertType) }}</b>
+    {{ if (ne .AlertType "arkscript") }}
+        {{ transform.Emojify (index $emojis .AlertType) }}
+        <b>{{ or (i18n .AlertType) (title .AlertType) }}</b>
+    {{ else }}
+        {{ with resources.Get (index $emojis .AlertType) }}
+            <img src="{{ .RelPermalink }}" width="64px" style="display: inline">
+        {{ end }}
+    {{ end }}
   </p>
   {{ .Text | safeHTML }}
 </blockquote>
