@@ -1,6 +1,6 @@
 +++
 title = 'ArkScript - December 2024 update'
-date = 2024-12-15T17:29:00+02:00
+date = 2024-12-17T13:37:00+02:00
 tags = []
 categories = ['arkscript']
 image = '/advent_of_code.png'
@@ -172,6 +172,100 @@ Things improved:
     - `@@=` works on two dimension indexables like list of lists or list of strings: `(@@= lst 1 2 false)` would replace element on line 1, column 2 by `false`
 - dedicated scope around loops, so that we can create variables inside the loop body without having them leaking after the loop
 - `@@`, which I'm still working as of right now, to get an element inside a two dimension indexables (list of lists or list of strings)
+
+### List improvements
+
+I've also greatly improved `string:split`, which takes a string and a delimiter (char or string) to split the input into a list. It used to work, but after using it and measuring its performance... splitting 1000 lines on `\n` was taking 10 seconds (on a M1 Mac Pro)!
+
+> [!TIP]
+> It's easy to measure code performance without impacting its structure nor how it's operating with a macro:
+> ```
+> ($ measure (name code) {
+>   (let ($symcat start name) (time))
+>   { code }
+>   (print
+>     (string:format "{} took {:.3f} seconds"
+>        ($repr name)
+>        (- (time) ($symcat start name)))) })
+> 
+> (measure test (print 5))
+> ```
+
+We used to iterate through the string, delete chunks of the input and copy them to an output list, run `string:find` again on our input... which involved a lot of copies, and that is not good! The new version does not update the input string, and does not involve `string:slice` (which involves even more copies, char by char):
+
+```diff
+ # @brief Split a string in multiple substrings in a list, given a separator
+ # @param _string the string to split
+ # @param _separator the separator to use for splitting
+ # @details Returns a list of strings. Example :
+ # =begin
+ # (import std.String)
+ # (let message "hello world, I like boats")
+ # (let splitted (split message " "))
+  (let split (fun (_string _separator) {
+-  (assert (!= "" _separator) "Separator of split can not be empty")
+-  (assert (>= (len _separator) 1) "Separator length must be at least 1")
+-
+-  (mut _index (string:find _string _separator))
+-  (mut _previous 0)
+-  (mut _output [])
++  (mut _at (string:find _string _separator))
+   (let _seplen (len _separator))
+-
+-  (while (!= _index -1) {
+-    (set _output (append _output (slice _string 0 (- _index _previous))))
+-    (set _string (slice _string (+ _index _seplen) (- (len _string) _index _seplen)))
+-    (set _index (string:find _string _separator)) })
+-
+-  (if (empty? _string)
++  (let _strlen (len _string))
++  (mut _output [])
++  (mut _last "")
++
++  (mut _i 0)
++  (while (< _i _strlen) {
++    (if (< _i _at)
++        {
++            (set _last (+ _last (@ _string _i)))
++            (set _i (+ 1 _i))
++        }
++        {
++            (append! _output _last)
++            (set _last "")
++            (set _i (+ _at _seplen))
++            (set _at (string:find _string _separator _i))
++            (if (= -1 _at)
++                (set _at _strlen)) })})
++
++  (if (empty? _last)
+     _output
+-    (append _output _string)) }))
++    {
++        (append! _output _last)
++        _output })}))
+```
+
+I've also gone around the standard library to use in-place list modifications instead of copying and replacing lists, to make the whole thing easier to use (no one likes to wait 10 seconds for a string to be split!)
+
+> [!TIP]
+> `(append data 5)` creates and returns a new list, while `(append! data 5)` will update `data` directly. The same goes for `concat` / `concat!`, `pop` / `pop!` and `list:setAt` / `@=` (& `@@=`).
+
+### While loops
+
+The following code used to complain that we were redefining a constant (`foo`) using `let`, but not anymore.
+
+```lisp
+(let foo 5)
+(mut i 0)
+(while (< i 5) {
+    (let foo (* i 7))
+    (print (= foo 5))
+    (set i (+ 1 i)) })
+
+(print (= 5 foo))
+```
+
+Here `false` is printed 5 times (once per loop iteration) because foo is `7i`, then `true` because we retrieve the `foo` from the current scope. The one inside the loop is another one.
 
 ## A new pre-release!
 
