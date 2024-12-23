@@ -276,6 +276,14 @@ With all these new features and improvements, a new release has been drafted! We
 
 It's also fun to see how many times each release have been released (see [GithubProjectStats](https://superfola.github.io/GitHubProjectStats/?user=ArkScript-lang&repo=Ark)). It seems that the Linux (built with GCC 14) version is the most popular one so far, with 321 total download across all versions! The most successful version is the 4.0.0-9 with 292 downloads, then the second one appears to be the 3.5.0 with 140 downloads.
 
+## Source code age
+
+For the curious people, here is a graph showing ArkScript source evolution over the years:
+
+![](/codeage.svg)
+
+We can see a solid base of code from 2019, and a few dips (when refactoring code), but not major changes: the code is pretty stable and gets improved every year. The total code base is growing larger, thanks to tests and a lot of fuzzing too!
+
 ## Tasks done
 
 ![Tasks tracker](/tasks.png)
