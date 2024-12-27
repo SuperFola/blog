@@ -85,7 +85,7 @@ The new test suites:
 - **Optimizer** tests the AST optimizer, and dead code elimination
 - **Utf8** tests the utf8 library (decoding / encoding utf8 codepoints)
 - **Tools** tests the C++ helpers (eg our implementation of Leveinshtein distance)
-- **Compiler** tests the IR optimizer by dumping IR and checking that super instrucitons have been used
+- **Compiler** tests the IR optimizer by dumping IR and checking that super instructions have been used
 - **NameResolution** tests the namespaces resolution, hidding variable, prefixing them...
 
 The biggest test suite to have been upgrade is the **Diagnostics** one, with more 70 new tests, testing even more error messages to ensure we still detect them in the future. I also finally fixed the line reporter of the parser, and tokens are *finally* underlined correctly:
@@ -142,7 +142,7 @@ All the work was done in the name resolution pass, that's now done right after p
 
 ## The AST optimization is back
 
-The AST optimizer was disabled before (or during, I can't recall at this point) the compiler rewrite done in September~ 2024, because I needed a rewrite, and was sometimes working, sometime not, for unknown reasons (the algorithm that marked and removed unused code was just bad.
+The AST optimizer was disabled before (or during, I can't recall at this point) the compiler rewrite done in September~ 2024, because I needed a rewrite, and was sometimes working, sometime not, for unknown reasons (the algorithm that marked and removed unused code was just bad).
 
 It's now counting all symbols uses, so that when we visit the top declarations (as well as any namespace nodes, resulting in the inclusion of a file), we can delete them if we know they are mentionned only once (only the declaration uses the symbol).
 
@@ -272,9 +272,17 @@ Here `false` is printed 5 times (once per loop iteration) because foo is `7i`, t
 With all these new features and improvements, a new release has been drafted! We are nearing the final v4 release for ArkScript.
 
 > [!arkscript]
-> New release: [ArkScript v4.0.0-10]("https://github.com/ArkScript-lang/Ark/releases/tag/v4.0.0-10), built for Windows, Linux and Mac, along with Docker images!
+> New release: [ArkScript v4.0.0-10](https://github.com/ArkScript-lang/Ark/releases/tag/v4.0.0-10), built for Windows, Linux and Mac, along with Docker images!
 
 It's also fun to see how many times each release have been released (see [GithubProjectStats](https://superfola.github.io/GitHubProjectStats/?user=ArkScript-lang&repo=Ark)). It seems that the Linux (built with GCC 14) version is the most popular one so far, with 321 total download across all versions! The most successful version is the 4.0.0-9 with 292 downloads, then the second one appears to be the 3.5.0 with 140 downloads.
+
+## Source code age
+
+For the curious people, here is a graph showing ArkScript source evolution over the years:
+
+![](/codeage.svg)
+
+We can see a solid base of code from 2019, and a few dips (when refactoring code), but not major changes: the code is pretty stable and gets improved every year. The total code base is growing larger, thanks to tests and a lot of fuzzing too!
 
 ## Tasks done
 
