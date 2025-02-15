@@ -11,14 +11,14 @@
             "id": "92dc6d163fe976a8",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "diff-view",
               "state": {
-                "file": "content/drafts/writing_a_macro_system_for_arkscript.md",
-                "mode": "source",
-                "source": false
+                "file": "content/drafts/my_2025_plans.md",
+                "staged": false,
+                "hash": "05ce581597f75da8028ee1935ea4006dcc541492"
               },
-              "icon": "lucide-file",
-              "title": "writing_a_macro_system_for_arkscript"
+              "icon": "git-pull-request",
+              "title": "Diff View (my_2025_plans)"
             }
           }
         ]
@@ -171,6 +171,7 @@
   },
   "active": "92dc6d163fe976a8",
   "lastOpenFiles": [
+    "content/drafts/writing_a_macro_system_for_arkscript.md",
     "/content/posts/arkscript_update_december_2024/index.md",
     "/content/posts/arkscript_update_december_2024/codeage.svg",
     "/themes/hugo-theme-stack",
