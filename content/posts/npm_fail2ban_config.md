@@ -2,7 +2,7 @@
 title = 'Nginx Proxy Manager and fail2ban behind CloudFlare to deny external traffic and ban bots'
 date = 2024-10-12T12:54:45+02:00
 tags = ['tooling', 'security', 'nginx']
-categories = []
+categories = ['knowledge base']
 +++
 
 I think this is the longest title on my blog as of now.

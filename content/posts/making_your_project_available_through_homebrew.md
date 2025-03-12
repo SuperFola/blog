@@ -3,7 +3,7 @@ title = 'Making your project available through Homebrew'
 date = 2022-09-12T11:47:37+02:00
 draft = false
 tags = ['brew', 'tooling', 'productivity']
-categories = []
+categories = ['knowledge base']
 +++
 
 As software developers, having our projects available easily to anyone is a goal, but it can be hard to achieve. Using package managers like `apt`, `pacman` or `brew` has become an industry standard (compared to wget + compile it yourself + install it), but publishing a project on it can be quite tedious.

@@ -3,7 +3,7 @@ title = 'How I created my own scripting language'
 date = 2019-10-08T22:53:29+02:00
 draft = false
 tags = ['arkscript', 'hacktoberfest']
-categories = ['pldev']
+categories = ['pldev', 'arkscript']
 +++
 
 Two years ago, I wanted to make my own games from A to Z, starting from the library I would use to handle entities, worlds, graphisms... to the tools next to that such as a map editor.

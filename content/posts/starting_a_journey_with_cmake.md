@@ -3,6 +3,7 @@ title = 'Starting a journey with cmake'
 date = 2020-09-16T23:02:10+02:00
 draft = false
 tags = ['cmake', 'cpp', 'beginners']
+categories = ['knowledge base']
 +++
 
 Very often, I have to help friends and colleagues to build a C or C++ project, and my solution is always the same: "use CMake!", but their documentation isn't pretty good so we have to spend a few hours on stackoverflow to get it to work for their specific use cases.

@@ -1,7 +1,7 @@
 +++
 title = 'ArkScript, a functional scripting language!'
 date = 2019-07-25T20:11:45+02:00
-tags = []
+tags = ['arkscript']
 categories = ['arkscript']
 +++
 

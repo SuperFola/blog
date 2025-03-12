@@ -1,8 +1,8 @@
 +++
 title = 'Implementing computed gotos in C++'
 date = 2024-09-24T15:45:00+02:00
-tags = ['arkscript', 'cpp']
-categories = ['pldev']
+tags = ['cplusplus', 'arkscript']
+categories = ['pldev', 'arkscript']
 +++
 
 A common idiom in virtual machines or state machines is to read data from a list, execute some code depending on the value we read, advance in the list, rinse and repeat. That could be written as:

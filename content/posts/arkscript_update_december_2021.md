@@ -1,7 +1,7 @@
 +++
 title = 'ArkScript - December 2021 update'
 date = 2021-12-11T16:52:45+02:00
-tags = []
+tags = ['arkscript']
 categories = ['arkscript']
 +++
 

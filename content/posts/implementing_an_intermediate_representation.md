@@ -2,7 +2,7 @@
 title = 'Implementing an Intermediate Representation for ArkScript'
 date = 2024-10-13T22:02:00+02:00
 tags = ['arkscript']
-categories = ['pldev']
+categories = ['pldev', 'arkscript']
 +++
 
 ArkScript is a scripting language, running on a VM. To accomplish this, we had (as of September 2024) a compiler generating bytecode for the virtual machine, receiving an AST from the parser (and a few other passes like name resolution, macro evaluation, name and scope resolution...).
