@@ -102,11 +102,9 @@ $ git worktree list
 
 From version [3.0.1](https://github.com/ArkScript-lang/Ark/tree/v3.0.1) to [3.0.12](https://github.com/ArkScript-lang/Ark/tree/v3.0.12).
 
-todo
+The very first version of the VM is using a `Frame` object, instanciated for each scope. I think I stole this idea from Java, though my implementation is subpar and I probably didn't understand everything at the time. Each `Frame` instanciated a new stack for itself, implemented as a `std::vector`, which mean that pushing to it would make grow and copy all of its elements, which is highly inefficient.
 
-Using a `Frame` object, instanciated for each scope. Each `Frame` instanciated a new stack for itself, implemented as a `std::vector` (which mean that pushing to it would make grow and copy all of its elements, which is highly inefficient).
-
-Locals were stored as a `std::shared_ptr<std::vector<Value>>`. You read that right, no id. You accessed a specific variable using `locals[variable_id]`.
+Locals were stored as a `std::shared_ptr<std::vector<Value>>` (`Scope_t`). You read that right, no id. You accessed a specific variable using `locals[variable_id]`. The shared pointer is there because locals could be added by closures, that have to retain their environment, which can be mutated. The stack of scopes was materialized as `std::vector<Scope_t>`.
 
 ```cpp
 class Frame
@@ -147,18 +145,17 @@ private:
 ```
 
 Results:
+
 ```
-Benchmark                  Time             CPU   Iterations
-Ackermann_3_7_ark        197 ms          197 ms            4
+Benchmark                         Time             CPU   Iterations
+ackermann                       197 ms          197 ms            4
 ```
 
 ### Locals as a list of pair of id and value
 
 From version [3.0.13](https://github.com/ArkScript-lang/Ark/tree/v3.0.13) to [3.0.15](https://github.com/ArkScript-lang/Ark/tree/v3.0.15).
 
-todo
-
-This version introduced the first version of the `Scope`, that we're still using today!
+The next iteration of locals management introduced the first version of the `Scope`, that we're still using today! They are still instanciated inside shared pointers, but they are way smaller as we do not access a variable through `operator[]`, but iterate through the pairs of `id -> value` instead.
 
 ```cpp
 class Scope
@@ -180,9 +177,7 @@ private:
 };
 ```
 
-It's slower, probably due to `Scope`s being used for locals, as well as `Frame`s for the stacks! Separating those two concepts might seem like a good idea architecture wise, but in term of performance we're splitting two important data structures and sprinkling them all over our RAM, thus accessing them is highly inefficient.
-
-Also, upon adding a new value, we were trying to be smart by sorting elements, so that lookup would be faster. In retrospect (and after having looked at benchmarks), I now know it was a bad idea (which is why I'm not doing this anymore!):
+This version tried to be smart: upon adding a new value, we sort the elements, so that lookup would be faster. In retrospect (and after having looked at benchmarks), I now know it was a bad idea (which is why I'm not doing this anymore!):
 
 ```cpp
 #define push_pair(id, val) \
@@ -223,42 +218,46 @@ void Scope::push_back(uint16_t id, Value&& val) noexcept
 }
 ```
 
+Inserting while trying to keep all elements ordered is slower than simply adding each element to the end of the scope:
+
 Results:
 ```
-Benchmark                            Time             CPU   Iterations
-Ackermann_3_7_ark_dichotomy        294 ms          294 ms            2
-Ackermann_3_7_ark_push_back        192 ms          192 ms            4
+Benchmark                         Time             CPU   Iterations
+ackermann_dichotomy             294 ms          294 ms            2
+ackermann_push_back             192 ms          192 ms            4
 ```
 
 ### Single stack
 
 From version [3.1.0](https://github.com/ArkScript-lang/Ark/tree/v3.1.0) to [4.0.0-10](https://github.com/ArkScript-lang/Ark/tree/v4.0.0-10).
 
-todo
-
-In v3.1.0, the `Scope` removed the sorted insert to push everything at the end of its `std::vector<std::pair<id, Value>>`. Also, the horrendous `std::vector<Frame>` was replaced by a `std::unique_ptr<std::array<Value, 8192>>`!
+In v3.1.0, the `Scope` removed the sorted insert to push everything at the end of its `std::vector<std::pair<id, Value>>`. Also, the horrendous `std::vector<Frame>` was replaced by a `std::unique_ptr<std::array<Value, 8192>>`, which yielded a much needed performance improvement. Instead of having a separate data structure to save the caller page pointer and instruction pointer, we now push those on the stack too (meaning we have a recursion depth of 4096 for non-primary recursive functions, that can't be optimized to loops).
 
 Results:
 ```
-Benchmark                  Time             CPU   Iterations
-Ackermann_3_7_ark        146 ms          146 ms            5
+Benchmark                         Time             CPU   Iterations
+ackermann                       146 ms          146 ms            5
 ```
 
-Then, in v3.1.3 the `ExecutionContext` appeared: it's a struct with everything the VM need to run code (instruction, page and stack pointer, stack, `std::vector<Scope>` for locals...). This has been added to help with adding parallelism to the language.
+Then, in v3.1.3 the `ExecutionContext` appeared: it's a struct with everything the VM needs to run code (instruction, page and stack pointer, stack, `std::vector<Scope>` for locals...). This has been added to help with adding parallelism to the language, it did not downgrade performances (nor did it improve them).
 
-In later versions, more AST and new IR optimizations were implemented, which helped reach those numbers:
+In later versions, more AST and new IR optimizations were implemented, which helped divide the run time of our benchmark by ~2.4:
 
 ```
-Benchmark                   Time             CPU   Iterations
-ackermann                60.4 ms         60.3 ms           50
+Benchmark                         Time             CPU   Iterations
+ackermann                      60.4 ms         60.3 ms           50
 ```
 
 However, we still spend around 35% of our time in `findNearestVariable` (which calls `Scope::operator[]` on line 5):
 
 ```cpp
-inline Value* VM::findNearestVariable(const uint16_t id, internal::ExecutionContext& context) noexcept
+inline Value* VM::findNearestVariable(
+  const uint16_t id,
+  internal::ExecutionContext& ctx
+) noexcept
 {
-  for (auto it = context.locals.rbegin(), it_end = context.locals.rend(); it != it_end; ++it)
+  for (auto it = ctx.locals.rbegin(), it_end = ctx.locals.rend();
+       it != it_end; ++it)
   {
     if (const auto val = (*it)[id]; val != nullptr)
       return val;
@@ -291,18 +290,113 @@ Value* Scope::operator[](const uint16_t id_to_look_for) noexcept
 
 ## How can we do better?
 
-todo
+In his book [Crafting Interpreters](https://craftinginterpreters.com/), Robert Nystrom shows that you can use the stack for storing local variables in the [Local Variables](https://craftinginterpreters.com/local-variables.html) chapter. This would mean using a *single contiguous data structure* for all of our needs, which would actually be pretty neat, and most certainly yield impressive performance improvements!
 
-implement the array of locals and bench
+Alas, due to how closures work in ArkScript, this isn't doable. Storing variables on the stack means the compiler has to know where we put each variable, and since no type checking is done at compile time, we can't easily know when we're compiling a closure call!
 
-- store locals on the stack (https://craftinginterpreters.com/local-variables.html)
-    -> not doable for us because closure lookups
-- array<Local, 8192> locals
-    -> Scope = view {locals, start = x, length = L, min_id, max_id}
-    -> linear, better for cache, no more allocations, space is already available
-    -> peut fonctionner car on ajoute des variables que dans le tout dernier scope
-    -> idem pour les closures? attention car on a une histoire de shared_ptr
-        -> on veut garder les closures en vie et on a des mergeScopeInto
-        -> les scope de closure devront être différents: créés à la volée quand on make_closure au lieu de dépendre du scope en cours
-        -> comment gérer les merdes sur stacked_closure_scopes?
+> [!NOTE]
+> Actually, we can infer that from `a.b` or `a.b.c` because the dot notation is reserved for closures and field accessing, but this only covers 90% of use cases, by reading (foo) we don't know if we're calling a C++ function, a user function or a user closure.
+
+But this gave me an idea: what if we could use a single contiguous data structure for our variables? And make small adaptations to handle closure scopes, that need to be kept alive while a closure is being called?
+
+Well, I did that. And it worked.
+
+### Contiguous storage for our locals
+
+Currently, our locals are stored in a `std::vector<std::shared_ptr<std::vector<std::pair<id, value>>>>`, basically a list of pointers to lists of pairs. This can't be good, our piles of `id -> value` are scattered all over RAM! However, what we need for storing locals is:
+
+- a vector or array to store our pairs `id -> value`
+- a length, to know how many elements are in our scope
+- maybe some min and max id to implement a basic bloom filter
+
+So we could make *views* over a single `std::array<std::pair<id, value>, N>`, that knows where they start, and how many elements they hold.
+
+The `Scope` implementation didn't even have to change that much:
+
+```cpp
+ScopeView::ScopeView(
+  std::array<pair_t, ScopeStackSize>* storage,
+  const std::size_t start
+) noexcept :
+  m_storage(storage), m_start(start), m_size(0),
+  m_min_id(std::numeric_limits<uint16_t>::max()),
+  m_max_id(0)
+{}
+
+void ScopeView::push_back(uint16_t id, Value&& val) noexcept
+{
+  if (id < m_min_id)
+    m_min_id = id;
+  if (id > m_max_id)
+    m_max_id = id;
+
+  (*m_storage)[m_start + m_size] = std::make_pair(id, std::move(val));
+  ++m_size;
+}
+
+bool ScopeView::maybeHas(const uint16_t id) const noexcept
+{
+  return m_min_id <= id && id <= m_max_id;
+}
+
+Value* ScopeView::operator[](const uint16_t id_to_look_for) noexcept
+{
+  if (!maybeHas(id_to_look_for))
+    return nullptr;
+
+  for (std::size_t i = m_start; i < m_start + m_size; ++i)
+  {
+    auto& [id, value] = (*m_storage)[i];
+    if (id == id_to_look_for)
+      return &value;
+  }
+  return nullptr;
+}
+```
+
+And creating a new scope is still quite easy, we just need to pass a pointer to our array, and the first free position:
+
+```cpp
+context.locals.emplace_back(
+  // our array<pair<id, value>>
+  &context.scopes_storage,
+  // the end of the scope (size + start) = first free slot
+  context.locals.back().storageEnd()
+);
+```
+
+As for closures, I had to create a dedicated `ClosureScope`, that was basically the old `Scope`, since the closure needs to have ownership of a scope and now we use views. Merging a `ClosureScope` inside a `Scope` is still doable (so that we can create a scope of references to the closure's fields):
+
+```cpp
+void ClosureScope::mergeRefInto(ScopeView& other)
+{
+  for (auto& [id, value] : m_data)
+  {
+    if (value.valueType() == ValueType::Reference)
+      other.push_back(id, value);
+    else
+      other.push_back(id, Value(&value));
+  }
+}
+```
+
+All of this is very fancy, and seems to work on paper, right? But some of you may have noticed a flaw in this design: what if we need to add values to a scope that *isn't* the last and active one? It would break! Luckily, this can't happen as only one scope can be active at a time, and variables are **always** added to the current active scope, which is the last one on our pile of scopes.
+
+### Gotta go fast!
+
+By using a contiguous storage, avoiding useless copies of the pairs `id -> value` when the storage vector grew, avoiding reserving and freeing memory every time a function is call / returns, we have achieved a 21% performance improvement on our benchmark (and even up to 76% improvement on the binary tree benchmark!):
+
+Results:
+
+```
+Benchmark                         Time             CPU   Iterations
+ackermann_begining              197 ms          197 ms            4
+ackermann_dichotomy             294 ms          294 ms            2
+ackermann_push_back             192 ms          192 ms            4
+ackermann_single_stack         60.4 ms         60.3 ms           50
+ackermann_contiguous           47.8 ms         47.7 ms           50
+
+binary_trees_single_stack    3965.9 ms      3962.32 ms            1
+binary_trees_contiguous         941 ms          939 ms            1
+```
 
