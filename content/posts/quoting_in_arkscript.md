@@ -2,15 +2,36 @@
 title = 'How does quoting works in ArkScript macros?'
 date = 2025-04-24T11:48:47+02:00
 tags = ['compiler', 'arkscript']
-draft = true
 categories = ['pldev', 'arkscript']
 +++
 
 The other night, I was talking about meta programming to other developers, and at one point someone asked how macros could be used to do meta programming. They were probably thinking about *C type of macros*, which are powerful but are just text processor tools.
 
+Using macros you could have the following code:
+
+```cpp
+double Compute()
+{
+  // doing something
+  return result;
+}
+```
+
+and transform it into:
+
+```cpp
+double Compute()
+{
+  if (_cache.GetValue(out var result)
+    return result;
+  // doing something
+  _cache.SetValue(result);
+  return result;
+}
+```
+
 > [!Macros]
 > They are a tool to manipulate code, with code. It allows one to write generic code and have the compiler do the heavy lifting and monomorphize your code.
-
 
 > [!NOTE]
 > What's **meta programming**?
@@ -43,6 +64,8 @@ I quickly threw this together, and sure enough, ArkScript let it pass as its mac
 ```
 
 ## Homoiconicity
+
+*A concept that gets talked about quite frequently in the context of macros.*
 
 It is the ability to manipulate code in the language, using code from the same language. Code is data, and data is code. Lisp is the most common homoiconic language, but we can also cite all its dialects (Clojure, Scheme, Racket...), as well as Rebol, and you guessed it, ArkScript.
 
