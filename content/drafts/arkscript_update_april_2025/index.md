@@ -49,12 +49,32 @@ Loading symbols in ArkScript is costly, as we rely on their identifier: `LOAD_SY
 
 This new instruction is `LOAD_SYMBOL_BY_INDEX <index>`, with the index being related to the current scope stack of values. An index of 0 means "the last value we registered", 1 means "the previous", etc. It makes symbol loading faster, as we went from a O(m &times; n) to O(1) access (m= number of scopes, n= number of variables per scope).
 
-Why stop there? Scopes are no longer a `vector<shared_ptr<Scope>>` but stored as `vector<ScopeView>`. A ScopeView is like a std::string_view, and the backend for storing locals is a big contiguous `array<pair<identifier, Value>, 4096>`.
+Why stop there? Scopes are no longer a `vector<shared_ptr<Scope>>` but stored as `vector<ScopeView>`. A ScopeView is like a std::string_view, and the backend for storing locals is a big contiguous `array<pair<identifier, Value>, 4096>`. Since locals are now stored contiguously, it’s more cache efficient, and yields overall better performance, even without the new instruction! For more details, checkout [this article I wrote about optimizing scopes data]({{< ref "/posts/optimizing_scopes_data_in_arkscript_vm.md" >}}).
 
 ## Better error messages, finally at runtime
 
-also added instruction source location tracking, enhancing runtime errors (add examples) for better user experience!
+For a long time, runtime error messages looked like garbage, presenting the user with an error string like "type error: expected Number got Nil" and some internal VM info (instruction, page, and stack pointers). Then, you had to guess where the error occurred. I have wondered for a long time how that could be improved, and I only started working on that a few weeks ago.
 
+And here we are, with way better runtime error messages:
+
+```
+ArityError: When calling `(foo 1 2 3)', received 3 arguments, but expected 2: `(foo a b)'
+
+In file a.ark
+    1 | (let foo (fun (a b) (+ a b)))
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    2 |
+    3 | (foo 1 2 3)
+
+[   2] In function `foo' (a.ark:1)
+[   1] In global scope (a.ark:3)
+
+Current scope variables values:
+foo = Function@1
+At IP: 0, PP: 1, SP: 5
+```
+
+To make this work, I added more data to the bytecode, in the form of two tables: one to hold the name of the files that were involved in producing the bytecode, and one to map a tuple `(instruction ptr, page ptr)` to a `(file id, line)`. You can read more about it [here!]({{< ref "/posts/inst_source_tracking_in_arkscript.md" >}})
 ## Tasks done
 
 ![Tasks tracker](/task_tracker.png)
