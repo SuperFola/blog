@@ -19,6 +19,9 @@ The second one was off the table pretty quickly, because I had a hunch it would 
 
 The third solution felt like a lot of work for a small gain, as it would be used only when handling errors. It would also double the size of the bytecode files, and lock the future evolutions of the VM as I wouldn't be able to use those additional 4 bytes for anything else.
 
+> [!NOTE]
+> As [Robert Nystrom noted](https://old.reddit.com/r/ProgrammingLanguages/comments/1kcef2l/comment/mq2ibt5/) on Reddit, making the bytecode larger the VM would have more cache misses, making performance worse.
+
 As you might have guessed, I went with the first solution.
 
 ## Implementation
