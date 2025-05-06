@@ -1,6 +1,6 @@
 +++
 title = 'ArkScript - April 2025 update'
-date = 2025-04-26T19:19:00+02:00
+date = 2025-05-04T19:19:00+02:00
 tags = []
 categories = ['arkscript']
 +++
