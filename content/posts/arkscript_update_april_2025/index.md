@@ -17,9 +17,7 @@ Testing is hard, but testing interactive programs *inside a CI* is even harder. 
 
 Using Python and the **pexpect** package, I can finally test the REPL and ensure it can autocomplete code. I tried testing for colored output, to ensure that code coloration also works, but since it depends on the system and shell you are running, I just gave up (and so should you, it's not worth it IMHO).
 
-The script is quite small too:
-
-{{< ghcode "https://raw.githubusercontent.com/ArkScript-lang/Ark/029de7012cac0e279912cec4af3785cd2929dc87/tests/repl/test.py" >}}
+The script is quite small too: [repl/test.py](https://raw.githubusercontent.com/ArkScript-lang/Ark/029de7012cac0e279912cec4af3785cd2929dc87/tests/repl/test.py).
 
 I also worked on Rosetta code problems, and added [as many as I could to the wiki](https://rosettacode.org/wiki/Category:ArkScript), which are also new tests! Everyone is welcome to contribute as the wiki is open.
 
