@@ -1,7 +1,7 @@
 baseURL = 'https://lexp.lt'
 languageCode = 'en-us'
 pagination.pagerSize = 10
-title = 'Lex Plt blog'
+title = 'Lexy Plt blog'
 theme = 'hugo-theme-stack'
 
 defaultContentLanguage = 'en'
