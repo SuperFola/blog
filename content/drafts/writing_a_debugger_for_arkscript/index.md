@@ -11,14 +11,14 @@ In February 2024, I first discussed adding a debugger to ArkScript with other de
 
 With an ideal debugger, I'd like to be able
 - to add a breakpoint in my code, without relying on specific IDEs integration ; a `(breakpoint condition)` expression is more portable
-- trigger the debugger when there is a runtime error (type error, arity error, assert failed...)
-- have breakpoints in the code but allow them to start the debugger only if we passed a specific CLI flag, eg `arkscript -fdebugger myfile.ark`
-- spawn a REPL-like shell on a breakpoint / error, that allows users to write ArkScript code to examine what went wrong
+- to trigger the debugger when there is a runtime error (type error, arity error, assert failed...)
+- to have breakpoints in the code but allow them to start the debugger only if we passed a specific CLI flag, eg `arkscript -fdebugger myfile.ark`
+- to spawn a REPL-like shell on a breakpoint / error, that allows users to write ArkScript code to examine what went wrong
 - maybe add breakpoints from the debugger, given a file and line
 
 ## Introducing a new instruction: BREAKPOINT
 
-If we want to be able to place breakpoints everywhere in our code (either at runtime when the debugger is running, or when writing code), it has to be a special instruction that won't push anything to the stack, to avoid messing up calls:
+If we want to place breakpoints everywhere in our code (either at runtime when the debugger is running, or when writing code), it has to be a special instruction that won't push anything to the stack, to avoid messing up calls:
 
 ```lisp
 (let foo (fun (a b c) {
