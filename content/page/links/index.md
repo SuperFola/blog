@@ -27,6 +27,8 @@ license: false
 
 ## Videos
 
+*You might see/hear me being referenced as Alexandre, it was before the I installed the life 2.0 update.*
+
 {{< youtube 9XVui8NbGvI >}}
 
 ---
