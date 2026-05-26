@@ -11,7 +11,7 @@ Last month I got to use [ArkScript](https://arkscript-lang.dev), a language I've
 
 Advent of code challenges are often heavy on lists, with inputs sometimes being thousands of lines long. After benchmarking some of my solutions, I noticed passing big lists to helper functions (eg a `(get grid x y)` that would check for width and height) was slower than doing the check in place and duplicating code. This is due to ArkScript "no hidden behaviour" rule: arguments are always passed by value, and no hidden references are used.
 
-This was a now a problem, and after years of refusing to alter the function declaration syntax, I cave and added *function arguments' attributes*: we now could declare an argument as *mutable* (all arguments are immutable by default inside a function body) or as a *read-only reference*, on a per argument basis:
+This was now a problem, and after years of refusing to alter the function declaration syntax, I cave and added *function arguments' attributes*: we can declare an argument as *mutable* (all arguments are immutable by default inside a function body) or as a *read-only reference*, on a per argument basis:
 
 ```lisp
 (let foo (fun (a (mut b) (ref c)) {
@@ -83,7 +83,7 @@ Fixing this bug required evaluating expressions once with some trickery:
 
 ## Calls to print... sometimes fail?
 
-ArkScript has an optimization for builtins, so that we can create proxies in the standard library `.ark` source files (which are scoped properly):
+ArkScript has an optimization for builtins, so that we can create proxies in the standard library `.ark` source files (which are then available through glob and name imports):
 
 ```lisp
 (let reverse (fun (_L) (builtin__list:reverse _L)))
@@ -126,12 +126,12 @@ page_1
 
 ## Better standard library
 
-Doing the challenge this year was way easier than last year thanks to the state of the standard library, however there still was room for improvement:
+Doing the challenge this year was way easier than last year thanks to the state of the standard library, however there was still room for improvement:
 - `list:forEach`, `list:window` and `list:enumerate` can take functors returning `list:stopIteration` to abort iteration early
 - `list:sortByKey`
 - `list:transpose` to transpose a list of lists or list of strings
 - `list:contains?` to check if a list has a given element
-- `list:permutations`, `list:permutationsWithReplacements` to generate permutations sequences
+- `list:combinations`, `list:combinationsWithReplacements` to generate combinations sequences
 - `list:select` to select elements from a list by a list of indexes
 - `io:readLinesFile`
 - `unpackPair` macro to unpack a list of two elements into variables
