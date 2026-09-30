@@ -2,7 +2,7 @@ rssFullContent = true
 favicon = "favicon.png"
 
 contentTypeName = "posts"
-showMenuItems = 3
+showMenuItems = 4
 fullWidthTheme = false
 centerTheme = true
 dateFormat = "Jan 02, 2006"
