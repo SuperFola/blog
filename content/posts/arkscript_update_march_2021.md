@@ -2,7 +2,6 @@
 title = 'ArkScript - March 2021 update'
 date = 2021-03-21T23:22:45+02:00
 tags = ['arkscript']
-categories = ['arkscript']
 +++
 
 Hello, it's been a while, and I'm back with some good news!

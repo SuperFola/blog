@@ -1,13 +1,49 @@
 baseURL = 'https://lexp.lt'
 languageCode = 'en-us'
-pagination.pagerSize = 10
 title = "Lexy's blog"
-theme = 'hugo-theme-stack'
+
+theme = 'terminal'
+pagination.pagerSize = 10
 
 defaultContentLanguage = 'en'
 
 enableGitInfo = true
 enableRobotsTXT = true
+
+[languages]
+  [languages.en]
+    languageName = "English"
+    title = "Lexy's blog"
+    [languages.en.params]
+      subtitle = ""
+      owner = ""
+      keywords = ""
+      copyright = ""
+      menuMore = "Show more"
+      readMore = "Read more"
+      readOtherPosts = "Read other posts"
+      newerPosts = "Newer posts"
+      olderPosts = "Older posts"
+      missingContentMessage = "SIGSEV - Page not found..."
+      missingBackButtonLabel = "Back to home page"
+
+      [languages.en.params.logo]
+        logoText = "Lexy's blog"
+
+      [languages.en.menu]
+        [[languages.en.menu.main]]
+          identifier = "about"
+          name = "About"
+          url = "/about"
+          weight = 1
+        [[languages.en.menu.main]]
+          identifier = "github"
+          name = "GitHub"
+          url = "https://github.com/SuperFola"
+        [[languages.en.menu.main]]
+          identifier = "mastodon"
+          name = "Mastodon"
+          url = "https://hachyderm.io/@lexplt"
 
 [privacy]
   [privacy.youtube]

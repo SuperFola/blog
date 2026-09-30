@@ -1,7 +1,9 @@
 /public
 /resources
 .DS_Store
+Thumbs.db
 node_modules
 dist
 tmp
 .obsidian/
+.idea/
