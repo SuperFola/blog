@@ -1,8 +1,7 @@
 +++
 title = 'Writing a debugger for ArkScript'
 date = 2026-01-10T18:09:10+02:00
-tags = ['arkscript']
-categories = ['arkscript', 'pldev']
+tags = ['arkscript', 'pldev']
 +++
 
 In February 2024, I first discussed adding a debugger to ArkScript with other devs that were involved in the project at that time. I didn't know where to start or how it should work ; and about two years later this is now done.

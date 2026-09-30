@@ -1,8 +1,7 @@
 +++
 title = 'Implementing stack overflow protection in ArkScript'
 date = 2025-09-11T08:46:48+02:00
-tags = ['arkscript']
-categories = ['pldev']
+tags = ['arkscript', 'pldev']
 +++
 
 ArkScript is a programming language running in a stack-based virtual machine, implemented in C++. If we are not careful, we could blow the stack (even though it is about 4096 elements long) and crash the VM!

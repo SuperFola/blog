@@ -1,8 +1,7 @@
 +++
 title = 'Code formatter for ArkScript'
 date = 2024-07-31T22:32:45+02:00
-tags = ['arkscript']
-categories = ['pldev']
+tags = ['arkscript', 'pldev']
 +++
 
 why?
