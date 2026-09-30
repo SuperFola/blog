@@ -1,8 +1,7 @@
 +++
 title = 'ArkScript - April 2025 update'
 date = 2025-05-04T19:19:00+02:00
-tags = []
-categories = ['arkscript']
+tags = ['arkscript']
 +++
 
 Since the [last update post]({{< ref "/posts/arkscript_update_december_2024/index.md" >}}), there was a total of 102 commits, for 947 files changed, 9395 insertions, 3149 deletions. I mainly focused on test coverage, adding around a hundred tests on type checking errors.

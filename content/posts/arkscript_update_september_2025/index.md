@@ -1,8 +1,7 @@
 +++
 title = 'ArkScript - September 2025 update'
 date = 2025-09-02T19:19:45+02:00
-tags = []
-categories = ['arkscript']
+tags = ['arkscript']
 +++
 
 Since my [last update post]({{< ref "/posts/arkscript_update_june_2025/index.md" >}}), there was a total of 127 new commits, 402 files changed, 4782 insertions, and 2798 deletions. There was a lot of refactoring to make the project cleaner, a new `Dict` datatype, a ton of new tests that helped fix bugs, better position tracking for nodes in the parser, and a few more super instructions for optimization purposes!

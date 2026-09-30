@@ -1,8 +1,7 @@
 +++
 title = 'Designing a better import for ArkScript'
 date = 2024-12-02T22:03:00+02:00
-tags = ['arkscript']
-categories = ['pldev', 'arkscript']
+tags = ['arkscript', 'pldev']
 +++
 
 In December 2022, a colleague gave me the idea to improve ArkScript import system. All it was doing was using a `(import "folder/file.ark")` syntax, and copy / pasting the content of the file (duplicate imports were removed).

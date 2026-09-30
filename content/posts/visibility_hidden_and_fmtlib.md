@@ -1,11 +1,10 @@
 +++
 title = '-fvisibility=hidden and fmtlib'
 date = 2025-02-24T14:33:39+01:00
-tags = ['cplusplus', 'fmtlib']
-categories = ['cplusplus']
+tags = ['cpp', 'fmtlib']
 +++
 
-After having watch a video of Jason Turner about [visibility=hidden](https://www.youtube.com/watch?v=vtz8S10hGuc), I wanted to try and apply this compiler switch to my project, [ArkScript]({{< ref "/categories/ArkScript" >}}). This is useful for me as I build ArkScript in two phases: a shared library and an executable, and marking the symbols of the shared library as hidden unless specified otherwise allows the compiler to apply more optimizations.
+After having watch a video of Jason Turner about [visibility=hidden](https://www.youtube.com/watch?v=vtz8S10hGuc), I wanted to try and apply this compiler switch to my project, [ArkScript]({{< ref "/tags/ArkScript" >}}). This is useful for me as I build ArkScript in two phases: a shared library and an executable, and marking the symbols of the shared library as hidden unless specified otherwise allows the compiler to apply more optimizations.
 
 In this project, I also use [fmtlib](https://fmt.dev), whose code is directly integrated to the shared library:
 

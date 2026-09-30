@@ -1,8 +1,7 @@
 +++
 title = 'Instruction source location tracking in ArkScript'
 date = 2025-04-24T20:11:45+02:00
-tags = ['arkscript']
-categories = ['pldev', 'arkscript']
+tags = ['arkscript', 'pldev']
 +++
 
 Good error reporting is crucial in programming languages. Doing it at compile time was easy in ArkScript as we have all the context we need at hand, but since we compile code down to bytecode, which is then run by the virtual machine, we loose a lot of context: the source files, their path, their content, we don't have that anymore! Our runtime errors could only show the VM internal state. This article is about how it all changed.

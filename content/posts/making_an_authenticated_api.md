@@ -7,6 +7,8 @@ tags = ['javascript', 'api', 'auth']
 
 This week, I had to design an API with protected routes, which needed the user to be logged in. There is even more to it, said API should be used by a website (where you have access to cookies).
 
+<!--more-->
+
 ----
 
 **Technologies used**: NodeJS & expressjs

@@ -1,12 +1,13 @@
 +++
 title = 'Making a light alarm with Arduino'
 date = 2024-11-11T17:42:00+02:00
-tags = ['arduino']
-categories = ['diy']
-image = '/5.jpg'
+tags = ['arduino', 'diy']
+cover = '/5.jpg'
 +++
 
 A few years back, I wanted to try my hand at making my own alarm clock, but using light to wake me up (basically, DIY domotic?). All I had available to me was an Arduino and a lighting garland (as well as a few other components: cables, resistors, diodes, potentiometers, LCD screen, relays).
+
+<!--more-->
 
 ![The components available to me for this project](/1.jpg)
 

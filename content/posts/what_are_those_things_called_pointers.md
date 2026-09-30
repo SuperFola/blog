@@ -2,17 +2,17 @@
 title = 'What are those things named pointers?'
 date = 2018-09-08T22:05:34+02:00
 draft = false
-tags = ['memory']
-categories = ['eli5']
+tags = ['memory', 'eli5']
+description = "I'll try to explain what pointers are in low level programming languages."
 +++
 
 Why did I write this article ? In my engineering school, we have C++ lessons, and very often, students do not understand what a *pointer* is, and what are their use. I tried to write something as simple as possible to fix this issue, do not hesitate to tell me if there is anything missing/wrong/whatsoever !
 
-## What are those things called "pointers" ?
+## So, what are they?
 
 When programming in what we call "low level" programming language, you can sometimes meet what is called a *pointer*. In this post, we'll go through a bit of history and describe how a computer works before explaining what is this strange thing: "pointer".
 
-## How does a computer store variables ?
+## How does a computer store variables?
 
 Under the hood, a computer has what we call RAM - or memory - to store variables. Basically, it's a small hard drive dedicated to store data represented in binary format. Everything in memory is stored as a sequence of 0 and 1, formatted in such a way your computer can understand it.  
 When creating a program, you can create variables of differents type, such as *number* (integers or floating point numbers), *string* (sequence of characters)... And they are all stored in memory as 0 and 1 !
@@ -29,9 +29,9 @@ Each variable declared in a program is created when the program starts, and the 
 
 And here appeared "dynamic memory management". Behind those ugly words, there is a pointer ! The goal of "dynamic memory management" (I'll write it *DMM* since it's a bit shorter) is to be able to allocate memory at *runtime*, eg for a variable, and destroy it when it's not needed anymore. We can now create a temporary variable at runtime and save memory !
 
-## How does *DMM* works ?
+## How does *DMM* works?
 
-In pseudo-code, we could write this :
+In pseudocode, we could write this :
 
 ```
 integer my_temporary_variable = allocate(integer);
@@ -45,9 +45,9 @@ As a comparison, we could say that :
 When using a variable, we are sending a letter to the operating system, to ask for the value of this variable. No need to know where this variable is allocated in memory, the OS knows it.  
 When we need to get the value pointed by a *pointer*, we send a letter with an *address* to the OS, which will go to this address, and send us back whatever is located there.
 
-Lets illustrate this with some pseudo-code :
+Let's illustrate this with some pseudocode :
 
-```
+```text
 integer my_variable = 10;
 print(my_variable);  // the OS knows where is 'my_variable'
 
@@ -70,4 +70,3 @@ if (pointer_to_int == 0) {
     // now, pointer_to_int points to nothing, the value was destroyed and space used was fred up
 }
 ```
-

@@ -2,11 +2,12 @@
 title = 'What is OOP?'
 date = 2018-09-28T22:09:38+02:00
 draft = false
-tags = ['oop']
-categories = ['eli5']
+tags = ['oop', 'eli5']
 +++
 
-**Why** did i write this article ? Object Oriented Programming is very useful, but also a wide subject, and in my engineering school, I found it was a bit tough to understand this concept.
+**Why** did I write this article ? Object Oriented Programming is very useful, but also a wide subject, and in my engineering school, I found it was a bit tough to understand this concept.
+
+<!--more-->
 
 ## A class describes an object
 

@@ -1,8 +1,7 @@
 +++
 title = 'Using ArkScript for the Advent of Code 2025'
 date = 2026-01-01T00:34:00+02:00
-tags = []
-categories = ['arkscript']
+tags = ['arkscript']
 +++
 
 Last month I got to use [ArkScript](https://arkscript-lang.dev), a language I've been developing for nearly 7 years, for the Advent of Code. And this time, I got to the end, using only my language (and a few hints from [programming.dev](https://programming.dev))!

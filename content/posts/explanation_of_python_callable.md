@@ -2,13 +2,14 @@
 title = 'Call me maybe: an explanation of Python callable'
 date = 2020-03-24T22:55:57+02:00
 draft = false
-tags = ['python']
-categories = ['eli5']
+tags = ['python', 'eli5']
 +++
 
 If you have some experience with Python, you must have already seen a `TypeError: 'T' object is not callable`.
 
-In this article we will try to demystify this kind of errors.
+In this article we will try to demystify this kind of error.
+
+<!--more-->
 
 ## What is a callable?
 

@@ -2,12 +2,13 @@
 title = 'Advice on games architecture'
 date = 2021-04-22T23:02:10+02:00
 draft = false
-tags = ['architecture']
-categories = ['gamedev']
-image = '/scene_graph.png'
+tags = ['architecture', 'gamedev']
+cover = '/scene_graph.png'
 +++
 
-In this article, I will try to highlight important things when developping your own games, according to me.
+In this article, I will try to highlight important things when developing your own games, according to me.
+
+<!--more-->
 
 ## The importance of a clean code
 

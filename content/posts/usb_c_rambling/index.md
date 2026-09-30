@@ -2,8 +2,7 @@
 title = 'Rambling about USB-C'
 date = 2024-10-07T19:50:00+02:00
 tags = ['hardware']
-categories = []
-image = '/USB_2022_September_naming_scheme.png'
+cover = '/USB_2022_September_naming_scheme.png'
 +++
 
 ## A bit of context...

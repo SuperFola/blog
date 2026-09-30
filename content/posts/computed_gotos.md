@@ -1,11 +1,11 @@
 +++
 title = 'Implementing computed gotos in C++'
 date = 2024-09-24T15:45:00+02:00
-tags = ['cplusplus', 'arkscript']
-categories = ['pldev', 'arkscript']
+tags = ['cpp', 'arkscript', 'pldev']
 +++
 
-A common idiom in virtual machines or state machines is to read data from a list, execute some code depending on the value we read, advance in the list, rinse and repeat. That could be written as:
+A common idiom in virtual machines or state machines is to read data from a list, execute some code depending on the
+value we read, advance in the list, rinse and repeat. <!--more--> That could be written as:
 
 ```cpp
 std::vector<uint8_t> bytecode = readBytecode();
@@ -28,11 +28,16 @@ while (pos < bytecode.size())
 }
 ```
 
-While this works, there are other ways that do the same thing but are also better in term of performances. This current approach isn't very branch-predictor friendly because we read data from a vector, select code to execute, break, and repeat. The branch-predictor can not learn what common instructions follow each other.
+While this works, there are other ways that do the same thing but are also better in term of performances. This current
+approach isn't very branch-predictor friendly because we read data from a vector, select code to execute, break, and
+repeat. The branch-predictor can not learn what common instructions follow each other.
 
 ## Definition
 
-A way to solve that is to use *computed gotos*. We read an instruction, load the next and jump to its code. No more instruction selection, a single stream of *code to run* -> *jump* -> *repeat*, which pleases the branch predictor. It can now learn what instruction Y often follows another instruction X and preload code (even though it can still fail, which degrades performances).
+A way to solve that is to use *computed gotos*. We read an instruction, load the next and jump to its code. No more
+instruction selection, a single stream of *code to run* -> *jump* -> *repeat*, which pleases the branch predictor. It
+can now learn what instruction Y often follows another instruction X and preload code (even though it can still fail,
+which degrades performances).
 
 ## Modifying our code for compute gotos
 
@@ -63,17 +68,21 @@ uint8_t inst = bytecode[pos];
 }
 ```
 
-Here we replaced our `while` loop with a `switch`, a label and a `goto`, nearly achieving the same thing as before. *Nearly* because we are now loading the next instruction before our `goto`, and we don't have any `if (pos < bytecode.size())` anymore.
+Here we replaced our `while` loop with a `switch`, a label and a `goto`, nearly achieving the same thing as before.
+*Nearly* because we are now loading the next instruction before our `goto`, and we don't have any
+`if (pos < bytecode.size())` anymore.
 
 > [!NOTE]
-> While we could add an `if (end of bytecode)` condition before our goto, an easier solution would be to add a special `STOP_INTERPRETER` instruction, implemented like this:
+> While we could add an `if (end of bytecode)` condition before our goto, an easier solution would be to add a special
+`STOP_INTERPRETER` instruction, implemented like this:
 > ```
 > case STOP_INTERPRETER:
 >     break;  // or another goto label_end;
 >             // with label_end after the switch
 > ```
 
-This code isn't any faster or slower than the previous implementation, it is just another way (though not a recommended one due to the presence of `goto`s) to write a loop, but that will help us for the next transformations.
+This code isn't any faster or slower than the previous implementation, it is just another way (though not a recommended
+one due to the presence of `goto`s) to write a loop, but that will help us for the next transformations.
 
 ### Making our code slightly better with macros
 
@@ -116,7 +125,8 @@ uint8_t inst = bytecode[pos];
 
 ### Computed gotos
 
-With a gcc extension, we can take the address of a label, and store it in an array. Using this, we can `goto array[index];` and jump at a given label. What if we put one label per instruction now?
+With a gcc extension, we can take the address of a label, and store it in an array. Using this, we can
+`goto array[index];` and jump at a given label. What if we put one label per instruction now?
 
 ```cpp
 #define FETCH_INSTRUCTION()    \
@@ -166,7 +176,8 @@ uint8_t inst = bytecode[pos];
 
 ### Everything together
 
-With some conditions and more macros, we could have a dual implementation, generating a `switch` or a computed gotos table:
+With some conditions and more macros, we could have a dual implementation, generating a `switch` or a computed gotos
+table:
 
 ```cpp
 #define FETCH_INSTRUCTION()    \
@@ -225,16 +236,19 @@ uint8_t inst = bytecode[pos];
 
 ## Results
 
-I've implemented this in [ArkScript](https://arkscript-lang.dev), a small scripting language I've been working on for a few years now, and this has yielded about a 10% performance improvement:
+I've implemented this in [ArkScript](https://arkscript-lang.dev), a small scripting language I've been working on for a
+few years now, and this has yielded about a 10% performance improvement:
 
 Machine (M1 MBP):
+
 - Run on (8 X 24 MHz CPU s)
 - CPU Caches:
-  - L1 Data 64 KiB
-  - L1 Instruction 128 KiB
-  - L2 Unified 4096 KiB (x8)
+    - L1 Data 64 KiB
+    - L1 Instruction 128 KiB
+    - L2 Unified 4096 KiB (x8)
 
 Before:
+
 ```
 Load Average: 3.62, 2.42, 2.46
 ---------------------------------------------------------------------------
@@ -246,6 +260,7 @@ fibonacci/iterations:100               9.23 ms         9.22 ms          100
 ```
 
 After:
+
 ```
 Load Average: 2.87, 2.73, 3.07
 ---------------------------------------------------------------------------

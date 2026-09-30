@@ -8,6 +8,8 @@ image = '/git_log.png'
 
 Nowadays, we have code everywhere. We need to patch bugs, find how and why a bug was introduced to fix it, find when a functionality was added and by who, thus we need what is called "version control".
 
+<!--more-->
+
 Version control is a bunch of things to solve the problem stated above:
 * handling a bunch of small changes (= **commit**)
 * commits are signed to know who made them, thus who made the changes listed by a commit

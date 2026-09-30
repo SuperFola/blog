@@ -2,7 +2,6 @@
 title = 'ArkScript, a functional scripting language!'
 date = 2019-07-25T20:11:45+02:00
 tags = ['arkscript']
-categories = ['arkscript']
 +++
 
 Hi there, fellow reader! Today, I want to talk about a small project I've been working on since April 2019, [ArkScript](https://github.com/ArkScript-lang/Ark).

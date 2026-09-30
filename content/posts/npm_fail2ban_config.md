@@ -1,8 +1,7 @@
 +++
 title = 'Nginx Proxy Manager and fail2ban behind CloudFlare to deny external traffic and ban bots'
 date = 2024-10-12T12:54:45+02:00
-tags = ['tooling', 'security', 'nginx']
-categories = ['knowledge base']
+tags = ['tooling', 'security', 'nginx', 'knowledge base']
 +++
 
 I think this is the longest title on my blog as of now.
@@ -11,6 +10,8 @@ This problem is highly specific to my setup and homelab, but that could help som
 1. have CloudFlare serving as a proxy for my homelab, so that my IP address isn't directly accessible
 2. rely on [nginx-proxy-manager](https://github.com/NginxProxyManager/nginx-proxy-manager) to create hosts on my homelab and serve them on the internet
 3. ban abusers and bots using [fail2ban docker](https://github.com/crazymax/fail2ban)
+
+<!--more-->
 
 ## Using CloudFlare as a proxy
 

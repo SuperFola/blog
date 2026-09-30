@@ -1,9 +1,8 @@
 +++
 title = 'ArkScript - June 2024 update'
 date = 2024-06-24T22:59:45+02:00
-tags = []
-categories = ['arkscript']
-image = '/arkscript-notion.png'
+tags = ['arkscript']
+cover = '/arkscript-notion.png'
 +++
 
 Hello again!

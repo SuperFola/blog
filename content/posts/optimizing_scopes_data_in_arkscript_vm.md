@@ -1,8 +1,7 @@
 +++
 title = 'Optimizing scopes data in ArkScript VM'
 date = 2025-03-15T12:38:47+02:00
-tags = ['arkscript', 'compiler', 'vm']
-categories = ['pldev', 'arkscript']
+tags = ['arkscript', 'compiler', 'vm', 'pldev']
 +++
 
 If you don't know me yet, I have been working on [ArkScript](https://arkscript-lang.dev) for nearly 6 years now. ArkScript is a scripting language in modern C++, running on a custom virtual machine (like Python or Lua), with the goal of having a syntax easy to learn and use, a C++ interface to embed it in programs, and decent performances (without trying to be as fast as Lua though, Mike Pall is a genius and did outstanding work on LuaJIT).

@@ -1,8 +1,7 @@
 +++
 title = "Comparing Python and ArkScript asynchronous models"
 date = 2024-09-01T16:54:00+02:00
-tags = ['python', 'arkscript']
-categories = ['pldev']
+tags = ['python', 'arkscript', 'pldev']
 +++
 
 Python has received a lot of attention lately. The 3.13 release, planned for October this year, will begin the huge work of [removing the GIL](https://peps.python.org/pep-0703/). A [prerelease](https://www.python.org/downloads/release/python-3130rc1/) is already out for curious users who want to try a (nearly) GIL-less Python.
