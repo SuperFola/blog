@@ -13,7 +13,7 @@ the language.
 I worked on improving error contexts, by adding an optional cause, which is very helpful when debugging macros
 extensions:
 
-```
+```text
 At (foo 1 2) @ 4:2
     1 | (macro foo (a b c ...d)
       | ^ macro expansion started here
@@ -77,7 +77,7 @@ I saw it was inefficient and could be improved to remove useless push-pop patter
 
 We went from a
 
-```
+```text
 # (if (and 1 2) ...)
 page_0
     LOAD_CONST 1
@@ -91,7 +91,7 @@ page_0
 
 to new instructions, `SHORTCIRCUIT_AND` and `SHORTCIRCUIT_OR`:
 
-```
+```text
 # (if (and 1 2) ...)
 page_0
     LOAD_CONST 1
@@ -109,7 +109,7 @@ the jump if the condition is false (for `and`) or true (for `or`) early.
 I also took some time to improve ArkScript calling convention. We used to push arguments in the order they were given,
 and load them in the order they were declared, which conflicted when your intermediate storage is a LIFO stack.
 
-```
+```text
 # (foo 1 2 3)
 push 1
 push 2

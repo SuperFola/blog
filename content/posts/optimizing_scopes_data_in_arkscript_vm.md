@@ -38,7 +38,7 @@ It is also *17 times slower* than Python on the binary tree benchmark. I expecte
 
 ArkScript does not use any kind of registers, all computations are done using a stack, so `(1 + 2) * 3` is:
 
-```
+```text
 PUSH 2
 PUSH 1
 ADD  // pop 1, 2, push (1+2)
@@ -55,7 +55,7 @@ For the following sections, I inspected the code of each version to see how loca
 Benchmarks are run on the Ackermann-Péter function using [google/benchmark](https://github.com/google/benchmark), because it's a recursive function but not a [primitive recursive function](https://en.wikipedia.org/wiki/Primitive_recursive_function), meaning compilers can't easily optimize it. It grows quickly, creates a lot of scopes and destroys them a lot too, which is perfect for our use case.
 
 They are run on a M1 MacBook Pro with 10 cores and 32GB of RAM:
-```
+```text
 Run on (8 X 24 MHz CPU s)
 CPU Caches:
   L1 Data 64 KiB
@@ -145,7 +145,7 @@ private:
 
 Results:
 
-```
+```text
 Benchmark                         Time             CPU   Iterations
 ackermann                       197 ms          197 ms            4
 ```
@@ -220,7 +220,7 @@ void Scope::push_back(uint16_t id, Value&& val) noexcept
 Inserting while trying to keep all elements ordered is slower than simply adding each element to the end of the scope:
 
 Results:
-```
+```text
 Benchmark                         Time             CPU   Iterations
 ackermann_dichotomy             294 ms          294 ms            2
 ackermann_push_back             192 ms          192 ms            4
@@ -233,7 +233,7 @@ From version [3.1.0](https://github.com/ArkScript-lang/Ark/tree/v3.1.0) to [4.0.
 In v3.1.0, the `Scope` removed the sorted insert to push everything at the end of its `std::vector<std::pair<id, Value>>`. Also, the horrendous `std::vector<Frame>` was replaced by a `std::unique_ptr<std::array<Value, 8192>>`, which yielded a much needed performance improvement. Instead of having a separate data structure to save the caller page pointer and instruction pointer, we now push those on the stack too (meaning we have a recursion depth of 4096 for non-primary recursive functions, that can't be optimized to loops).
 
 Results:
-```
+```text
 Benchmark                         Time             CPU   Iterations
 ackermann                       146 ms          146 ms            5
 ```
@@ -242,7 +242,7 @@ Then, in v3.1.3 the `ExecutionContext` appeared: it's a struct with everything t
 
 In later versions, more AST and new IR optimizations were implemented, which helped divide the run time of our benchmark by ~2.4:
 
-```
+```text
 Benchmark                         Time             CPU   Iterations
 ackermann                      60.4 ms         60.3 ms           50
 ```
@@ -387,7 +387,7 @@ By using a contiguous storage, avoiding useless copies of the pairs `id -> value
 
 Results:
 
-```
+```text
 Benchmark                         Time             CPU   Iterations
 ackermann_begining              197 ms          197 ms            4
 ackermann_dichotomy             294 ms          294 ms            2

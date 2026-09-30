@@ -27,7 +27,7 @@ The compiler now outputs IR entities, that the IR compiler compiles to bytecode.
 
 This IR looks like this when dumped (useful for analysis, better than comparing byte codes):
 
-```
+```text
 page_0
 	LOAD_CONST_STORE 0, 0
 	LOAD_CONST_STORE 1, 1
@@ -71,7 +71,7 @@ is faster as the branch has an easier time learning jumps between instructions.
 In this benchmarks report, we compare with: a baseline, then computed gotos, then super instructions + computed gotos (
 `{benchmark_id}-{commit_id}`):
 
-```
+```text
                           |           | 5-57d0e0cd   | 6-c7f632ff          | 7-28999c0f
 --------------------------+-----------+--------------+---------------------+---------------------
  quicksort                | real_time | 0.190424ms   | -0.022 (-11.3935%)  | -0.036 (-18.6841%)
@@ -106,7 +106,7 @@ The biggest test suite to have been upgrade is the **Diagnostics** one, with mor
 messages to ensure we still detect them in the future. I also finally fixed the line reporter of the parser, and tokens
 are *finally* underlined correctly:
 
-```
+```text
 # before
 At a @ 2:9
     1 | (let a [])
@@ -135,7 +135,7 @@ one I started working at the end of 2022!
 We can finally import symbols from files (also called "packages" now), import files with prefix, or just import a few
 names from a file:
 
-```
+```text
 # import all, with a prefix
 (import std.List)
 (list:map [1 2 3] print)
@@ -222,7 +222,7 @@ seconds (on a M1 Mac Pro)!
 
 > [!TIP]
 > It's easy to measure code performance without impacting its structure nor how it's operating with a macro:
-> ```
+> ```text
 > ($ measure (name code) {
 >   (let ($symcat start name) (time))
 >   { code }

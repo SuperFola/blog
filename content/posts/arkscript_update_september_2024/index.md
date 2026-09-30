@@ -47,7 +47,7 @@ guessed, I've done all 3 (4 if you count tests).
 I've already told you about benchmarks and my script for calculating the differences in perf between different commits,
 and now we're also measuring parser and compiler performance.
 
-```
+```text
 New parser - Simple - 39 nodes/0      0.045 ms        0.045 ms        15467 nodesAvg=92.802k nodesRate=132.546k/s uselessLines/sec=287.183k/s
 New parser - Medium - 83 nodes/1      0.130 ms        0.129 ms         5405 nodesAvg=54.05k nodesRate=77.3058k/s uselessLines/sec=193.265k/s
 New parser - Big - 665 nodes/2         1.74 ms         1.73 ms          405 nodesAvg=7.695k nodesRate=10.958k/s uselessLines/sec=183.402k/s

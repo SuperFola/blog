@@ -17,7 +17,7 @@ Now, one could wonder why are we keeping the variables' names, instead of using 
 
 We introduced a table to keep track of the variables' names, so that we could refer to variables by using a single fixed length number in our bytecode. The same should apply to values if we want to be able to handle more than unsigned numbers, currently used to refer to variables' identifiers. Remember our bytecode example:
 
-```
+```text
 \x01 \x00\x05   ->   PUSH 0x0005
 \x01 \x00\x04   ->   PUSH 0x0004
 \x02            ->   EQ
@@ -32,7 +32,7 @@ To come back to our original discussion, we can not have our values in the bytec
 
 Thus, we need to design a table to store each value encountered in the original program to refer to them by their identifier. The table of the previous code sample could look like this:
 
-```
+```text
 let a = 4 + 5 * 12
 let foo = (a, b, c) {
     let d = a + b
@@ -107,9 +107,9 @@ The latter is what we will go with in these articles. Since our stack stores val
 
 We will divide our bytecode into pages, since a bytecode is a serie of instructions, or phrases, like a book. Some people also call that *bytecode chunks*. A page = a function, which the 0th one being for the global scope. This will ease function representation: we just need to know to which *page* we need to jump to.
 
-In term of bytecode, we could have something like:
+In terms of bytecode, we could have something like:
 
-```
+```text
 LOAD_CONST 1 (page number 2)
 LOAD_CONST 2 (number 1)
 LOAD_CONST 3 (number 0)
@@ -122,7 +122,7 @@ We need to push our absolute address in the bytecode on the stack, so that we ca
 
 Then, the `CALL` instruction will push the arguments it got, though, be careful with ordering: we popped them this way: [number 0, number 1] because it's a LIFO stack! The function's bytecode should start with `STORE 1 (symbol a), STORE 2 (symbol b)` if it was written like this: `function foo(a, b) { ... }`, it will get the values from the stack.
 
-```
+```text
 Original code calling foo(a=1, b=0):
 	LOAD function foo
 	LOAD number 1

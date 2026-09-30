@@ -61,7 +61,7 @@ number of bytes, here 2)
 
 Let's break this down:
 
-```
+```text
 \x01 \x00\x05   ->   PUSH 0x0005
 \x01 \x00\x04   ->   PUSH 0x0004
 \x02            ->   EQ
@@ -119,7 +119,7 @@ achieve, and a lot of micro benchmarks and micro optimizations (that's still doa
 
 Let's take this small snippet from an imaginary language:
 
-```
+```text
 let a = 4 + 5 * 12
 let foo = (a, b, c) {
 	let d = a + b

@@ -44,7 +44,7 @@ A test being composed of two files, a `.ark` and a `.expected`.
 
 ---
 
-```
+```text
 # input.expected
 TypeError: A Nil isn't a callable
 ```
@@ -83,7 +83,7 @@ performance that I consider correct (I'll have to measure the current parser to 
 all off, 0 warnings (Wall, Wextra, Wconversion, Wshadow and pedantic, I'm crazy), 0 memory leaks, tests in all
 directions and soon fuzzing.
 
-```
+```text
 Running ./build/bench
 Run on (8 X 24.121 MHz CPU s)
 CPU Caches:

@@ -10,7 +10,7 @@ tags = ['bytecode', 'vm', 'pldev']
 
 Following the previous article(s), we could implement `and` / `or` as follows:
 
-```
+```text
 # a and b
 LOAD a
 LOAD b
@@ -58,7 +58,7 @@ else:                   #   |    actually not duplicated once
 
 Let's see how `and` is implemented in [ArkScript](https://arkscript-lang.dev) (as of 16/09/2024):
 
-```
+```text
 LOAD_SYMBOL a
 DUP
 POP_JUMP_IF_FALSE (after)  ---`

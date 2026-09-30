@@ -33,7 +33,7 @@ And here appeared "dynamic memory management". Behind those ugly words, there is
 
 In pseudocode, we could write this :
 
-```
+```text
 integer my_temporary_variable = allocate(integer);
 ```
 

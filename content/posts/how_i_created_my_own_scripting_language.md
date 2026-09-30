@@ -15,11 +15,11 @@ TL;DR: this isn't an experiment I would recommend to beginners since it's time e
 
 So I started to develop my own language Kafe, which was meant to run on a virtual machine I would as well create. Ugh, this went bad. I started from the end by creating the virtual machine first (while having already chosen the syntax) ; it was really hard to debug it since I had to write the bytecode by hand for every single test... and I couldn't get myself to work on the compiler afterward.
 
-Fast forward a few months, I started developing a Lisp clone for fun, and I challenged myself to add a compiler after having done the lexer/parser/repl part. Before talking about that, just a few words about what those things are:
+Fast-forward a few months, I started developing a Lisp clone for fun, and I challenged myself to add a compiler after having done the lexer/parser/repl part. Before talking about that, just a few words about what those things are:
 
 * a lexer is a program taking a text in input and returning a list of tokens. A token is atomic, you can't divide it, for example `1.1` is a single token, while `print("hello")` will be separated in multiple tokens, it could be `print`, `(`, `"hello"`, `)`.
 * a parser is taking a list of tokens from the lexer in input, and returns an Abstract Syntax Tree (also called AST) made from the tokens:
-```
+```text
 # input program:
 a = 1 + 2
 print(a + 4)
@@ -43,7 +43,7 @@ print(a + 4)
 
 So I started to work on a compiler, but before I could start, I needed to know how I would create the binary file, which operations will I need, which format should I use. A good start was my experiment with Kafe, whose bytecode was inspired from Python's. The idea was to have a binary file presented like this:
 
-```
+```text
 magic constant, to make sure we're running a binary file created by the compiler, and not trying to run a powerpoint
 
 version of the compiler used to create the file
@@ -70,7 +70,7 @@ We should reference variables/functions with integers only, to avoid having to r
 The hardest part wasn't conditions (thanks to internal `goto`s) or scoping (automatically handled by the virtual machine) but the functions. That's why I introduced multiple code pages, one per function, the n°0 being for the global scope. A function should receive arguments from the stack, have it's own stack to avoid messing up the stack of the previous function call, and must be able to return a value from its stack to its parent's stack!
 
 The idea here was to push argument on the current stack, then use `CALL code_page_number number_of_arguments` which would take `number_of_arguments` from the stack, jump to the code page of the function, push the arguments in the right order, and continue running. The function should have instructions like `store_from_stack symbol_id` at the beginning, to store the arguments in variables referenced by symbols in its scope. Again, the code generation should know in which order the `store_from stack symbol_id` should be generated, otherwise you could end up with something like this:
-```
+```text
 def foo(a0, a1):
     print(a0, a1)
 
@@ -106,7 +106,7 @@ As you can see, I was (and I still am) a bit crazy, but I learnt a lot from it. 
 * the second one when I wanted to have a cleaner virtual machine, add a plugin table (to be able to load DLL as plugins and use C/C++ code in the virtual machine), more performances with my closures (another hard time because they are functions, but... not really, since they must save captured variables, thus act as a scope) and function calls in general
 
 The syntax barely changed, and even tried to re-brand Lisp:
-```
+```lisp
 {
     (let fibo (fun (n)
         (if (< n 2)

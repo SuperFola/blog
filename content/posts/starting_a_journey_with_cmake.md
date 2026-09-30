@@ -83,7 +83,7 @@ Basically what it does is:
 
 Now that we have a nice CMakeLists.txt, we need to tell CMake to use it:
 
-```
+```shell
 cmake -Bbuild -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++-8
 ```
 
@@ -97,7 +97,7 @@ My favorite on Windows is `-G "Visual Studio <version> Win64"` to force the gene
 
 Then we build a project by using
 
-```
+```shell
 cmake --build build --config Debug
 ```
 

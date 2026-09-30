@@ -26,7 +26,7 @@ target_include_directories(ArkReactor
 
 I found it easier to add it this way, but after adding `-fvisibility=hidden`, any program linking against **ArkReactor** would have linker errors:
 
-```
+```text
 Undefined symbols for architecture arm64:
   "fmt::v11::vformat(fmt::v11::basic_string_view<char>, fmt::v11::basic_format_args<fmt::v11::context>)", referenced from:
       std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> fmt::v11::format<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>&, char const* const&>(fmt::v11::fstring<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>&, char const* const&>::t, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>&, char const* const&) in server.cpp.o

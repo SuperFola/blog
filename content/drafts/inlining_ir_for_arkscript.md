@@ -20,7 +20,7 @@ is it good perf wise? benchmark to do (should be, because creating a scope doesn
 ## another hurdle
 
 it somewhat works? bug with
-```
+```text
 (let abs (fun (_x) (if (< _x 0) (* -1 _x) _x)))
 (let gcd (fun (_a _b) (if (= 0 _b) _a (gcd _b (mod _a _b)))))
 (let lcm (fun (_a _b) (* (abs _a) (/ _b (gcd _a _b)))))
@@ -38,7 +38,7 @@ inline functions that were only declared once, just in case
 
 ## perf
 
-```
+```lisp
 (import std.String)
 (import std.Benchmark)
 

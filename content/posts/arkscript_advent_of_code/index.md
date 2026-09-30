@@ -24,7 +24,7 @@ ArkScript being a dynamic language, type checking is done at runtime. And I hit 
 
 **Before**
 
-```
+```text
 Function list:reverse expected 1 argument but got 3
   -> list (List) was of type Number
 ```
@@ -33,7 +33,7 @@ Hard to know what were the arguments, where we messed up.
 
 **After**
 
-```
+```text
 Function list:reverse expected 1 argument
 Call
   ↳ (list:reverse "hello")
@@ -48,7 +48,7 @@ In file tests/unittests/resources/DiagnosticsSuite/typeChecking/listreverse_str.
     2 |
 ```
 
-We now show the how the function was called, the signature, and details about each argument, with source code location!
+We now show how the function was called, the signature, and details about each argument, with source code location!
 
 ## Fixing the testing library
 
@@ -90,7 +90,7 @@ ArkScript has an optimization for builtins, so that we can create proxies in the
 
 Would be optimized to:
 
-```
+```text
 page_1
 	CALL_BUILTIN_WITHOUT_RETURN_ADDRESS builtin-id, arguments-count
 .L0:
@@ -100,7 +100,7 @@ page_1
 
 Instead of:
 
-```
+```text
 page_1
 	STORE 1
 	PUSH_RETURN_ADDRESS L0

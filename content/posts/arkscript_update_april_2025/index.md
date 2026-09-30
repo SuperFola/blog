@@ -54,7 +54,7 @@ For a long time, runtime error messages looked like garbage, presenting the user
 
 And here we are, with way better runtime error messages:
 
-```
+```text
 ArityError: When calling `(foo 1 2 3)', received 3 arguments, but expected 2: `(foo a b)'
 
 In file a.ark

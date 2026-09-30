@@ -39,7 +39,7 @@ My first idea was to output a tree of IR instructions instead of a list of instr
 
 If we use a Lisp-like (ArkScript-like?) syntax, it could look like this
 
-```
+```lisp
 (store a 0)   # a = 0
 (setval a 5)  # a = 5
 (load_symbol a)
@@ -50,7 +50,7 @@ If we use a Lisp-like (ArkScript-like?) syntax, it could look like this
     else...)
 ```
 
-However I didn't really like this idea, it felt like reinventing the wheel, another tree, as we have a non-flat structure to handle a sequence of conditions `(if cond (if cond2 ...))`.
+However, I didn't really like this idea, it felt like reinventing the wheel, another tree, as we have a non-flat structure to handle a sequence of conditions `(if cond (if cond2 ...))`.
 
 ### Second try: getting rid of jumps altogether
 
@@ -250,7 +250,7 @@ Who would have thought that avoiding a series of `LOAD_CONST`, `STORE` and using
 
 Applying this pattern to increment (`LOAD_SYMBOL a`, `LOAD_CONST 1`, `ADD` becomes `INCREMENT a`), decrement, and store the head or tail of a list in a variable helps, tremendously according to the benchmarks:
 
-```
+```text
                           |           | 5-c7f632ff   | 6-28999c0f
 --------------------------+-----------+--------------+--------------------
  quicksort                | real_time | 0.168728ms   | -0.014 (-8.2280%)

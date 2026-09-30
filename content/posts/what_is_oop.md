@@ -19,7 +19,7 @@ When you are writing what we call a `class` in OOP, it's basically an instructio
 
 Now that you understand the most primitive difference between a *class* and an *object*, I have to add something to the definition of a *class*: it doesn't **only** describe the shape of an object, it also describes its behaviour. To explain this, I will take an animal: a duck. Its manual would be something like the following:
 
-```
+```text
 Manual of: Duck
     - 2 webbed feet
     - 1 beak on a head at the end of a neck, linked to the body
@@ -30,7 +30,7 @@ Manual of: Duck
 
 *I know, our duck will look like this, but well, it looks nice, no ?*
 
-```
+```text
        ___
    ___/   \
   /__  O   |
@@ -45,7 +45,7 @@ Manual of: Duck
 
 And its behaviour should follow those rules:
 
-```
+```text
 Behaviour of: Duck
     - cackle with its beak
     - swim with its webbed feet
@@ -68,7 +68,7 @@ We saw the manual, to build a duck, and what behaviour it should have. All of th
 
 So, with this new vocabulary, we now have this:
 
-```
+```text
 class: Duck
     attributes:
         - number of feet = 2
@@ -104,7 +104,7 @@ This means we can take there code and use it ! But... what if I want a class "Su
 
 The answer is no ! Thanks to inheritance, we can say "SuperDuck is a class. Its mom is Duck. SuperDuck has a laser coming out of its beak". It means we can define a class a child of another, which would take all the attributes and methods of the other class (called the "parent") and add our attributes and methods.
 
-```
+```text
 class: SuperDuck
     parents: Duck
 

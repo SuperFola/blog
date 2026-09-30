@@ -15,7 +15,7 @@ To continue from the end of the last message, the new parser has been permanentl
 
 And on top of that, over the last few months I've been able to optimize the parser a little more, which used to take a long time to calculate the cursor position in the file (not as easy as keeping a counter as we often go backwards, cf. [the monster that helps position line breaks](https://github.com/ArkScript-lang/Ark/blob/79bfe1f596b5a17ed4a684191adf0addd3507d25/src/arkreactor/Compiler/AST/BaseParser.cpp#L8-L33)). This gives us the following perf:
 
-```
+```text
 ---------------------------------------------------------------------------
 Benchmark                                 Time             CPU   Iterations
 ---------------------------------------------------------------------------
@@ -55,7 +55,7 @@ As I love numbers and stats of all kinds, I decided to add more benchmarks last 
 
 You can see the evolution between several commits here, with losses in ms and % between each commit and the base (the 0-684ea758), successively:
 
-```
+```text
                           |           | 0-684ea758   | 1-d45d7ea1         | 2-abb043b4          | 3-75161de7          | 4-ad889963
 --------------------------+-----------+--------------+--------------------+---------------------+---------------------+---------------------
  quicksort                | real_time | 0.152787ms   | -0.008 (-5.3205%)  | -0.009 (-5.8277%)   | -0.009 (-6.2021%)   | -0.011 (-7.4961%)
@@ -111,7 +111,7 @@ ut::suite<"AST"> ast_suite = [] {
 
 For very clear output and cool error reporting (when it crashes, which now rarely happens):
 
-```
+```text
 Suite 'global': all tests passed (0 asserts in 0 tests)
 Suite 'BytecodeReader': all tests passed (15 asserts in 7 tests)
 Suite 'AST': all tests passed (14 asserts in 15 tests)

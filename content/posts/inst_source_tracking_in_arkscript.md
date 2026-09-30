@@ -128,7 +128,7 @@ Given the following erroneous code:
 
 We expect an arity error upon calling `foo`, as we passed too many arguments.
 
-```
+```text
 ArityError: When calling `(foo)', received 3 arguments, but expected 2: `(foo a b)'
 
 In file a.ark
@@ -147,7 +147,7 @@ At IP: 0, PP: 1, SP: 5
 
 In terms of bytecode, it generated the following:
 
-```
+```text
 Symbols table (length: 3)
 0) foo
 1) a

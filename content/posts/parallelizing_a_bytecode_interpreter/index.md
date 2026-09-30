@@ -79,7 +79,7 @@ That's a concurrency problem, and to solve it we need to introduce a few *constr
 Given those constraints, **we can ensure thread safety** (no concurrent access to the same variable), to the cost of
 being unable to access a top level defined variable. This means that this code won't work:
 
-```
+```text
 let width = 120;
 
 parallel function foo(a, b, c) {
@@ -130,7 +130,7 @@ single core. Notice that I left some space between tasks, because the bytecode i
 switching (dumping the stack state and loading another one), which makes the whole code run slower instead of faster,
 since we now have:
 
-```
+```text
 total_time =
     execution_time(task 0)
   + execution_time(task 1)

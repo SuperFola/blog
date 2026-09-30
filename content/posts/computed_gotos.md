@@ -75,7 +75,7 @@ Here we replaced our `while` loop with a `switch`, a label and a `goto`, nearly 
 > [!NOTE]
 > While we could add an `if (end of bytecode)` condition before our goto, an easier solution would be to add a special
 `STOP_INTERPRETER` instruction, implemented like this:
-> ```
+> ```cpp
 > case STOP_INTERPRETER:
 >     break;  // or another goto label_end;
 >             // with label_end after the switch
@@ -249,7 +249,7 @@ Machine (M1 MBP):
 
 Before:
 
-```
+```text
 Load Average: 3.62, 2.42, 2.46
 ---------------------------------------------------------------------------
 Benchmark                                 Time             CPU   Iterations
@@ -261,7 +261,7 @@ fibonacci/iterations:100               9.23 ms         9.22 ms          100
 
 After:
 
-```
+```text
 Load Average: 2.87, 2.73, 3.07
 ---------------------------------------------------------------------------
 Benchmark                                 Time             CPU   Iterations

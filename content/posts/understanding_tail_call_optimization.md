@@ -20,7 +20,7 @@ create and destroy a bunch of stack frames.
 
 The functions we can optimise with said methods are the tail recursive ones:
 
-```
+```text
 let factorial = (n, acc) {
     if (n <= 1)
         return acc
@@ -36,7 +36,7 @@ This is called a tail recursive function because the last call of the function i
 Note that our `factorial` function takes an additional parameter, an accumulator, because the following implementation
 wouldn't be tail recursive:
 
-```
+```text
 let factorial = (n) {
     if (n <= 1)
         return 1
@@ -57,7 +57,7 @@ somewhere in case the function returns and need something from this state (which
 
 Thus, we can rewrite the tail recursive functions with loops:
 
-```
+```text
 let factorial = (n, acc) {
     while (true) {
         if (n <= 1)

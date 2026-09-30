@@ -52,7 +52,7 @@ Next thing is to add a `.gitignore` file to your project: it will list all the f
 
 Example of a `.gitignore`:
 
-```
+```text
 build/
 my-private-key.priv
 
@@ -69,21 +69,21 @@ To create a commit, we need to add files to it, since a commit is collection of 
 
 We can use
 
-```
+```shell
 git add <myfile> <otherfile> <a/nice/file.txt>
 ```
 
 to add specific files, or
 
-```
+```shell
 git add .
 ```
 
-to add all the files in the current directory and sub-directories.
+to add all the files in the current directory and subdirectories.
 
 Then we create a commit with those files with
 
-```
+```shell
 git commit -m "a nice commit message here"
 ```
 
@@ -95,13 +95,13 @@ It's useful to know which files have been modified when you have been working fo
 
 The command is
 
-```
+```shell
 git status
 ```
 
 giving a pretty verbose output:
 
-```
+```text
 On branch master
 Your branch is up to date with 'origin/master'.
 
@@ -116,13 +116,13 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 To show a shorter output, we can use the `-s` option (stands for short) along with `-b` (show branch information), like so:
 
-```
+```shell
 git status -sb
 ```
 
 giving a better output:
 
-```
+```text
 ## master...origin/master
  M CHANGELOG.md
 ```
@@ -131,7 +131,7 @@ giving a better output:
 
 To list commits with their message and date, we use
 
-```
+```shell
 git log
 ```
 
@@ -139,7 +139,7 @@ Commits are listed from the most recent to the oldest one.
 
 Example output:
 
-```
+```text
 commit c7d20ab1c669f2d177c4bf826bebe95ceb758270 (HEAD -> master, tag: 0.0.2, origin/master)
 Date:   Tue Apr 7 11:54:36 2020 +0200
 
@@ -154,13 +154,13 @@ Date:   Mon Apr 6 17:13:47 2020 +0200
 
 A shorter version without the dates is available by using
 
-```
+```shell
 git log --oneline
 ```
 
 to quickly see a list of changes made to a project (here we can see the importance of making good commit messages, to sum up the changes made). Example output:
 
-```
+```text
 c7d20ab (HEAD -> master, tag: 0.0.2, origin/master) updating gitignore
 e18d52a adding examples/Tilemap
 cc6457a adding a tilemap
@@ -171,7 +171,7 @@ b3f0c6e updating All.hpp
 
 Another one to show a pretty graph with branches (thanks Drarig29):
 
-```
+```shell
 git log --all --decorate --oneline --graph
 ```
 
@@ -185,13 +185,13 @@ Once we have made a few commits, we would like to host them on a repository, suc
 
 Once this is done, we need to add a *remote* to our local git repository, to tell git that we have a remote location where we want to push our code. On GitHub, an HTTP remote looks like this `https://github.com//.git`. We can add it to git by using
 
-```
+```shell
 git remote add origin https://github.com/<username>/<repository name>.git
 ```
 
 By doing so, we add a remote named *origin* to our local git repository. Then we have to tell git that we want to push our current branch (the *default* one, named `master` by default) on this remote:
 
-```
+```shell
 git remote -u origin master
 ```
 
@@ -205,7 +205,7 @@ If you remember correctly, a branch is just a collection of commits, thus a *ver
 
 This means that we can create a new version of a project by creating a new branch, like so:
 
-```
+```shell
 git checkout -b the_name_of_my_branch
 # or using switch:
 git switch -c the_name_of_my_branch
@@ -213,7 +213,7 @@ git switch -c the_name_of_my_branch
 
 The branch name can not have any whitespace in it. This command will create the new branch (the `-b` stands for *create a new branch*), and automatically move you to this branch. If you want to go back to another branch to retrieve code, you can do:
 
-```
+```shell
 git checkout my_branch
 # with switch:
 git switch my_branch
@@ -221,7 +221,7 @@ git switch my_branch
 
 Using `git switch` you can even jump between you current and last branch:
 
-```
+```text
 # current branch: feature
 
 git switch master
