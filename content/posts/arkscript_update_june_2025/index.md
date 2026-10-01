@@ -32,11 +32,13 @@ At (foo 1 2) @ 4:2
 A small thing that should be mentioned nonetheless: builtins are now available through the standard library, meaning we
 can scope them!
 
-```lisp
+{{< highlight_scripts >}}
+
+{{< highlight_arkscript >}}
 (import std.List :fill)
 
 (fill 5 nil)  # [nil nil nil nil nil]
-```
+{{< /highlight_arkscript >}}
 
 This was easy to implement, as I've just renamed builtins to `builtin__name`, and made proxies for them inside the
 standard library.
@@ -140,6 +142,5 @@ easier reading):
 
 ---
 
-See you next time, with hopefully less nerd snipping myself into optimizing the language, and more standard library
+See you next time, with hopefully less nerd snipping myself into optimising the language, and more standard library
 updates!
-

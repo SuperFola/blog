@@ -11,23 +11,30 @@ Between today and the last post, taking into account only the dev branch, a smal
 - 3093 lines added,
 - 1991 deleted
 
-I specifically said the `dev` branch, because a little new one has appeared, aimed specifically at the next big release, ArkScript 4.0! It includes :
+I specifically said the `dev` branch, because a little new one has appeared, aimed specifically at the next big release,
+ArkScript 4.0! It includes :
 
 - better type errors (already available in 3.1.3),
 - close symbol suggestion when an unbound symbol is encountered during compilation (3.2.0),
 - conversion of closures into strings with their fields,
 - addition of async/await as builtins,
 - management of unused expressions that polluted the stack (which I mentioned in the previous post, available in 3.2.0),
-- tail call optimisation (3.2.0) when a function calls itself (will be generalized in 4.0),
+- tail call optimisation (3.2.0) when a function calls itself (will be generalised in 4.0),
 - lots of fixes for annoying little bugs.
 
 <!--more-->
 
-The work done since last year can be seen as clean-up and a bit of house keeping, as the vacations have arrived for part of the team, development is slowing down a little. However, we're planning some brilliant improvements for the rest of the year, including the generation of an AST in JSON form (useful for making an LSP, writing tests for the lexer/parser/optimizer/macro processor, for having a new backend that transpiles into WASM or other...), fuzzing to detect as many errors as possible in the language's implementation.
+The work done since last year can be seen as clean-up and a bit of housekeeping, as the holidays have arrived for part
+of the team, development is slowing down a little. However, we're planning some brilliant improvements for the rest of
+the year, including the generation of an AST in JSON form (useful for making an LSP, writing tests for the
+lexer/parser/optimiser/macro processor, for having a new backend that transpiles into WASM or other...), fuzzing to
+detect as many errors as possible in the language's implementation.
 
-```lisp
+{{< highlight_scripts >}}
+
+{{< highlight_arkscript >}}
 (let size 1000)
-(let data (list:fill size 1))  # une liste de remplie de mille 1
+(let data (list:fill size 1))  # a list of a thousand ones
 (let sum (fun (a b src) {
     (mut acc 0)
     (while (< a b) {
@@ -49,11 +56,11 @@ The work done since last year can be seen as clean-up and a bit of house keeping
             workers
             (fun (w) (await w)))
         (fun (a b) (+ a b))))
-```
+{{< /highlight_arkscript >}}
 
 ![Variable name suggestion and error coloring](/unbound-var-error.png)
 
-```lisp
+{{< highlight_arkscript >}}
 (let make (fun (a b c)
     (fun (&a &b &c) ())))
 
@@ -63,5 +70,4 @@ The work done since last year can be seen as clean-up and a bit of house keeping
 functionName: needs argumentCount argument(s), got actualArgumentCount.
   -> arg1Name (wanted type) was arg1Value (of type arg1Type)
   -> arg2Name (wanted type) was arg2Value (of type arg2Type)
-```
-
+{{< /highlight_arkscript >}}

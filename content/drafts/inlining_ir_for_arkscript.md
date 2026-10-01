@@ -4,6 +4,8 @@ date = 2026-07-19T12:19:00+02:00
 tags = ['arkscript', 'pldev']
 +++
 
+{{< highlight_scripts >}}
+
 A while ago, I added an intermediate representation to ArkScript, to be able to compress some sequence of instructions into super instructions, doing multiple things at once. This helped improved the overall language performance, as you can see in [this post]({{< ref "/posts/implementing_an_intermediate_representation.md" >}}). Now that the tooling is in place, we can do more, like inline some bits of IR to remove function calls overhead when possible!
 
 ## basic ir inliner
@@ -38,7 +40,7 @@ inline functions that were only declared once, just in case
 
 ## perf
 
-```lisp
+{{< highlight_arkscript >}}
 (import std.String)
 (import std.Benchmark)
 
@@ -58,7 +60,7 @@ inline functions that were only declared once, just in case
 #  ↪︎ range: [0.021 - 31.6] ms
 #  ↪︎ mean: 0.038ms
 #  ↪︎ median: 0.0241ms
-```
+{{< /highlight_arkscript >}}
 
 between 13% and 43% better performance wise
 

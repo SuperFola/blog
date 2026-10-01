@@ -386,3 +386,81 @@ th,
 button {
   font-weight: 600;
 }
+
+/* RAINBOW JS */
+[data-language] code, [class^="lang"] code, pre.chroma-arkscript [data-language], pre.chroma-arkscript [class^="lang"] {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  animation: fade-in 50ms ease-in-out 2s forwards
+}
+
+[data-language] code.rainbow, [class^="lang"] code.rainbow, pre [data-language].rainbow, pre.chroma-arkscript [class^="lang"].rainbow {
+  animation: none;
+}
+
+[data-language] code.loading, [class^="lang"] code.loading, pre.chroma-arkscript [data-language].loading, pre.chroma-arkscript [class^="lang"].loading {
+  animation: none
+}
+
+[data-language] code.rainbow-show, [class^="lang"] code.rainbow-show, pre.chroma-arkscript [data-language].rainbow-show, pre.chroma-arkscript [class^="lang"].rainbow-show {
+  opacity: 1
+}
+
+pre.chroma-arkscript {
+  position: relative;
+  background-color: #000;
+  word-wrap: break-word;
+  padding: 10px;
+  color: #fff;
+  font-size: 14px;
+  margin: 0 0 20px;
+}
+
+pre.chroma-arkscript, code {
+  font-family: 'Monaco', 'Menlo', courier, monospace
+}
+
+pre.chroma-arkscript .comment {
+  color: #70aec0
+}
+
+pre.chroma-arkscript .constant.number {
+  color: #b9684f
+}
+
+pre.chroma-arkscript .constant {
+  color: #648c8f
+}
+
+pre.chroma-arkscript .constant.language {
+  color: #268bd2
+}
+
+pre.chroma-arkscript .constant.regexp {
+  color: #2aa198
+}
+
+pre.chroma-arkscript .storage {
+  color: #268bd2
+}
+
+pre.chroma-arkscript .variable {
+  color: #b575cc
+}
+
+pre.chroma-arkscript .string, pre .comment.docstring {
+  color: #2aa198
+}
+
+pre.chroma-arkscript .string.regexp {
+  color: #2aa198
+}
+
+pre.chroma-arkscript .keyword, pre .selector {
+  color: #859900
+}
+
+pre.chroma-arkscript .entity {
+  color: #b58900
+}
+/* END RAINBOW JS */

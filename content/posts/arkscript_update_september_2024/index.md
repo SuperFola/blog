@@ -5,7 +5,7 @@ tags = ['arkscript']
 cover = '/unittests-report.png'
 +++
 
-In the last 90 days, 795 files have been modified, for 3105 insertions and 9135 deletions (dataset cleanup for fuzzers),
+In the last 90 days, 795 files have been modified, for 3105 insertions and 9135 deletions (dataset clean-up for fuzzers),
 in just 97 commits (I'm reworking the very last one, more on that soon).
 
 ## Did someone say... macros?
@@ -14,14 +14,16 @@ Macros come in handy for improving syntax and creating DSLs like the one used fo
 
 <!--more-->
 
-```lisp
+{{< highlight_scripts >}}
+
+{{< highlight_arkscript >}}
 (test:suite list {
     (test:case "append and return a new list" {
         (test:eq (append a 4) [1 2 3 4])
         (test:eq a [1 2 3])
         (test:eq (append a a) [1 2 3 [1 2 3]])
         (test:eq a [1 2 3]) })})
-```
+{{< /highlight_arkscript >}}
 
 Except that, as `test:suite`, `test:case` and `test:eq` (and derivatives) are macros, all their arguments are
 evaluated (if possible) by the macro processor. Including an `(@ (list 1 2 3) 0)` which would return... the builtin
@@ -70,8 +72,8 @@ for the parser, which takes a file and outputs an AST, and the compiler, which t
 new one has appeared, taken out of the compiler: a name and scope resolver.
 
 It checks that you're only using *declared* and *valid* variables (you can't name a variable “print” or any other
-builtin), and suggests alternatives in error messages if necessary (eg fog -> foo?) based on existing variables and a
-Leveinshtein distance. Scope resolution can detect *unbound* variables, which exist later and are referenced before they
+builtin), and suggests alternatives in error messages if necessary (e.g. fog → foo?) based on existing variables and a
+Levenshtein distance. Scope resolution can detect *unbound* variables, which exist later and are referenced before they
 are used.
 
 ### More tooling
@@ -94,7 +96,7 @@ just that the code is running* (100% coverage is not a goal, neither achievable 
 ### Formatting code
 
 As the ArkScript code formatter has become more stable, we now have
-a [github action](https://github.com/ArkScript-lang/action-format) to check that code is formatted correctly in the CI.
+a [GitHub action](https://github.com/ArkScript-lang/action-format) to check that code is formatted correctly in the CI.
 
 ## Still fewer bugs?
 
@@ -109,7 +111,7 @@ The good news is that, thanks to fuzzing, I've been able to fix a whole host of 
 
 ## Final words
 
-I'm currently working on a small optimization (guided by numerous benchmarks and much skepticism), **computed goto** in
+I'm currently working on a small optimisation (guided by numerous benchmarks and much scepticism), **computed goto** in
 the virtual machine. At the moment, I'm seeing a 10% performance gain on the most demanding tests, still on the same
 machine (MacBook Pro M1, 8 cores).
 
@@ -121,4 +123,3 @@ little by little.
 
 If everything continues as is, you'll see me on December 24 for the next update. Otherwise, happy New Year and see you
 in 2025!
-

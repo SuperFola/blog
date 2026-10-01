@@ -37,10 +37,12 @@ crashes, I started a collection of “code that crashes but needs to be detected
 
 A test being composed of two files, a `.ark` and a `.expected`.
 
-```lisp
+{{< highlight_scripts >}}
+
+{{< highlight_arkscript >}}
 # input.ark
 (())
-```
+{{< /highlight_arkscript >}}
 
 ---
 
@@ -80,7 +82,7 @@ stuffed with bugs I haven't found yet.
 
 That's why I've tried a parser combinators approach, and the result is 2 times less code, 2 times easier to read, and
 performance that I consider correct (I'll have to measure the current parser to be able to compare though). To top it
-all off, 0 warnings (Wall, Wextra, Wconversion, Wshadow and pedantic, I'm crazy), 0 memory leaks, tests in all
+all off, 0 warnings (`Wall`, `Wextra`, `Wconversion`, `Wshadow` and `pedantic`, I'm crazy), 0 memory leaks, tests in all
 directions and soon fuzzing.
 
 ```text
@@ -100,4 +102,3 @@ Big - 665 nodes         31.9 ms         31.8 ms          224
 ```
 
 See you soon!
-

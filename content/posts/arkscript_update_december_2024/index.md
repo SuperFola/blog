@@ -22,7 +22,8 @@ more small improvements like this.
 
 Introducing this IR didn't change anything, as it is 96% based on the instruction set. The small difference is how we
 have to handle jumps: since we want to be able to merge instructions, jump offsets might change. If you're interested
-about this, go read [Implementing an IR for ArkScript]({{< ref "/posts/implementing_an_intermediate_representation.md" >}}).
+about this, go read
+[Implementing an IR for ArkScript]({{< ref "/posts/implementing_an_intermediate_representation.md" >}}).
 The compiler now outputs IR entities, that the IR compiler compiles to bytecode.
 
 This IR looks like this when dumped (useful for analysis, better than comparing byte codes):
@@ -53,7 +54,7 @@ page_0
 
 ## More optimizations!
 
-One optimization I wanted to work on, as said earlier, was to implement *super instructions*, basically merge two or
+One optimisation I wanted to work on, as said earlier, was to implement *super instructions*, basically merge two or
 more instructions together. As of today, those are:
 
 - load multiple values at once on the stack
@@ -85,11 +86,11 @@ In this benchmarks report, we compare with: a baseline, then computed gotos, the
 ```
 
 Overall a pretty decent set of performance improvements! For now, I'll stop working on such huge refactors and
-optimizations, and focus on new builtins, enhancing the standard library, the documentation, the tests coverage...
+optimisations, and focus on new builtins, enhancing the standard library, the documentation, the tests coverage...
 
 ## Coverage report
 
-Which makes a nice segway for this section! I've worked on new functionalities, more optimizations, but that didn't stop
+Which makes a nice segway for this section! I've worked on new functionalities, more optimisations, but that didn't stop
 me from adding five new test suites and about 90 more tests!
 
 ![./unittests](/tests_reports.png)
@@ -98,9 +99,9 @@ The new test suites:
 
 - **Optimizer** tests the AST optimizer, and dead code elimination
 - **Utf8** tests the utf8 library (decoding / encoding utf8 codepoints)
-- **Tools** tests the C++ helpers (eg our implementation of Leveinshtein distance)
-- **Compiler** tests the IR optimizer by dumping IR and checking that super instructions have been used
-- **NameResolution** tests the namespaces resolution, hidding variable, prefixing them...
+- **Tools** tests the C++ helpers (e.g. our implementation of Levenshtein distance)
+- **Compiler** tests the IR optimiser by dumping IR and checking that super instructions have been used
+- **NameResolution** tests the namespaces resolution, hiding variable, prefixing them...
 
 The biggest test suite to have been upgrade is the **Diagnostics** one, with more 70 new tests, testing even more error
 messages to ensure we still detect them in the future. I also finally fixed the line reporter of the parser, and tokens
@@ -156,7 +157,7 @@ anything from the standard library.
 
 All the work was done in the name resolution pass, that's now done right after processing macros, so that all names are
 computed (some variable names can be created by macros). If you want to learn more about the inner workings of this
-monstruosity, [I wrote an article about it!]({{< ref "/posts/designing_a_better_import.md" >}})
+monstrosity, [I wrote an article about it!]({{< ref "/posts/designing_a_better_import.md" >}})
 
 **TL;DR**: Once files are parsed, and the **Import Solver** has had a go at resolving `imports` and merging them, we are
 left with a single big AST, with `Namespace` nodes (multiple imports of a single file are merged together). Then, a new
@@ -174,7 +175,7 @@ The AST optimizer was disabled before (or during, I can't recall at this point) 
 marked and removed unused code was just bad).
 
 It's now counting all symbols uses, so that when we visit the top declarations (as well as any namespace nodes,
-resulting in the inclusion of a file), we can delete them if we know they are mentionned only once (only the declaration
+resulting in the inclusion of a file), we can delete them if we know they are mentioned only once (only the declaration
 uses the symbol).
 
 I've also added basic dead code elimination, so that we can:
@@ -205,13 +206,13 @@ Things improved:
 - `string:setAt` is a new builtin to modify a string at a given position and replace a character, which returns a copy
   of the original string, like `list:setAt`
 - `@=` and `@@=` are operators modifying strings and lists in place!
-    - `@=` is working on one dimension indexables like strings and list: `(@= lst 1 5)` would replace the element at
+    - `@=` is working on one dimension indexable like strings and list: `(@= lst 1 5)` would replace the element at
       position 1 by `5`
-    - `@@=` works on two dimension indexables like list of lists or list of strings: `(@@= lst 1 2 false)` would replace
+    - `@@=` works on two dimension indexable like list of lists or list of strings: `(@@= lst 1 2 false)` would replace
       element on line 1, column 2 by `false`
 - dedicated scope around loops, so that we can create variables inside the loop body without having them leaking after
   the loop
-- `@@`, which I'm still working as of right now, to get an element inside a two dimension indexables (list of lists or
+- `@@`, which I'm still working as of right now, to get an element inside a two dimension indexable (list of lists or
   list of strings)
 
 ### List improvements
@@ -223,7 +224,7 @@ seconds (on a M1 Mac Pro)!
 > [!TIP]
 > It's easy to measure code performance without impacting its structure nor how it's operating with a macro:
 > ```text
-> ($ measure (name code) {
+> (macro measure (name code) {
 >   (let ($symcat start name) (time))
 >   { code }
 >   (print
@@ -299,9 +300,11 @@ make the whole thing easier to use (no one likes to wait 10 seconds for a string
 
 ### While loops
 
-The following code used to complain that we were redefining a constant (`foo`) using `let`, but not anymore.
+The following code used to complain that we were redefining a constant (`foo`) using `let`, but not any more.
 
-```lisp
+{{< highlight_scripts >}}
+
+{{< highlight_arkscript >}}
 (let foo 5)
 (mut i 0)
 (while (< i 5) {
@@ -310,7 +313,7 @@ The following code used to complain that we were redefining a constant (`foo`) u
     (set i (+ 1 i)) })
 
 (print (= 5 foo))
-```
+{{< /highlight_arkscript >}}
 
 Here `false` is printed 5 times (once per loop iteration) because foo is `7i`, then `true` because we retrieve the `foo`
 from the current scope. The one inside the loop is another one.

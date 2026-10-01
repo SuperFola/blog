@@ -4,23 +4,33 @@ date = 2026-01-01T00:34:00+02:00
 tags = ['arkscript']
 +++
 
-Last month I got to use [ArkScript](https://arkscript-lang.dev), a language I've been developing for nearly 7 years, for the Advent of Code. And this time, I got to the end, using only my language (and a few hints from [programming.dev](https://programming.dev))!
+{{< highlight_scripts >}}
+
+Last month I got to use [ArkScript](https://arkscript-lang.dev), a language I've been developing for nearly 7 years, for
+the Advent of Code. And this time, I got to the end, using only my language (and a few hints
+from [programming.dev](https://programming.dev))!
 
 ## Adding attributes to functions' arguments
 
-Advent of code challenges are often heavy on lists, with inputs sometimes being thousands of lines long. After benchmarking some of my solutions, I noticed passing big lists to helper functions (eg a `(get grid x y)` that would check for width and height) was slower than doing the check in place and duplicating code. This is due to ArkScript "no hidden behaviour" rule: arguments are always passed by value, and no hidden references are used.
+Advent of code challenges are often heavy on lists, with inputs sometimes being thousands of lines long. After
+benchmarking some of my solutions, I noticed passing big lists to helper functions (eg a `(get grid x y)` that would
+check for width and height) was slower than doing the check in place and duplicating code. This is due to ArkScript "no
+hidden behaviour" rule: arguments are always passed by value, and no hidden references are used.
 
-This was now a problem, and after years of refusing to alter the function declaration syntax, I cave and added *function arguments' attributes*: we can declare an argument as *mutable* (all arguments are immutable by default inside a function body) or as a *read-only reference*, on a per argument basis:
+This was now a problem, and after years of refusing to alter the function declaration syntax, I cave and added *function
+arguments' attributes*: we can declare an argument as *mutable* (all arguments are immutable by default inside a
+function body) or as a *read-only reference*, on a per-argument basis:
 
-```lisp
+{{< highlight_arkscript >}}
 (let foo (fun (a (mut b) (ref c)) {
   # ...
   a }))
-```
+{{< /highlight_arkscript >}}
 
 ## Better UX with type errors
 
-ArkScript being a dynamic language, type checking is done at runtime. And I hit a few too many unhelpful type errors during the challenge, so I rewrote the error generator to be clearer:
+ArkScript being a dynamic language, type checking is done at runtime. And I hit a few too many unhelpful type errors
+during the challenge, so I rewrote the error generator to be clearer:
 
 **Before**
 
@@ -52,11 +62,14 @@ We now show how the function was called, the signature, and details about each a
 
 ## Fixing the testing library
 
-Running advent of code solutions often takes time, and even more when you add tests to ensure your solver is correct for edge cases. That's when I noticed some code was being run twice when a test case failed.
+Running advent of code solutions often takes time, and even more when you add tests to ensure your solver is correct for
+edge cases. That's when I noticed some code was being run twice when a test case failed.
 
-Test cases are declared using the `test:eq`, `test:neq` and `test:expect` macros. Since they are macros, they blindly paste their arguments inside a `(if (= expected value) (report_success) (report_error expected value))`, and now we have our solver running twice when there is an error, because we passed a function call to `test:eq`:
+Test cases are declared using the `test:eq`, `test:neq` and `test:expect` macros. Since they are macros, they blindly
+paste their arguments inside a `(if (= expected value) (report_success) (report_error expected value))`, and now we have
+our solver running twice when there is an error, because we passed a function call to `test:eq`:
 
-```lisp
+{{< highlight_arkscript >}}
 (test:suite day4 {
   (test:case "part 1" {
     (test:eq (solve sample false) 13)
@@ -65,11 +78,11 @@ Test cases are declared using the `test:eq`, `test:neq` and `test:expect` macros
   (test:case "part 2" {
     (test:eq (solve_until_0 sample) 43)
     (test:eq (solve_until_0 data) 8768) })})
-```
+{{< /highlight_arkscript >}}
 
 Fixing this bug required evaluating expressions once with some trickery:
 
-```lisp
+{{< highlight_arkscript >}}
 (macro test:eq (_expr _expected ..._desc) {
   {
     # save the expected and expr, and use the variables later on!
@@ -78,17 +91,18 @@ Fixing this bug required evaluating expressions once with some trickery:
     (if (= testing:_expected_res testing:_expr_res)
       (testing:_report_success)
       (testing:_report_error testing:_expected_res testing:_expr_res ($repr _expected) ($repr _expr) _desc)) } })
-```
+{{< /highlight_arkscript >}}
 
 ## Calls to print... sometimes fail?
 
-ArkScript has an optimization for builtins, so that we can create proxies in the standard library `.ark` source files (which are then available through glob and name imports):
+ArkScript has an optimisation for builtins, so that we can create proxies in the standard library `.ark` source files (
+which are then available through glob and name imports):
 
-```lisp
+{{< highlight_arkscript >}}
 (let reverse (fun (_L) (builtin__list:reverse _L)))
-```
+{{< /highlight_arkscript >}}
 
-Would be optimized to:
+Would be optimised to:
 
 ```text
 page_1
@@ -112,21 +126,27 @@ page_1
 	HALT
 ```
 
-`CALL_BUILTIN_WITHOUT_RETURN_ADDRESS` is a call instruction that doesn't push/pop arguments to/from the stack, avoiding a costly context switching. However, the optimizer tried to apply the optimization nearly everywhere, instead of just at the beginning of a bytecode page (which maps to a function). The following code would be optimized, and the `RET` instruction not being present would break everything:
+`CALL_BUILTIN_WITHOUT_RETURN_ADDRESS` is a call instruction that doesn't push/pop arguments to/from the stack, avoiding
+a costly context switching. However, the optimiser tried to apply the optimisation nearly everywhere, instead of just at
+the beginning of a bytecode page (which maps to a function). The following code would be optimised, and the `RET`
+instruction not being present would break everything:
 
-```lisp
+{{< highlight_arkscript >}}
 # some code...
 
 (let a 5)
 (print a)
 
 # more code, that wouldn't be executed
-```
+{{< /highlight_arkscript >}}
 
 ## Better standard library
 
-Doing the challenge this year was way easier than last year thanks to the state of the standard library, however there was still room for improvement:
-- `list:forEach`, `list:window` and `list:enumerate` can take functors returning `list:stopIteration` to abort iteration early
+Doing the challenge this year was way easier than last year thanks to the state of the standard library, however there
+was still room for improvement:
+
+- `list:forEach`, `list:window` and `list:enumerate` can take functors returning `list:stopIteration` to abort iteration
+  early
 - `list:sortByKey`
 - `list:transpose` to transpose a list of lists or list of strings
 - `list:contains?` to check if a list has a given element
@@ -137,5 +157,6 @@ Doing the challenge this year was way easier than last year thanks to the state 
 
 ## What's next?
 
-I'd like to enhance the small framework I made for solving Advent of code challenges in ArkScript, and perhaps use it to complete the previous years challenges too! This is a fun way of playing with algorithms, and it helps find areas where the language could be improved.
-
+I'd like to enhance the small framework I made for solving Advent of code challenges in ArkScript, and perhaps use it to
+complete the previous years challenges too! This is a fun way of playing with algorithms, and it helps find areas where
+the language could be improved.

@@ -4,42 +4,61 @@ date = 2024-10-13T22:02:00+02:00
 tags = ['arkscript', 'pldev']
 +++
 
-ArkScript is a scripting language, running on a VM. To accomplish this, we had (as of September 2024) a compiler generating bytecode for the virtual machine, receiving an AST from the parser (and a few other passes like name resolution, macro evaluation, name and scope resolution...).
+ArkScript is a scripting language, running on a VM. To accomplish this, we had (as of September 2024) a compiler
+generating bytecode for the virtual machine, receiving an AST from the parser (and a few other passes like name
+resolution, macro evaluation, name and scope resolution...).
 
 <!--more-->
 
-## Exploring new optimizations
+{{< highlight_scripts >}}
 
-The only thing we could optimize was the virtual machine and the memory layout of our values, and some very little things directly in the compiler, like [tail call optimization]({{< ref "/posts/understanding_tail_call_optimization.md" >}}). Having implemented [computed gotos]({{< ref "/posts/computed_gotos.md" >}}) a few weeks ago, I think I've hit the limit in terms of feasible optimization for this VM.
+## Exploring new optimisations
 
-For a while, a friend tried to push me toward making an *intermediate representation* for ArkScript. I shrugged it off, saying it was too much work, not really knowing what I would get into and having bigger fish to fry.
+The only thing we could optimise was the virtual machine and the memory layout of our values, and some very little
+things directly in the compiler, like
+[tail call optimisation]({{< ref "/posts/understanding_tail_call_optimization.md" >}}). Having implemented
+[computed gotos]({{< ref "/posts/computed_gotos.md" >}}) a few weeks ago, I think I've hit the limit in terms of
+feasible optimisation for this VM.
+
+For a while, a friend tried to push me toward making an *intermediate representation* for ArkScript. I shrugged it off,
+saying it was too much work, not really knowing what I would get into and having bigger fish to fry.
 
 ### Biting the bullet
 
-At the end of September, I stumbled upon [a post by Eniko on Mastodon](https://peoplemaking.games/@eniko/113211730549249447) (if you don't follow her already, what are you waiting for?), and the idea of making an IR came back into my mind... and I just started thinking about, but seriously this time.
+At the end of September, I stumbled
+upon [a post by Eniko on Mastodon](https://peoplemaking.games/@eniko/113211730549249447) (if you don't follow her
+already, what are you waiting for?), and the idea of making an IR came back into my mind... and I just started thinking
+about, but seriously this time.
 
 What were my goals?
 
-1. Optimizing the bytecode produced by the compiler, so that we could remove useless or redundant instructions ;
+1. Optimising the bytecode produced by the compiler, so that we could remove useless or redundant instructions ;
 2. Replacing a series of instructions by a single one, more specific, that could do multiple things at once.
 
 **Problem**: operating directly on bytecode is hard: we either need
+
 - to replace instructions with `NOP` (that would still be decoded and run by the VM, even to do virtually nothing)
-- to recompute every single jump address after merging or removing instructions (this problem appears with both relative and absolute jumps)
+- to recompute every single jump address after merging or removing instructions (this problem appears with both relative
+  and absolute jumps)
 
 ## Designing the IR
 
-The IR would have to solve this problem, otherwise it would be useless for its single job: helping to produce better bytecode. Let's see what we can work with:
+The IR would have to solve this problem, otherwise it would be useless for its single job: helping to produce better
+bytecode. Let's see what we can work with:
 
-The *compiler* job is to flatten the AST (*Abstract Syntax Tree*, our parsed code represented as a tree that we visit recursively) into a list of instructions. To simplify the calling convention, each function is compiled in a dedicated region that I call a **page**. Inside a **page**, each jump is relative to the first instruction, and the bytecode is essentially a `uint8_t[][]`, that we can access using a `page pointer` and an `instruction pointer`.
+The *compiler* job is to flatten the AST (*Abstract Syntax Tree*, our parsed code represented as a tree that we visit
+recursively) into a list of instructions. To simplify the calling convention, each function is compiled in a dedicated
+region that I call a **page**. Inside a **page**, each jump is relative to the first instruction, and the bytecode is
+essentially a `uint8_t[][]`, that we can access using a `page pointer` and an `instruction pointer`.
 
 ### First draft
 
-My first idea was to output a tree of IR instructions instead of a list of instructions. That would still be flatter than the AST, and on paper, it would solve the jump problem as we have jumps only for loops and conditions.
+My first idea was to output a tree of IR instructions instead of a list of instructions. That would still be flatter
+than the AST, and on paper, it would solve the jump problem as we have jumps only for loops and conditions.
 
 If we use a Lisp-like (ArkScript-like?) syntax, it could look like this
 
-```lisp
+{{< highlight_arkscript >}}
 (store a 0)   # a = 0
 (setval a 5)  # a = 5
 (load_symbol a)
@@ -48,20 +67,27 @@ If we use a Lisp-like (ArkScript-like?) syntax, it could look like this
 (if
     then...
     else...)
-```
+{{< /highlight_arkscript >}}
 
-However, I didn't really like this idea, it felt like reinventing the wheel, another tree, as we have a non-flat structure to handle a sequence of conditions `(if cond (if cond2 ...))`.
+However, I didn't really like this idea, it felt like reinventing the wheel, another tree, as we have a non-flat
+structure to handle a sequence of conditions `(if cond (if cond2 ...))`.
 
 ### Second try: getting rid of jumps altogether
 
-This time, we will use a structure very similar if not identical to the bytecode, and get rid of all the `JUMP` instructions. Taking inspiration from assembly, they will get replaced by **labels** and **gotos** in our IR! This way we can add and remove as many instructions as we want, as long as we don't update a **label** we can still compute its address later and compile our **gotos** to absolute jumps without any issues.
+This time, we will use a structure very similar if not identical to the bytecode, and get rid of all the `JUMP`
+instructions. Taking inspiration from assembly, they will get replaced by **labels** and **gotos** in our IR! This way
+we can add and remove as many instructions as we want, as long as we don't update a **label** we can still compute its
+address later and compile our **gotos** to absolute jumps without any issues.
 
-This is also the easiest solution, as it does not require me to entirely rewrite the compiler: I just have to add a wrapper for the `Instruction`, that gets compiled to bytecode.
+This is also the easiest solution, as it does not require me to entirely rewrite the compiler: I just have to add a
+wrapper for the `Instruction`, that gets compiled to bytecode.
 
 ## Implementing the IR
 
-The wrapper is small, and was easy to implement, needing only an additional `Kind` to differentiate final instructions (`Opcode` and `Opcode2Args`) and entities that require processing to be compiled to final instructions (`Goto`, `GotoIfTrue`, `GotoIfFalse` all require the attached label to be computed first). The `Label` is only there to get an address in the bytecode, and won't produce an instruction.
-
+The wrapper is small, and was easy to implement, needing only an additional `Kind` to differentiate final instructions (
+`Opcode` and `Opcode2Args`) and entities that require processing to be compiled to final instructions (`Goto`,
+`GotoIfTrue`, `GotoIfFalse` all require the attached label to be computed first). The `Label` is only there to get an
+address in the bytecode, and won't produce an instruction.
 
 ```cpp
 enum class Kind
@@ -111,13 +137,15 @@ using Block = std::vector<Entity>;
 
 ### Instructions in ArkScript
 
-It is also interesting to speak about the instruction representation in ArkScript. An instruction in on four bytes: `iiiiiiii pppppppp aaaaaaaa aaaaaaaa`.
+It is also interesting to speak about the instruction representation in ArkScript. An instruction in on four bytes:
+`iiiiiiii pppppppp aaaaaaaa aaaaaaaa`.
 
 - `i` represents the instruction bits, 8, giving us 256 different instructions possible
 - `p` is for padding, ignored in instructions with a single immediate argument
 - `a` represents the bits of the immediate argument, a total of 16 (0 -> 65'535)
 
-Super Instructions can require up to two arguments, which are encoded using the padding: `iiiiiiii ssssssss ssssaaaa aaaaaaaa`.
+Super Instructions can require up to two arguments, which are encoded using the padding:
+`iiiiiiii ssssssss ssssaaaa aaaaaaaa`.
 
 - we still have our instruction on the same byte,
 - `s` represents the bits of the secondary argument, a total of 12 (0 -> 4095)
@@ -125,7 +153,8 @@ Super Instructions can require up to two arguments, which are encoded using the 
 
 ### Compiling an IR entity to bytecode
 
-Since some instructions can take two arguments, the instruction-to-bytecode helper had to be updated. Implementation for reference:
+Since some instructions can take two arguments, the instruction-to-bytecode helper had to be updated. Implementation for
+reference:
 
 ```cpp
 struct Word
@@ -155,9 +184,12 @@ struct Word
 };
 ```
 
-The rest is pretty straightforward: instead of having the **Compiler** output bytecode directly, it now outputs IR entities, and a new **IRCompiler** has been introduced. All it has to do is map an IR entity to its instruction, and turn it into a `Word` so that it can be written to disk.
+The rest is pretty straightforward: instead of having the **Compiler** output bytecode directly, it now outputs IR
+entities, and a new **IRCompiler** has been introduced. All it has to do is map an IR entity to its instruction, and
+turn it into a `Word` so that it can be written to disk.
 
-An important step is to compute the labels addresses so that we can generate correct `JUMP`, `POP_JUMP_IF_TRUE` and `POP_JUMP_IF_FALSE` instructions:
+An important step is to compute the labels addresses so that we can generate correct `JUMP`, `POP_JUMP_IF_TRUE` and
+`POP_JUMP_IF_FALSE` instructions:
 
 ```cpp
 uint16_t pos = 0;
@@ -180,7 +212,9 @@ for (auto inst : page)
 
 ### Detecting sequence of entities that can be combined
 
-This one was way easier than I thought, all we have to do is iterate on the given IR blocks, and match the current entity and the next one with a known pattern. The only thing to be aware of is jumping over the instructions we managed to fuse, so that we do not push left over instructions in our optimized IR.
+This one was way easier than I thought, all we have to do is iterate on the given IR blocks, and match the current
+entity and the next one with a known pattern. The only thing to be aware of is jumping over the instructions we managed
+to fuse, so that we do not push left over instructions in our optimised IR.
 
 ```cpp
 void IROptimizer::process(
@@ -246,9 +280,12 @@ void IROptimizer::process(
 
 ## Performance gain!
 
-Who would have thought that avoiding a series of `LOAD_CONST`, `STORE` and using a single `LOAD_CONST_STORE` instruction would be so beneficial? We are avoiding a push -> pop and immediately putting a value from our constants table inside a variable.
+Who would have thought that avoiding a series of `LOAD_CONST`, `STORE` and using a single `LOAD_CONST_STORE` instruction
+would be so beneficial? We are avoiding a push → pop and immediately putting a value from our constants table inside a
+variable.
 
-Applying this pattern to increment (`LOAD_SYMBOL a`, `LOAD_CONST 1`, `ADD` becomes `INCREMENT a`), decrement, and store the head or tail of a list in a variable helps, tremendously according to the benchmarks:
+Applying this pattern to increment (`LOAD_SYMBOL a`, `LOAD_CONST 1`, `ADD` becomes `INCREMENT a`), decrement, and store
+the head or tail of a list in a variable helps, tremendously according to the benchmarks:
 
 ```text
                           |           | 5-c7f632ff   | 6-28999c0f
@@ -265,5 +302,7 @@ Applying this pattern to increment (`LOAD_SYMBOL a`, `LOAD_CONST 1`, `ADD` becom
                           | cpu_time  | 0.621938ms   | -0.037 (-5.9495%)
 ```
 
-The first column, `5-c7f632ff` is our reference benchmark (based on ArkScript commit `684ea758`), and the second one, `5-ee9ff764`, is the result of implementing our IR and IR optimizer. Quite the improvement, we gained at least 2% and at most 10% on every single benchmark!
+The first column, `5-c7f632ff` is our reference benchmark (based on ArkScript commit `684ea758`), and the second one,
+`5-ee9ff764`, is the result of implementing our IR and IR optimiser. Quite the improvement, we gained at least 2% and at
+most 10% on every single benchmark!
 

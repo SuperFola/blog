@@ -7,13 +7,19 @@ cover = '/arkscript-notion.png'
 
 Hello again!
 
-It's now been 581 days since I last posted here. In the meantime, that's around 21880 lines added and 18238 deleted in various refactos, divided into 202 commits (the year 2023 was very empty, work resumed at the start of 2024)!
+It's now been 581 days since I last posted here. In the meantime, that's around 21880 lines added and 18238 deleted in
+various refactos, divided into 202 commits (the year 2023 was very empty, work resumed at the start of 2024)!
 
 ## A parser? Again?
 
-To continue from the end of the last message, the new parser has been permanently integrated into ArkScript, and the old one decommissioned. The integration was easier than expected if I remember correctly, with a lot of ugly, hard-to-maintain code gone.
+To continue from the end of the last message, the new parser has been permanently integrated into ArkScript, and the old
+one decommissioned. The integration was easier than expected if I remember correctly, with a lot of ugly,
+hard-to-maintain code gone.
 
-And on top of that, over the last few months I've been able to optimize the parser a little more, which used to take a long time to calculate the cursor position in the file (not as easy as keeping a counter as we often go backwards, cf. [the monster that helps position line breaks](https://github.com/ArkScript-lang/Ark/blob/79bfe1f596b5a17ed4a684191adf0addd3507d25/src/arkreactor/Compiler/AST/BaseParser.cpp#L8-L33)). This gives us the following perf:
+And on top of that, over the last few months I've been able to optimise the parser a little more, which used to take a
+long time to calculate the cursor position in the file (not as easy as keeping a counter as we often go backwards,
+cf. [the monster that helps position line breaks](https://github.com/ArkScript-lang/Ark/blob/79bfe1f596b5a17ed4a684191adf0addd3507d25/src/arkreactor/Compiler/AST/BaseParser.cpp#L8-L33)).
+This gives us the following perf:
 
 ```text
 ---------------------------------------------------------------------------
@@ -30,30 +36,39 @@ New parser - Big - 665 nodes/2         1.66 ms         1.66 ms          422 node
 
 Previously, the syntax of macros wasn't very pretty or logical:
 
-```lisp
+{{< highlight_scripts >}}
+
+{{< highlight_arkscript >}}
 !{name 12}
 !{if cond then else}
 !{func (arg arg2) body}
-```
+{{< /highlight_arkscript >}}
 
 Now we use the same syntax as the rest of the language with a magic token, `$`:
 
-```lisp
+{{< highlight_arkscript >}}
 ($ name 12)
 ($if cond then else)
 ($ func (arg arg2) body)
-```
+{{< /highlight_arkscript >}}
 
-And we've got new primitives like `$repr` to get a string from a node at compile time, `symcat` to concatenate symbols (useful in recursive macros defining temporary variables), `argcount` to get the number of arguments to a function. (I'll have to standardize the names so that they all start with `$`, it's in my backlog).
+And we've got new primitives like `$repr` to get a string from a node at compile time, `symcat` to concatenate symbols (
+useful in recursive macros defining temporary variables), `argcount` to get the number of arguments to a function. (I'll
+have to standardise the names so that they all start with `$`, it's in my backlog).
 
 > [!NOTE]
-> We could use pattern matching to extract the number of arguments for a node, but that's a complex thing to implement, and there's not enough need for it at the moment. What's certain is that it would be really cool to implement, if only for the experience, but given the state of the macro processor, it'll have to wait a little longer.
+> We could use pattern matching to extract the number of arguments for a node, but that's a complex thing to implement,
+> and there's not enough need for it at the moment. What's certain is that it would be really cool to implement, if only
+> for the experience, but given the state of the macro processor, it'll have to wait a little longer.
 
 ## More and more benchmarks
 
-As I love numbers and stats of all kinds, I decided to add more benchmarks last year, with benchmarks for the VM I can run on my machine, and output CSVs. Add a pinch of Python and I can track perf evolutions at each commit if I wish, to track potential regressions. Pretty cool, eh?
+As I love numbers and stats of all kinds, I decided to add more benchmarks last year, with benchmarks for the VM I can
+run on my machine, and output CSVs. Add a pinch of Python and I can track perf evolutions at each commit if I wish, to
+track potential regressions. Pretty cool, eh?
 
-You can see the evolution between several commits here, with losses in ms and % between each commit and the base (the 0-684ea758), successively:
+You can see the evolution between several commits here, with losses in ms and % between each commit and the base (the
+0-684ea758), successively:
 
 ```text
                           |           | 0-684ea758   | 1-d45d7ea1         | 2-abb043b4          | 3-75161de7          | 4-ad889963
@@ -68,19 +83,31 @@ You can see the evolution between several commits here, with losses in ms and % 
                           | cpu_time  | 0.0151691ms  | -0.000 (-1.2855%)  | -0.000 (-1.4859%)   | -0.000 (-2.2711%)   | -0.000 (-1.7134%)
 ```
 
-Not too bad, but I'd like to automate all that... That's why [benchmarks are now launched](https://github.com/ArkScript-lang/Ark/blob/79bfe1f596b5a17ed4a684191adf0addd3507d25/.github/workflows/benchmarks.yml#L62-L66) by the CI for each commit to `dev`. Don't worry, I'm not looking at time, as CI environments are not reproducible, but at the ratios between ArkScript and other languages, which can be viewed at [https://arkscript-lang.dev/benchmarks.html](https://arkscript-lang.dev/benchmarks.html).
+Not too bad, but I'd like to automate all that... That's
+why [benchmarks are now launched](https://github.com/ArkScript-lang/Ark/blob/79bfe1f596b5a17ed4a684191adf0addd3507d25/.github/workflows/benchmarks.yml#L62-L66)
+by the CI for each commit to `dev`. Don't worry, I'm not looking at time, as CI environments are not reproducible, but
+at the ratios between ArkScript and other languages, which can be viewed
+at [https://arkscript-lang.dev/benchmarks.html](https://arkscript-lang.dev/benchmarks.html).
 
 ## Switching to C++20
 
-After that, I decided it was high time to switch to C++20 (also because I wanted to integrate [boost-ext/ut](https://github.com/boost-ext/ut), which is in C++20), and I took it upon myself to modernize the code (ranges & views make the code much clearer).
+After that, I decided it was high time to switch to C++20 (also because I wanted to
+integrate [boost-ext/ut](https://github.com/boost-ext/ut), which is in C++20), and I took it upon myself to modernise
+the code (ranges & views make the code much clearer).
 
-At the same time, I finally switched to CLion, and I think it was the best decision of my life. The integration with clangd is much better than VSCode and IntelliSense, even if CLion eats RAM like I eat donuts... (promise, this post isn't sponso, just having a debugger that doesn't just show me the asm is a life-changer; and being able to set breakpoints too).
+At the same time, I finally switched to CLion, and I think it was the best decision of my life. The integration with
+clangd is much better than VSCode and IntelliSense, even if CLion eats RAM like I eat doughnuts... (promise, this post
+isn't sponso, just having a debugger that doesn't just show me the asm is a life-changer; and being able to set
+breakpoints too).
 
-The hardest part of this migration was adapting the CI to have compilers supporting C++20 (support for gcc < 13 and clang < 15 was dropped).
+The hardest part of this migration was adapting the CI to have compilers supporting C++20 (support for gcc < 13 and
+clang < 15 was dropped).
 
 ## A lot of testing
 
-With my head in the CI, I also started writing a lot of tests, in C++ this time, to test the parser, the bytecode reader, the VM, the VM+State embedding, ... and honestly, it's all very stupid and easy to read, just look at this simplicity :
+With my head in the CI, I also started writing a lot of tests, in C++ this time, to test the parser, the bytecode
+reader, the VM, the VM+State embedding, ... and honestly, it's all very stupid and easy to read, just look at this
+simplicity :
 
 ```cpp
 ut::suite<"AST"> ast_suite = [] {
@@ -122,19 +149,28 @@ Suite '*hidden*': all tests passed (64 asserts in 32 tests)
 
 ## Fuzzing
 
-I've also continued fuzzing, and I'm happy to say that I'm fuzzing approximately 3 times faster than before, thanks to a better parser and well-targeted optimizations (always fed by benchmarks and profiling beforehand)!
+I've also continued fuzzing, and I'm happy to say that I'm fuzzing approximately 3 times faster than before, thanks to a
+better parser and well-targeted optimisations (always fed by benchmarks and profiling beforehand)!
 
-To help me with this task of sorting out 300+ outputs marked as KO by the fuzzers, I've made a few scripts ([sorting in python, a la git add -p](https://github.com/ArkScript-lang/Ark/blob/79bfe1f596b5a17ed4a684191adf0addd3507d25/tests/fuzzing/fuzzer-crash-triage.py), [launching the fuzzers with different parameters for better coverage](https://github.com/ArkScript-lang/Ark/blob/79bfe1f596b5a17ed4a684191adf0addd3507d25/tests/fuzzing/fuzz.sh)).
+To help me with this task of sorting out 300+ outputs marked as KO by the fuzzers, I've made a few
+scripts ([sorting in python, à la git add -p](https://github.com/ArkScript-lang/Ark/blob/79bfe1f596b5a17ed4a684191adf0addd3507d25/tests/fuzzing/fuzzer-crash-triage.py), [launching the fuzzers with different parameters for better coverage](https://github.com/ArkScript-lang/Ark/blob/79bfe1f596b5a17ed4a684191adf0addd3507d25/tests/fuzzing/fuzz.sh)).
 
-At the time of writing, I'm left with ~64 errors (some of which overlap, hence the usefulness of the python script to quickly sort out false errors (aka ArkScript flagging an error) and real errors (a sanitizer flagging a problem), having started from 400+ errors in 4 hours of fuzz testing!
+At the time of writing, I'm left with ~64 errors (some of which overlap, hence the usefulness of the Python script to
+quickly sort out false errors (aka ArkScript flagging an error) and real errors (a sanitiser flagging a problem), having
+started from 400+ errors in 4 hours of fuzz testing!
 
-Thanks to the fuzzers, the test base is also enriched, as we now also test errors and their reporting, to ensure that we don't make an error reappear and that everything is always handled correctly: [/tests/errors](https://github.com/ArkScript-lang/Ark/tree/79bfe1f596b5a17ed4a684191adf0addd3507d25/tests/errors) (organized by error category, with an .ark file and an .expected file for the bit of error message we're waiting for, I'm pretty proud of that).
+Thanks to the fuzzers, the test base is also enriched, as we now also test errors and their reporting, to ensure that we
+don't make an error reappear and that everything is always handled
+correctly: [/tests/errors](https://github.com/ArkScript-lang/Ark/tree/79bfe1f596b5a17ed4a684191adf0addd3507d25/tests/errors) (organised by error category, with an .ark file and an .expected file for the bit of
+error message we're waiting for, I'm pretty proud of that).
 
 ## Better test reports for ArkScript
 
-I didn't like having asserts in ArkScript, because the tests crashed immediately. You had to fix them one by one and the reporting was ugly, then restart everything. Inspired by mockito in Scala, I designed a test lib in ArkScript, for ArkScript. Check it out:
+I didn't like having asserts in ArkScript, because the tests crashed immediately. You had to fix them one by one and the
+reporting was ugly, then restart everything. Inspired by mockito in Scala, I designed a test lib in ArkScript, for
+ArkScript. Check it out:
 
-```lisp
+{{< highlight_arkscript >}}
 (import std.Testing)
 
 (test:suite aaa {
@@ -150,7 +186,7 @@ I didn't like having asserts in ArkScript, because the tests crashed immediately
         (test:eq c foobar "foobar is equal to c")
         (test:case "nested case"
             (test:eq c foobar))})})
-```
+{{< /highlight_arkscript >}}
 
 Which gives the following output:
 
@@ -158,42 +194,56 @@ Which gives the following output:
 
 ## Running ArkScript code... online?
 
-What could be better than a playground for testing the language, instead of cloning the repo and compiling the project on your own machine?
+What could be better than a playground for testing the language, instead of cloning the repo and compiling the project
+on your own machine?
 
 [https://playground.arkscript-lang.dev/](https://playground.arkscript-lang.dev/)
 
-It's even been integrated into the language's tutorial page, so you can try out the examples straight away, while you learn: [https://arkscript-lang.dev/tutorials/language.html](https://arkscript-lang.dev/tutorials/language.html).
+It's even been integrated into the language's tutorial page, so you can try out the examples straight away, while you
+learn: [https://arkscript-lang.dev/tutorials/language.html](https://arkscript-lang.dev/tutorials/language.html).
 
 ## More uniformity on the website
 
 Right now, we're walking around with three different sites (four with the playground), and I don't like it:
 
 - the showcase site, `/`, with tutorials, guidelines and examples
-- the project's C++ documentation, `/impl`, for maintainers and external contributors (and... documentation for modules coded in C++?? alas yes)
+- the project's C++ documentation, `/impl`, for maintainers and external contributors (and... documentation for modules
+  coded in C++?? alas yes)
 - documentation for the standard lib, `/std`
 - and the playground, of course
 
-So a few months ago, I started to move all the documentation to the “main” site in `/`, so that only the implementation documentation would remain in `/impl`. Tutorials, integration guides and module creation guides are all on the main site! A single interface, easier to manage and maintain for me (the links page: [https://arkscript-lang.dev/documentation.html](https://arkscript-lang.dev/documentation.html)).
+So a few months ago, I started to move all the documentation to the “main” site in `/`, so that only the implementation
+documentation would remain in `/impl`. Tutorials, integration guides and module creation guides are all on the main
+site! A single interface, easier to manage and maintain for me (the links
+page: [https://arkscript-lang.dev/documentation.html](https://arkscript-lang.dev/documentation.html)).
 
-Eventually, module documentation will be absorbed via ArkDoc, our tool for generating documentation from comments in ArkScript code (and C++, builtins are documented with the same tool; with a little modification we should be able to document modules with it too).
+Eventually, module documentation will be absorbed via ArkDoc, our tool for generating documentation from comments in
+ArkScript code (and C++, builtins are documented with the same tool; with a little modification we should be able to
+document modules with it too).
 
 ## A code formatter
 
 Astute readers may have noticed that a test was marked `*hidden*` above... it's the ArkScript Code Formatter test suite!
 
-So it's official: the CLI has been equipped with a tool that can reformat a file in place or in dry-run (in which case the formatting that would have been done is simply written to the console). It's very opinionated and not at all configurable, a la gofmt: so no fuss, everyone will have to work the same way.
+So it's official: the CLI has been equipped with a tool that can reformat a file in place or in dry-run (in which case
+the formatting that would have been done is simply written to the console). It's very opinionated and not at all
+configurable, à la gofmt: so no fuss, everyone will have to work the same way.
 
-As soon as I'm sure it's stable and doesn't swallow comments by mistake, I'll format all the ArkScript code in the project with it (examples, standard lib, tests...)! Don't hesitate to test it and give feedback, it's by far the most complex piece of code in the project, despite its small size ([around 500 lines at the most](https://github.com/ArkScript-lang/Ark/blob/79bfe1f596b5a17ed4a684191adf0addd3507d25/src/arkscript/Formatter.cpp)).
+As soon as I'm sure it's stable and doesn't swallow comments by mistake, I'll format all the ArkScript code in the
+project with it (examples, standard lib, tests...)! Don't hesitate to test it and give feedback, it's by far the most
+complex piece of code in the project, despite its small
+size ([around 500 lines at the most](https://github.com/ArkScript-lang/Ark/blob/79bfe1f596b5a17ed4a684191adf0addd3507d25/src/arkscript/Formatter.cpp)).
 
 I hope to be able to write an article about it, as the subject is very interesting and more complicated than it seems.
 
 ## Parting words
 
-Small sneak peak of everything I still want to do on this project (one task down usually pushes two, or more):
+Small sneak peek of everything I still want to do on this project (one task down usually pushes two, or more):
 
 ![ArkScript's Notion (in French)](/arkscript-notion.png)
 
-I also realize that I have a tendency to make very long posts, I hope you enjoy/enjoy them as much as I enjoy writing them; it's true that posting once every 4 months (or rather 18 months in this case) helps to write such long posts, there's plenty to discuss!
+I also realised that I have a tendency to make very long posts, I hope you enjoy/enjoy them as much as I enjoy writing
+them; it's true that posting once every 4 months (or rather 18 months in this case) helps to write such long posts,
+there's plenty to discuss!
 
 I'll try to come back sooner next time ;)
-

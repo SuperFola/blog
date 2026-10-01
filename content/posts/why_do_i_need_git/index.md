@@ -2,7 +2,7 @@
 title = 'Why do I need git?'
 date = 2020-04-08T22:57:17+02:00
 draft = false
-tags = ['git', 'beginners']
+tags = ['git', 'eli5']
 image = '/git_log.png'
 +++
 

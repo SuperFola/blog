@@ -4,6 +4,8 @@ date = 2020-07-11T12:23:45+02:00
 tags = ['arkscript']
 +++
 
+{{< highlight_scripts >}}
+
 Hi there!
 
 So we've got a new interpreter (REPL) that has persistence between each line typed (previously each piece of executed
@@ -32,7 +34,7 @@ and VM too).
 
 In lexing/parsing, you'll get something like:
 
-```lisp
+{{< highlight_arkscript >}}
 main:007> (if)
 class Ark::ParseError: ParseError: no more token to consume
 On line 1:59, got TokenType::Grouping
@@ -40,11 +42,11 @@ On line 1:59, got TokenType::Grouping
       |    ^
     2 | no more token to consume
 Ark::State::doString failed
-```
+{{< /highlight_arkscript >}}
 
 In the VM, we get better messages when a variable is unknown / unusable or when we have import problems:
 
-```lisp
+{{< highlight_arkscript >}}
 main:001> (print a)
 unbound variable: a
 At IP: 2, PP: 0
@@ -60,5 +62,5 @@ At IP: 44, PP: 0
 main:013> (import "blabla.ark")
 class std::runtime_error: While processing file FILE, couldn't import blabla.ark: file not found
 Ark::State::doString failed
-```
+{{< /highlight_arkscript >}}
 

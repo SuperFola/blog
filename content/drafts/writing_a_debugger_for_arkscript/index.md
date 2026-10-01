@@ -4,6 +4,8 @@ date = 2026-01-10T18:09:10+02:00
 tags = ['arkscript', 'pldev']
 +++
 
+{{< highlight_scripts >}}
+
 In February 2024, I first discussed adding a debugger to ArkScript with other devs that were involved in the project at that time. I didn't know where to start or how it should work ; and about two years later this is now done.
 
 ## What should it do?
@@ -19,13 +21,13 @@ With an ideal debugger, I'd like to be able
 
 If we want to place breakpoints everywhere in our code (either at runtime when the debugger is running, or when writing code), it has to be a special instruction that won't push anything to the stack, to avoid messing up calls:
 
-```lisp
+{{< highlight_arkscript >}}
 (let foo (fun (a b c) {
   (let d (+ a b))
   (* d c) }))
 
 (foo 1 2 (breakpoint true) 3)
-```
+{{< /highlight_arkscript >}}
 
 We wouldn't want to be passing 4 arguments to `foo`, but instead trigger a breakpoint while passing arguments to `foo`.
 

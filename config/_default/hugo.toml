@@ -37,17 +37,32 @@ enableRobotsTXT = true
           url = "/about"
           weight = 1
         [[languages.en.menu.main]]
+          identifier = "tags"
+          name = "Tags"
+          url = "/tags"
+          weight = 2
+        [[languages.en.menu.main]]
           identifier = "github"
           name = "GitHub"
           url = "https://github.com/SuperFola"
+          weight = 3
         [[languages.en.menu.main]]
           identifier = "mastodon"
           name = "Mastodon"
           url = "https://hachyderm.io/@lexplt"
+          weight = 4
         [[languages.en.menu.main]]
-          identifier = "tags"
-          name = "Tags"
-          url = "/tags"
+          identifier = "rss"
+          name = "RSS Feed"
+          url = "/index.xml"
+          weight = 5
+
+[outputs]
+  home = ['html', 'rss']
+
+[services]
+  [services.rss]
+    limit = -1  # unlimited articles
 
 [privacy]
   [privacy.youtube]

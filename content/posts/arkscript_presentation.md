@@ -4,6 +4,8 @@ date = 2019-07-25T20:11:45+02:00
 tags = ['arkscript']
 +++
 
+{{< highlight_scripts >}}
+
 Hi there, fellow reader! Today, I want to talk about a small project I've been working on since April 2019, [ArkScript](https://github.com/ArkScript-lang/Ark).
 
 After the failure of Kafe, I wanted to make another language but this time Lisp inspired and interpreted. Then Ark was born (later renamed ArkScript, see [this reddit post](https://www.reddit.com/r/ProgrammingLanguages/comments/cdv2vw/ark_programming_language_a_lisp_like_scripting/etwoo6p)). Then I tried actually compiling this language, and instead of starting to make the virtual machine before the compiler, I did it properly, and here we are.
@@ -46,7 +48,7 @@ The language is intended to be extensible, and to this end it exposes an API for
 
 A small example that uses closures with explicit capture (via the `&capture` notation), closure field reading (dot notation) to simulate object orientation (with no possibility of modifying the object from the outside, everything is read-only when you're not in the closure):
 
-```lisp
+{{< highlight_arkscript >}}
 (let create-human (fun (name age weight) {
     # functions can be invoked in the closure scope
     (let set-age (fun (new-age) (set age new-age)))
@@ -62,11 +64,11 @@ A small example that uses closures with explicit capture (via the `&capture` not
 (print bob.age)
 
 (print john.age)
-```
+{{< /highlight_arkscript >}}
 
 The Ackermann Péter function, which I use for my benchmarks, is a non-primitive recursive function, so it can't be optimized by a compiler. It's very useful for testing the implementation of a language:
 
-```lisp
+{{< highlight_arkscript >}}
 (let ackermann (fun (m n) {
     (if (> m 0)
         (if (= 0 n)
@@ -75,7 +77,7 @@ The Ackermann Péter function, which I use for my benchmarks, is a non-primitive
         (+ 1 n) )}))
 
 (print (ackermann 3 6))
-```
+{{< /highlight_arkscript >}}
 
 Releases are available [here](https://github.com/ArkScript-lang/Ark/releases/latest) (the standard lib is supplied with each release, as are the .arkm modules).
 
