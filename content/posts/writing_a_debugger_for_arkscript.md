@@ -20,6 +20,8 @@ With an ideal debugger, I'd like to be able
   wrong
 - maybe add breakpoints from the debugger, given a file and line
 
+<!--more-->
+
 ## Introducing a new instruction: BREAKPOINT
 
 If we want to place breakpoints everywhere in our code (either at runtime when the debugger is running, or when writing
