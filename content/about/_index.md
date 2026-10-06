@@ -10,6 +10,13 @@ complicated problems, understanding complex pieces of software, finding the time
 ten years, playing video games, dreaming about making my own video games, eating pizza, and sometimes even doing
 [code golf](https://code.golf/golfers/SuperFola).
 
+<div style="text-align: center;">
+<img src="/lexynomicon.png" style="border: none; display: block; margin: auto;" width="40%" alt="Necronomicon trans colored" />
+
+*Necronomicon logo, trans coloured, the logo of this blog*
+
+</div>
+
 I dislike AI and fight it every day, it causes brainrot and destroys the planet.
 
 <h1 style="text-align: center; font-size: 2.3em;">🏳️‍⚧️&nbsp;🏳️‍🌈&nbsp;🇵🇸&nbsp;🇺🇦</h1>
